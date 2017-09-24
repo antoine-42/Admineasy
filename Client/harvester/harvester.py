@@ -1,12 +1,13 @@
 import platform  # system info
 import psutil  # hardware info
-import pySMART  # hard drive smart info, requires admin
+import cpuinfo  # detailed CPU info
+#import pySMART  # hard drive smart info, requires admin
 import influxdb  # communication with influxdb
 
 
 # DATA COLLECTION
 class DiskInfo:
-    def __init__(self, info):
+    def __init__(self, info):  # separer tout
         self.device = info[0]
         self.mount = info[1]
         self.file_system = info[2]
@@ -30,17 +31,21 @@ platform_name = platform.node()
 
 
 # CPU
-cpu_name = platform.processor()
+cpu_info = cpuinfo.get_cpu_info()
+cpu_name = cpu_info["brand"]
+
 cpu_logical_cores = psutil.cpu_count()
 cpu_physical_cores = psutil.cpu_count(False)
 cpu_hyper_threading = True
 if cpu_logical_cores == cpu_physical_cores:
     cpu_hyper_threading = False
+
 cpu_freq_info = psutil.cpu_freq()
 cpu_freq_curr_mhz = cpu_freq_info[0]
 cpu_freq_min_mhz = cpu_freq_info[1]
 cpu_freq_max_mhz = cpu_freq_info[2]
-cpu_usage_percent = psutil.cpu_percent(1)  # measured between every call, first call meaningless
+
+cpu_usage_percent = psutil.cpu_percent(1)  # measured between every call, first call meaningless if None
 
 # RAM
 ram_info = psutil.virtual_memory()
@@ -91,12 +96,13 @@ json_body = [
     }
 ]
 client = influxdb.InfluxDBClient("192.168.1.33", 8086, "admineasy-client", "1337" "admineasy")
-success = client.write_points(json_body)
+#success = client.write_points(json_body)
 
 
 # DISPLAY
 print('\n' + "System")
 print("OS: " + platform_os)
+print("Machine name: " + platform_name)
 
 print('\n' + "CPU")
 cpu_text = cpu_name + "  @" + str(round(cpu_freq_max_mhz/1000, 1)) + "Ghz"
