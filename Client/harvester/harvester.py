@@ -95,7 +95,7 @@ json_body = [
         }
     }
 ]
-#client = influxdb.InfluxDBClient("192.168.1.33", 8086, "admineasy-client", "1337" "admineasy")
+client = influxdb.InfluxDBClient("192.168.1.33", 8086, "admineasy-client", "1337" "admineasy")
 #success = client.write_points(json_body)
 
 
