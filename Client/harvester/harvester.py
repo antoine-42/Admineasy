@@ -1,4 +1,6 @@
 import sys
+import time
+import datetime
 import collections
 import platform  # system info
 import psutil  # hardware info
@@ -7,24 +9,84 @@ import cpuinfo  # detailed CPU info
 import influxdb  # communication with influxdb
 
 
+# influxDB init
+client = influxdb.InfluxDBClient(database="admineasy")
+
+# Platform
+platform_os = platform.platform()
+platform_name = platform.node()
+
+
 # DATA COLLECTION
 class DiskInfo:
+    disk_available_B = -1
+    disk_usage_B = -1
+    disk_usage_percent = -1
+
     def __init__(self, device_, mount_, file_system_):  # separer tout
         self.device = device_
         self.mount = mount_
         self.file_system = file_system_
 
         disk_usage_info = psutil.disk_usage(self.mount)
-        self.space_total_B = disk_usage_info[0]
-        self.space_available_B = disk_usage_info[2]
-        self.space_used_B = disk_usage_info[1]
-        self.space_used_percent = disk_usage_info[3]
+        self.disk_total_B = disk_usage_info[0]
+        self.refresh_used()
 
     def refresh_used(self):
         disk_usage_info = psutil.disk_usage(self.mount)
-        self.space_available_B = disk_usage_info[2]
-        self.space_used_B = disk_usage_info[1]
-        self.space_used_percent = disk_usage_info[3]
+        self.disk_available_B = disk_usage_info[2]
+        self.disk_usage_B = disk_usage_info[1]
+        self.disk_usage_percent = disk_usage_info[3]
+
+    def update_influxdb(self):
+        self.refresh()
+        json = [
+            {
+                "measurement": "disk_total_bytes",
+                "tags": {
+                    "machine": platform_name
+                },
+                "time": str(datetime.datetime.utcnow().isoformat()),
+                "fields": {
+                    "value": self.disk_total_B,
+                    "partition": self.mount
+                }
+            },
+            {
+                "measurement": "disk_available_bytes",
+                "tags": {
+                    "machine": platform_name
+                },
+                "time": str(datetime.datetime.utcnow().isoformat()),
+                "fields": {
+                    "value": self.disk_available_B,
+                    "partition": self.mount
+                }
+            },
+            {
+                "measurement": "disk_usage_bytes",
+                "tags": {
+                    "machine": platform_name
+                },
+                "time": str(datetime.datetime.utcnow().isoformat()),
+                "fields": {
+                    "value": self.disk_usage_B,
+                    "partition": self.mount
+                }
+            },
+            {
+                "measurement": "disk_usage_percent",
+                "tags": {
+                    "machine": platform_name,
+                    "partition": self.mount
+                },
+                "time": str(datetime.datetime.utcnow().isoformat()),
+                "fields": {
+                    "value": self.disk_usage_percent
+                }
+            }
+        ]
+        return client.write_points(json)
 
 
 class TemperatureSensor:
@@ -103,34 +165,123 @@ class TemperatureDevice:
         return total/number
 
 
-# Platform
-platform_os = platform.platform()
-platform_name = platform.node()
+class RamInfo:
+    ram_total_B = -1
+    ram_available_B = -1
+    ram_used_B = -1
+    ram_used_percent = -1
+
+    def __init__(self):
+        self.refresh()
+
+    def refresh(self):
+        ram_info = psutil.virtual_memory()
+        self.ram_total_B = ram_info[0]
+        self.ram_available_B = ram_info[1]
+        self.ram_used_B = ram_info[3]
+        self.ram_used_percent = ram_info[2]
+
+    def update_influxdb(self):
+        self.refresh()
+        json = [
+            {
+                "measurement": "ram_total_bytes",
+                "tags": {
+                    "machine": platform_name
+                },
+                "time": str(datetime.datetime.utcnow().isoformat()),
+                "fields": {
+                    "value": self.ram_total_B
+                }
+            },
+            {
+                "measurement": "ram_availabe_bytes",
+                "tags": {
+                    "machine": platform_name
+                },
+                "time": str(datetime.datetime.utcnow().isoformat()),
+                "fields": {
+                    "value": self.ram_available_B
+                }
+            },
+            {
+                "measurement": "ram_usage_bytes",
+                "tags": {
+                    "machine": platform_name
+                },
+                "time": str(datetime.datetime.utcnow().isoformat()),
+                "fields": {
+                    "value": self.ram_used_B
+                }
+            },
+            {
+                "measurement": "ram_usage_percent",
+                "tags": {
+                    "machine": platform_name
+                },
+                "time": str(datetime.datetime.utcnow().isoformat()),
+                "fields": {
+                    "value": self.ram_used_percent
+                }
+            }
+        ]
+        return client.write_points(json)
 
 
-# CPU
-cpu_info = cpuinfo.get_cpu_info()
-cpu_name = cpu_info["brand"]
+class CpuInfo:
+    cpu_freq_curr_mhz = -1
 
-cpu_logical_cores = psutil.cpu_count()
-cpu_physical_cores = psutil.cpu_count(False)
-cpu_hyper_threading = True
-if cpu_logical_cores == cpu_physical_cores:
-    cpu_hyper_threading = False
+    cpu_usage_percent = -1
 
-cpu_freq_info = psutil.cpu_freq()
-cpu_freq_curr_mhz = cpu_freq_info[0]
-cpu_freq_min_mhz = cpu_freq_info[1]
-cpu_freq_max_mhz = cpu_freq_info[2]
+    def __init__(self):
+        cpu_info = cpuinfo.get_cpu_info()
+        self.cpu_name = cpu_info["brand"]
 
-cpu_usage_percent = psutil.cpu_percent(1)  # measured between every call, first call meaningless if None
+        self.cpu_logical_cores = psutil.cpu_count()
+        self.cpu_physical_cores = psutil.cpu_count(False)
+        self.cpu_hyper_threading = True
+        if self.cpu_logical_cores == self.cpu_physical_cores:
+            self.cpu_hyper_threading = False
 
-# RAM
-ram_info = psutil.virtual_memory()
-ram_total_B = ram_info[0]
-ram_available_B = ram_info[1]
-ram_used_B = ram_info[3]
-ram_used_percent = ram_info[2]
+        cpu_freq_info = psutil.cpu_freq()
+        self.cpu_freq_min_mhz = cpu_freq_info[1]
+        self.cpu_freq_max_mhz = cpu_freq_info[2]
+
+        self.refresh()
+
+    def refresh(self):
+        cpu_freq_info = psutil.cpu_freq()
+        self.cpu_freq_curr_mhz = cpu_freq_info[0]
+
+        # measured between every call, first call meaningless if None then average between every call
+        self.cpu_usage_percent = psutil.cpu_percent(1)
+
+    def update_influxdb(self):
+        self.refresh()
+        json = [
+            {
+                "measurement": "cpu_freq_mhz",
+                "tags": {
+                    "machine": platform_name
+                },
+                "time": str(datetime.datetime.utcnow().isoformat()),
+                "fields": {
+                    "value": self.cpu_freq_curr_mhz
+                }
+            },
+            {
+                "measurement": "cpu_usage_percent",
+                "tags": {
+                    "machine": platform_name
+                },
+                "time": str(datetime.datetime.utcnow().isoformat()),
+                "fields": {
+                    "value": self.cpu_usage_percent
+                }
+            }
+        ]
+        return client.write_points(json)
+
 
 # SWAP
 swap_info = psutil.swap_memory()
@@ -139,12 +290,6 @@ swap_available_B = swap_info[2]
 swap_used_B = swap_info[1]
 swap_used_percent = swap_info[3]
 
-# Disks
-disks_info = psutil.disk_partitions()
-disks = []
-for curr_disk in disks_info:  # ignore partitions under 1 GB?
-    if curr_disk[2] != "":
-        disks.append(DiskInfo(curr_disk[0], curr_disk[1], curr_disk[2]))
 
 # Sensors
 temp_devices = []
@@ -166,25 +311,11 @@ battery_info = psutil.sensors_battery()
 boot_timestamp = psutil.boot_time()
 
 
-# DB
-json_body = [
-    {
-        "measurement": "cpu_load_short",
-        "tags": {
-            "machine": platform_name,
-            "region": "us-west"
-        },
-        "time": "2009-11-10T23:00:00Z",
-        "fields": {
-            "value": 0.64
-        }
-    }
-]
-client = influxdb.InfluxDBClient("192.168.1.33", 8086, "admineasy-client", "1337" "admineasy")
-# success = client.write_points(json_body)
+# todo: create user "admineasy-client", "1337", . 192.168.1.33
 
 
 # DISPLAY
+'''
 print('\n' + "System")
 print("OS: " + platform_os)
 print("Machine name: " + platform_name)
@@ -246,3 +377,25 @@ else:
     else:
         for fan in fans_info:
             print(fan[0] + ": " + fan[1] + "RPM")
+'''
+
+
+ram = RamInfo()
+cpu = CpuInfo()
+
+# Disks
+disks_info = psutil.disk_partitions()
+disks = []
+for curr_disk in disks_info:  # ignore partitions under 1 GB?
+    if curr_disk[2] != "":
+        disks.append(DiskInfo(curr_disk[0], curr_disk[1], curr_disk[2]))
+
+
+while True:
+    ram.update_influxdb()
+    cpu.update_influxdb()
+
+    for disk in disks:
+        disk.update_influxdb()
+
+    time.sleep(5)
