@@ -18,151 +18,59 @@ platform_name = platform.node()
 
 
 # DATA COLLECTION
-class DiskInfo:
-    disk_available_B = -1
-    disk_usage_B = -1
-    disk_usage_percent = -1
+class CpuInfo:
+    cpu_freq_curr_mhz = -1
 
-    def __init__(self, device_, mount_, file_system_):  # separer tout
-        self.device = device_
-        self.mount = mount_
-        self.file_system = file_system_
+    cpu_usage_percent = -1
 
-        disk_usage_info = psutil.disk_usage(self.mount)
-        self.disk_total_B = disk_usage_info[0]
-        self.refresh_used()
+    def __init__(self):
+        cpu_info = cpuinfo.get_cpu_info()
+        self.cpu_name = cpu_info["brand"]
 
-    def refresh_used(self):
-        disk_usage_info = psutil.disk_usage(self.mount)
-        self.disk_available_B = disk_usage_info[2]
-        self.disk_usage_B = disk_usage_info[1]
-        self.disk_usage_percent = disk_usage_info[3]
+        self.cpu_logical_cores = psutil.cpu_count()
+        self.cpu_physical_cores = psutil.cpu_count(False)
+        self.cpu_hyper_threading = True
+        if self.cpu_logical_cores == self.cpu_physical_cores:
+            self.cpu_hyper_threading = False
+
+        cpu_freq_info = psutil.cpu_freq()
+        self.cpu_freq_min_mhz = cpu_freq_info[1]
+        self.cpu_freq_max_mhz = cpu_freq_info[2]
+
+        self.refresh()
+
+    def refresh(self):
+        cpu_freq_info = psutil.cpu_freq()
+        self.cpu_freq_curr_mhz = cpu_freq_info[0]
+
+        # measured between every call, first call meaningless if None then average between every call
+        self.cpu_usage_percent = psutil.cpu_percent(1)
 
     def update_influxdb(self):
         self.refresh()
         json = [
             {
-                "measurement": "disk_total_bytes",
+                "measurement": "cpu_freq_mhz",
                 "tags": {
                     "machine": platform_name
                 },
                 "time": str(datetime.datetime.utcnow().isoformat()),
                 "fields": {
-                    "value": self.disk_total_B,
-                    "partition": self.mount
+                    "value": self.cpu_freq_curr_mhz
                 }
             },
             {
-                "measurement": "disk_available_bytes",
+                "measurement": "cpu_usage_percent",
                 "tags": {
                     "machine": platform_name
                 },
                 "time": str(datetime.datetime.utcnow().isoformat()),
                 "fields": {
-                    "value": self.disk_available_B,
-                    "partition": self.mount
-                }
-            },
-            {
-                "measurement": "disk_usage_bytes",
-                "tags": {
-                    "machine": platform_name
-                },
-                "time": str(datetime.datetime.utcnow().isoformat()),
-                "fields": {
-                    "value": self.disk_usage_B,
-                    "partition": self.mount
-                }
-            },
-            {
-                "measurement": "disk_usage_percent",
-                "tags": {
-                    "machine": platform_name,
-                    "partition": self.mount
-                },
-                "time": str(datetime.datetime.utcnow().isoformat()),
-                "fields": {
-                    "value": self.disk_usage_percent
+                    "value": self.cpu_usage_percent
                 }
             }
         ]
         return client.write_points(json)
-
-
-class TemperatureSensor:
-    def __init__(self, name_, current_, high_, critical_):
-        self.name = name_
-        self.current = current_
-        self.high = high_
-        self.critical = critical_
-
-    def is_high(self):
-        if self.current >= self.high:
-            return True
-        return False
-
-    def is_critical(self):
-        if self.current >= self.critical:
-            return True
-        return False
-
-
-class TemperatureDevice:
-    name_to_device = collections.defaultdict(str)
-    name_to_device_list = [
-        ["coretemp", "CPU"],
-        ["acpitz", "motherboard"]
-    ]
-
-    def __init__(self, name_, sensors_):
-        for k, v in self.name_to_device_list:
-            self.name_to_device[k] = v
-
-        self.name = name_
-        self.type = self.name_to_device[self.name]
-        self.sensors = []
-        for curr_sensor in sensors_:
-            self.sensors.append(TemperatureSensor(curr_sensor[0], curr_sensor[1], curr_sensor[2], curr_sensor[3]))
-
-    def is_high(self):
-        high = 0
-        for curr_sensor in self.sensors:
-            if curr_sensor.is_high():
-                high += 1
-        return high
-
-    def is_critical(self):
-        critical = 0
-        for curr_sensor in self.sensors:
-            if curr_sensor.is_critical():
-                critical += 1
-        return critical
-
-    def highest(self):
-        highest = -274
-        highest_name = ""
-        for curr_sensor in self.sensors:
-            if curr_sensor.current > highest:
-                highest = curr_sensor.current
-                highest_name = curr_sensor.name
-        return [highest, highest_name]
-
-    def lowest(self):
-        lowest = sys.maxsize
-        lowest_name = ""
-        for curr_sensor in self.sensors:
-            if curr_sensor.current < lowest:
-                lowest = curr_sensor.current
-                lowest_name = curr_sensor.name
-        return [lowest, lowest_name]
-
-    def average(self):
-        total = 0
-        number = 0
-        for curr_sensor in self.sensors:
-            total += curr_sensor.current
-            number += 1
-        return total/number
 
 
 class RamInfo:
@@ -228,67 +136,221 @@ class RamInfo:
         return client.write_points(json)
 
 
-class CpuInfo:
-    cpu_freq_curr_mhz = -1
-
-    cpu_usage_percent = -1
+class SWAPInfo:
+    swap_total_B = -1
+    swap_available_B = -1
+    swap_used_B = -1
+    swap_used_percent = -1
 
     def __init__(self):
-        cpu_info = cpuinfo.get_cpu_info()
-        self.cpu_name = cpu_info["brand"]
-
-        self.cpu_logical_cores = psutil.cpu_count()
-        self.cpu_physical_cores = psutil.cpu_count(False)
-        self.cpu_hyper_threading = True
-        if self.cpu_logical_cores == self.cpu_physical_cores:
-            self.cpu_hyper_threading = False
-
-        cpu_freq_info = psutil.cpu_freq()
-        self.cpu_freq_min_mhz = cpu_freq_info[1]
-        self.cpu_freq_max_mhz = cpu_freq_info[2]
-
         self.refresh()
 
     def refresh(self):
-        cpu_freq_info = psutil.cpu_freq()
-        self.cpu_freq_curr_mhz = cpu_freq_info[0]
-
-        # measured between every call, first call meaningless if None then average between every call
-        self.cpu_usage_percent = psutil.cpu_percent(1)
+        swap_info = psutil.swap_memory()
+        self.swap_total_B = swap_info[0]
+        self.swap_available_B = swap_info[2]
+        self.swap_used_B = swap_info[1]
+        self.swap_used_percent = swap_info[3]
 
     def update_influxdb(self):
         self.refresh()
         json = [
             {
-                "measurement": "cpu_freq_mhz",
+                "measurement": "swap_total_bytes",
                 "tags": {
                     "machine": platform_name
                 },
                 "time": str(datetime.datetime.utcnow().isoformat()),
                 "fields": {
-                    "value": self.cpu_freq_curr_mhz
+                    "value": self.swap_total_B
                 }
             },
             {
-                "measurement": "cpu_usage_percent",
+                "measurement": "swap_availabe_bytes",
                 "tags": {
                     "machine": platform_name
                 },
                 "time": str(datetime.datetime.utcnow().isoformat()),
                 "fields": {
-                    "value": self.cpu_usage_percent
+                    "value": self.swap_available_B
+                }
+            },
+            {
+                "measurement": "swap_usage_bytes",
+                "tags": {
+                    "machine": platform_name
+                },
+                "time": str(datetime.datetime.utcnow().isoformat()),
+                "fields": {
+                    "value": self.swap_used_B
+                }
+            },
+            {
+                "measurement": "swap_usage_percent",
+                "tags": {
+                    "machine": platform_name
+                },
+                "time": str(datetime.datetime.utcnow().isoformat()),
+                "fields": {
+                    "value": self.swap_used_percent
                 }
             }
         ]
         return client.write_points(json)
 
 
-# SWAP
-swap_info = psutil.swap_memory()
-swap_total_B = swap_info[0]
-swap_available_B = swap_info[2]
-swap_used_B = swap_info[1]
-swap_used_percent = swap_info[3]
+class DiskInfo:
+    disk_available_B = -1
+    disk_usage_B = -1
+    disk_usage_percent = -1
+
+    def __init__(self, device_, mount_, file_system_):  # separer tout
+        self.device = device_
+        self.mount = mount_
+        self.file_system = file_system_
+
+        disk_usage_info = psutil.disk_usage(self.mount)
+        self.disk_total_B = disk_usage_info[0]
+        self.refresh_used()
+
+    def refresh(self):
+        self.refresh_used()
+        # refresh smart
+
+    def refresh_used(self):
+        disk_usage_info = psutil.disk_usage(self.mount)
+        self.disk_available_B = disk_usage_info[2]
+        self.disk_usage_B = disk_usage_info[1]
+        self.disk_usage_percent = disk_usage_info[3]
+
+    def update_influxdb(self):
+        self.refresh()
+        json = [
+            {
+                "measurement": "disk_total_bytes",
+                "tags": {
+                    "machine": platform_name,
+                    "partition": self.device
+                },
+                "time": str(datetime.datetime.utcnow().isoformat()),
+                "fields": {
+                    "value": self.disk_total_B
+                }
+            },
+            {
+                "measurement": "disk_available_bytes",
+                "tags": {
+                    "machine": platform_name,
+                    "partition": self.device
+                },
+                "time": str(datetime.datetime.utcnow().isoformat()),
+                "fields": {
+                    "value": self.disk_available_B
+                }
+            },
+            {
+                "measurement": "disk_usage_bytes",
+                "tags": {
+                    "machine": platform_name,
+                    "partition": self.device
+                },
+                "time": str(datetime.datetime.utcnow().isoformat()),
+                "fields": {
+                    "value": self.disk_usage_B
+                }
+            },
+            {
+                "measurement": "disk_usage_percent",
+                "tags": {
+                    "machine": platform_name,
+                    "partition": self.device
+                },
+                "time": str(datetime.datetime.utcnow().isoformat()),
+                "fields": {
+                    "value": self.disk_usage_percent
+                }
+            }
+        ]
+        return client.write_points(json)
+
+
+class TemperatureDevice:
+    name_to_device = collections.defaultdict(str)
+    name_to_device_list = [
+        ["coretemp", "CPU"],
+        ["acpitz", "motherboard"]
+    ]
+
+    def __init__(self, name_, sensors_):
+        for k, v in self.name_to_device_list:
+            self.name_to_device[k] = v
+
+        self.name = name_
+        self.type = self.name_to_device[self.name]
+        self.sensors = []
+        for curr_sensor in sensors_:
+            self.sensors.append(TemperatureSensor(curr_sensor[0], curr_sensor[1], curr_sensor[2], curr_sensor[3]))
+
+    def is_high(self):
+        high = 0
+        for curr_sensor in self.sensors:
+            if curr_sensor.is_high():
+                high += 1
+        return high
+
+    def is_critical(self):
+        critical = 0
+        for curr_sensor in self.sensors:
+            if curr_sensor.is_critical():
+                critical += 1
+        return critical
+
+    def highest(self):
+        highest = -274
+        highest_name = ""
+        for curr_sensor in self.sensors:
+            if curr_sensor.current > highest:
+                highest = curr_sensor.current
+                highest_name = curr_sensor.name
+        return [highest, highest_name]
+
+    def lowest(self):
+        lowest = sys.maxsize
+        lowest_name = ""
+        for curr_sensor in self.sensors:
+            if curr_sensor.current < lowest:
+                lowest = curr_sensor.current
+                lowest_name = curr_sensor.name
+        return [lowest, lowest_name]
+
+    def average(self):
+        total = 0
+        number = 0
+        for curr_sensor in self.sensors:
+            total += curr_sensor.current
+            number += 1
+        return total/number
+
+
+class TemperatureSensor:
+    def __init__(self, name_, current_, high_, critical_):
+        self.name = name_
+        self.current = current_
+        self.high = high_
+        self.critical = critical_
+
+    def is_high(self):
+        if self.current >= self.high:
+            return True
+        return False
+
+    def is_critical(self):
+        if self.current >= self.critical:
+            return True
+        return False
+
+
+# todo: Network
 
 
 # Sensors
@@ -380,8 +442,9 @@ else:
 '''
 
 
-ram = RamInfo()
 cpu = CpuInfo()
+ram = RamInfo()
+swap = SWAPInfo()
 
 # Disks
 disks_info = psutil.disk_partitions()
@@ -392,8 +455,9 @@ for curr_disk in disks_info:  # ignore partitions under 1 GB?
 
 
 while True:
-    ram.update_influxdb()
     cpu.update_influxdb()
+    ram.update_influxdb()
+    swap.update_influxdb()
 
     for disk in disks:
         disk.update_influxdb()
