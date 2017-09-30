@@ -32,7 +32,7 @@ class UserInfo:
 
 
 class CpuInfo:
-    # todo: per core frequency and usage
+    # TODO: per core frequency and usage
     freq_curr_mhz = -1
     used_percent = -1
 
@@ -118,10 +118,13 @@ class RamInfo:
 
 
 class SWAPInfo:
-    swap_total_B = -1
-    swap_available_B = -1
-    swap_used_B = -1
-    swap_used_percent = -1
+    total_B = -1
+    available_B = -1
+    used_B = -1
+    used_percent = -1
+
+    input_B = -1
+    output_B = -1
 
     def __init__(self):
         self.refresh()
@@ -129,10 +132,13 @@ class SWAPInfo:
     # Updates all the data.
     def refresh(self):
         swap_info = psutil.swap_memory()
-        self.swap_total_B = swap_info[0]
-        self.swap_available_B = swap_info[2]
-        self.swap_used_B = swap_info[1]
-        self.swap_used_percent = swap_info[3]
+        self.total_B = swap_info[0]
+        self.available_B = swap_info[2]
+        self.used_B = swap_info[1]
+        self.used_percent = swap_info[3]
+
+        self.input_B = swap_info[4]
+        self.output_B = swap_info[5]
 
     # Updates all the data, then sends it to the influxdb database.
     def update_influxdb(self):
@@ -145,23 +151,29 @@ class SWAPInfo:
                 },
                 "time": str(datetime.datetime.utcnow().isoformat()),
                 "fields": {
-                    "total_bytes": self.swap_total_B,
-                    "available_bytes": self.swap_available_B,
-                    "used_bytes": self.swap_used_B,
-                    "used_percent": self.swap_used_percent
+                    "total_bytes": self.total_B,
+                    "available_bytes": self.available_B,
+                    "used_bytes": self.used_B,
+                    "used_percent": self.used_percent,
+                    "input_bytes": self.input_B,
+                    "output_bytes": self.output_B
                 }
             }
         ]
         return client.write_points(json)
 
 
-class InterfaceInfo:
+class NetInterfaceInfo:
+    # TODO: data collection for all interfaces
     sent_B = -1
     sent_packets = -1
-    out_error = -1
-    out_drop = -1
     received_B = -1
     received_packets = -1
+    total_B = -1  # Grafana doesn't support operations on multiple sources, so this has to be done here.....
+    total_packets = -1
+
+    out_error = -1
+    out_drop = -1
     in_error = -1
     in_drop = -1
 
@@ -188,6 +200,9 @@ class InterfaceInfo:
         self.received_B = counters_info[1]
         self.received_packets = counters_info[3]
 
+        self.total_B = self.sent_B + self.received_B
+        self.total_packets = self.sent_packets + self.received_packets
+
         self.out_error = counters_info[5]
         self.out_drop = counters_info[7]
 
@@ -210,6 +225,9 @@ class InterfaceInfo:
                     "sent_packets": self.sent_packets,
                     "received_bytes": self.received_B,
                     "received_packets": self.received_packets,
+                    "total_bytes": self.total_B,
+                    "total_packets": self.total_packets,
+
                     "out_error": self.out_error,
                     "out_drop": self.out_drop,
                     "in_error": self.in_error,
@@ -509,8 +527,7 @@ class BatteryInfo:
 #                Init                #
 ######################################
 # InfluxDB
-# todo: create user "admineasy-client", "1337"
-# client = influxdb.InfluxDBClient(database="admineasy")
+# client = influxdb.InfluxDBClient(database="admineasy") # todo: create user "admineasy-client", "1337"
 client = influxdb.InfluxDBClient(host="192.168.1.33", database="admineasy", username="admineasy-client", password="1337")
 
 # Platform
@@ -532,7 +549,7 @@ swap = SWAPInfo()
 interfaces = []
 interfaces_info = psutil.net_if_stats()
 for interface_name, interface_info in interfaces_info.items():
-    interfaces.append(InterfaceInfo(interface_name))
+    interfaces.append(NetInterfaceInfo(interface_name))
 
 disks_info = psutil.disk_partitions()
 disks = []
@@ -545,8 +562,9 @@ temp_unavailable = False
 if hasattr(psutil, "sensors_temperatures"):
     temp_info = psutil.sensors_temperatures()
     if temp_info is not None:
-        for device_name, sensors in temp_info.items():
-            temp_devices.append(TemperatureDevice(device_name, sensors))
+        temp_devices = [TemperatureDevice(device_name, sensors) for device_name, sensors in temp_info.items()]
+#  for device_name, sensors in temp_info.items():
+#     temp_devices.append(TemperatureDevice(device_name, sensors))
     else:
         temp_unavailable = True
 
