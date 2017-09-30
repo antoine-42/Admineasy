@@ -9,7 +9,9 @@ import cpuinfo  # detailed CPU info
 import influxdb  # communication with influxdb
 
 
-# DATA COLLECTION
+#########################################
+#                CLASSES                #
+#########################################
 class UserInfo:
     start = time.time() # Timestamp of the first connection of this user
 
@@ -153,14 +155,86 @@ class SWAPInfo:
         return client.write_points(json)
 
 
+class InterfaceInfo:
+    sent_B = -1
+    sent_packets = -1
+    out_error = -1
+    out_drop = -1
+    received_B = -1
+    received_packets = -1
+    in_error = -1
+    in_drop = -1
+
+    def __init__(self, name_):
+        self.name = name_
+
+        interfaces_info = psutil.net_if_stats()
+        for interface_name, interface_info in interfaces_info.items():
+            if interface_name == self.name:
+                self.up = interface_info[0]
+                self.speed = interface_info[2]
+                self.mtu = interface_info[3]
+                break
+
+        self.refresh()
+
+    # Updates all the data.
+    def refresh(self):
+        counters_info = psutil.net_io_counters()
+
+        self.sent_B = counters_info[0]
+        self.sent_packets = counters_info[2]
+
+        self.received_B = counters_info[1]
+        self.received_packets = counters_info[3]
+
+        self.out_error = counters_info[5]
+        self.out_drop = counters_info[7]
+
+        self.in_error = counters_info[4]
+        self.in_drop = counters_info[6]
+
+    # Updates all the data, then sends it to the influxdb database.
+    def update_influxdb(self):
+        self.refresh()
+        json = [
+            {
+                "measurement": "network",
+                "tags": {
+                    "machine": platform_name,
+                    "interface": self.name
+                },
+                "time": str(datetime.datetime.utcnow().isoformat()),
+                "fields": {
+                    "sent_bytes": self.sent_B,
+                    "sent_packets": self.sent_packets,
+                    "received_bytes": self.received_B,
+                    "received_packets": self.received_packets,
+                    "out_error": self.out_error,
+                    "out_drop": self.out_drop,
+                    "in_error": self.in_error,
+                    "in_drop": self.in_drop
+                }
+            }
+        ]
+        return client.write_points(json)
+
+
 class DiskInfo:
-    disk_total_B = -1
-    disk_available_B = -1
-    disk_used_B = -1
-    disk_used_percent = -1
+    total_B = -1
+    available_B = -1
+    used_B = -1
+    used_percent = -1
+
+    read_bytes = -1
+    read_count = -1
+    read_time = -1
+    write_bytes = -1
+    write_count = -1
+    write_time = -1
 
     def __init__(self, device_, mount_, file_system_):  # separer tout
-        self.device = device_.replace("\\", "")
+        self.device = device_
         self.mount = mount_
         self.file_system = file_system_
 
@@ -169,15 +243,28 @@ class DiskInfo:
     # Updates all the data.
     def refresh(self):
         self.refresh_used()
+        self.refresh_io()
         # refresh smart
 
     # Updates the used space data.
     def refresh_used(self):
         disk_used_info = psutil.disk_usage(self.mount)
-        self.disk_total_B = disk_used_info[0]
-        self.disk_available_B = disk_used_info[2]
-        self.disk_used_B = disk_used_info[1]
-        self.disk_used_percent = disk_used_info[3]
+        self.total_B = disk_used_info[0]
+        self.available_B = disk_used_info[2]
+        self.used_B = disk_used_info[1]
+        self.used_percent = disk_used_info[3]
+
+    def refresh_io(self):
+        disks_io_info = psutil.disk_io_counters(True)
+        for disk_name, disk_io_info in disks_io_info.items():
+            if disk_name == self.device:  # TODO doesn't works on windows, use global?
+                self.read_bytes = disk_io_info[2]
+                self.read_count = disk_io_info[0]
+                self.read_time = disk_io_info[4]
+                self.write_bytes = disk_io_info[3]
+                self.write_count = disk_io_info[1]
+                self.write_time = disk_io_info[5]
+                break
 
     # Updates all the data, then sends it to the influxdb database.
     def update_influxdb(self):
@@ -187,14 +274,30 @@ class DiskInfo:
                 "measurement": "disk",
                 "tags": {
                     "machine": platform_name,
-                    "partition": self.device
+                    "partition": self.device.replace("\\", "")
                 },
                 "time": str(datetime.datetime.utcnow().isoformat()),
                 "fields": {
-                    "total": self.disk_total_B,
-                    "available": self.disk_available_B,
-                    "used": self.disk_used_B,
-                    "used_percent": self.disk_used_percent
+                    "total": self.total_B,
+                    "available": self.available_B,
+                    "used": self.used_B,
+                    "used_percent": self.used_percent
+                }
+            },
+            {
+                "measurement": "disk_io",
+                "tags": {
+                    "machine": platform_name,
+                    "partition": self.device.replace("\\", "")
+                },
+                "time": str(datetime.datetime.utcnow().isoformat()),
+                "fields": {
+                    "read_bytes": self.read_bytes,
+                    "read_count": self.read_count,
+                    "read_time": self.read_time,
+                    "write_bytes": self.write_bytes,
+                    "write_count": self.write_count,
+                    "write_time": self.write_time
                 }
             }
         ]
@@ -402,13 +505,10 @@ class BatteryInfo:
         return client.write_points(json)
 
 
-# todo: Network
-
-
 ######################################
 #                Init                #
 ######################################
-# influxDB
+# InfluxDB
 # todo: create user "admineasy-client", "1337"
 # client = influxdb.InfluxDBClient(database="admineasy")
 client = influxdb.InfluxDBClient(host="192.168.1.33", database="admineasy", username="admineasy-client", password="1337")
@@ -424,9 +524,15 @@ for user_info in users_info:
 
 boot_timestamp = psutil.boot_time()
 
+# Devices Data
 cpu = CpuInfo()
 ram = RamInfo()
 swap = SWAPInfo()
+
+interfaces = []
+interfaces_info = psutil.net_if_stats()
+for interface_name, interface_info in interfaces_info.items():
+    interfaces.append(InterfaceInfo(interface_name))
 
 disks_info = psutil.disk_partitions()
 disks = []
@@ -453,10 +559,16 @@ if hasattr(psutil, "sensors_fans"):
 battery = BatteryInfo()
 
 
+###########################################
+#                Execution                #
+###########################################
 while True:
     cpu.update_influxdb()
     ram.update_influxdb()
     swap.update_influxdb()
+
+    for interface in interfaces:
+        interface.update_influxdb()
 
     for disk in disks:
         disk.update_influxdb()
