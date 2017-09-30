@@ -1,6 +1,6 @@
 # Admineasy
-##Harvester
-###Librairies utilisées
+## Harvester.py
+### Librairies utilisées
 - [psutil](http://pythonhosted.org/psutil/)
 - [py-cpuinfo](https://github.com/workhorsy/py-cpuinfo)
 - [pySMART](https://pypi.python.org/pypi/pySMART)
