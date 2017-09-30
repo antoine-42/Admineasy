@@ -67,7 +67,7 @@ class CpuInfo:
             {
                 "measurement": "cpu",
                 "tags": {
-                    "machine": platform_name
+                    "machine": machine_name
                 },
                 "time": str(datetime.datetime.utcnow().isoformat()),
                 "fields": {
@@ -103,7 +103,7 @@ class RamInfo:
             {
                 "measurement": "ram",
                 "tags": {
-                    "machine": platform_name
+                    "machine": machine_name
                 },
                 "time": str(datetime.datetime.utcnow().isoformat()),
                 "fields": {
@@ -147,7 +147,7 @@ class SWAPInfo:
             {
                 "measurement": "swap",
                 "tags": {
-                    "machine": platform_name
+                    "machine": machine_name
                 },
                 "time": str(datetime.datetime.utcnow().isoformat()),
                 "fields": {
@@ -216,7 +216,7 @@ class NetInterfaceInfo:
             {
                 "measurement": "network",
                 "tags": {
-                    "machine": platform_name,
+                    "machine": machine_name,
                     "interface": self.name
                 },
                 "time": str(datetime.datetime.utcnow().isoformat()),
@@ -291,7 +291,7 @@ class DiskInfo:
             {
                 "measurement": "disk",
                 "tags": {
-                    "machine": platform_name,
+                    "machine": machine_name,
                     "partition": self.device.replace("\\", "")
                 },
                 "time": str(datetime.datetime.utcnow().isoformat()),
@@ -305,7 +305,7 @@ class DiskInfo:
             {
                 "measurement": "disk_io",
                 "tags": {
-                    "machine": platform_name,
+                    "machine": machine_name,
                     "partition": self.device.replace("\\", "")
                 },
                 "time": str(datetime.datetime.utcnow().isoformat()),
@@ -397,7 +397,7 @@ class TemperatureDevice:
             {
                 "measurement": "temp",
                 "tags": {
-                    "machine": platform_name,
+                    "machine": machine_name,
                     "device": self.name
                 },
                 "time": str(datetime.datetime.utcnow().isoformat()),
@@ -411,11 +411,11 @@ class TemperatureDevice:
             }
         ]
 
-        for sensor in sensors:
+        for sensor in self.sensors:
             json.append({
                 "measurement": "temp_advanced",
                 "tags": {
-                    "machine": platform_name,
+                    "machine": machine_name,
                     "device": self.name,
                     "sensor": sensor.name
                 },
@@ -471,7 +471,7 @@ class FanInfo:
             {
                 "measurement": "fan",
                 "tags": {
-                    "machine": platform_name,
+                    "machine": machine_name,
                     "device": self.name
                 },
                 "time": str(datetime.datetime.utcnow().isoformat()),
@@ -510,7 +510,7 @@ class BatteryInfo:
             {
                 "measurement": "fan",
                 "tags": {
-                    "machine": platform_name
+                    "machine": machine_name
                 },
                 "time": str(datetime.datetime.utcnow().isoformat()),
                 "fields": {
@@ -531,8 +531,10 @@ class BatteryInfo:
 client = influxdb.InfluxDBClient(host="192.168.1.33", database="admineasy", username="admineasy-client", password="1337")
 
 # Platform
-platform_os = platform.platform()
-platform_name = platform.node()
+platform_os_name = platform.system()
+platform_os_version = platform.release()
+platform_os_full = platform.platform()
+machine_name = platform.node()
 
 users_info = psutil.users()
 users = []
