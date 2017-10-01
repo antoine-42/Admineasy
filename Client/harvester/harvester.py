@@ -365,7 +365,9 @@ class TemperatureDevice:
         devices_info = psutil.sensors_temperatures()
         for device_name, sensors_info in devices_info.items():
             if device_name == self.name:
-                self.sensors = [TemperatureSensor(sensor_info[0]) for sensor_info in sensors_info]
+                self.sensors = [TemperatureSensor(
+                    sensor_info[0], sensor_info[1], sensor_info[2], sensor_info[3]
+                ) for sensor_info in sensors_info]
                 break
 
     # Returns the number of sensors in high temperature range (not including critical).
@@ -465,12 +467,11 @@ class TemperatureDevice:
 
 
 class TemperatureSensor:
-    current = -1
-    high = -1
-    critical = -1
-
-    def __init__(self, name_):
+    def __init__(self, name_, current_=-1, high_=-1, critical_=-1):
         self.name = name_
+        self.current = current_
+        self.high = high_
+        self.critical = critical_
 
     def refresh(self, data):
         self.current = data[1]
