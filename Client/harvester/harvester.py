@@ -238,12 +238,64 @@ class NetInterfaceInfo:
         return client.write_points(json)
 
 
-class DiskInfo:
+class PartitionInfo:
     total_B = -1
     available_B = -1
     used_B = -1
     used_percent = -1
 
+    def __init__(self, device_):
+        self.device = device_
+
+        for partition in psutil.disk_partitions():
+            if partition[0] == self.device:
+                self.mount = partition[1]
+                self.file_system = partition[2]
+                self.options = partition[3]
+
+        self.refresh()
+
+    # Updates all the data.
+    def refresh(self):
+        self.refresh_used()
+        # self.refresh_smart()
+
+    # Updates the used space data.
+    def refresh_used(self):
+        partition_used_info = psutil.disk_usage(self.mount)
+        self.total_B = partition_used_info[0]
+        self.available_B = partition_used_info[2]
+        self.used_B = partition_used_info[1]
+        self.used_percent = partition_used_info[3]
+
+    # Updates the SMART data.
+    def refresh_smart(self):
+        # TODO
+        pass
+
+    # Updates all the data, then sends it to the influxdb database.
+    def update_influxdb(self):
+        self.refresh()
+        json = [
+            {
+                "measurement": "partition",
+                "tags": {
+                    "machine": machine_name,
+                    "partition": self.device.replace("\\", "")
+                },
+                "time": str(datetime.datetime.utcnow().isoformat()),
+                "fields": {
+                    "total": self.total_B,
+                    "available": self.available_B,
+                    "used": self.used_B,
+                    "used_percent": self.used_percent
+                }
+            }
+        ]
+        return client.write_points(json)
+
+
+class DiskIOInfo:
     read_bytes = -1
     read_count = -1
     read_time = -1
@@ -251,31 +303,15 @@ class DiskInfo:
     write_count = -1
     write_time = -1
 
-    def __init__(self, device_, mount_, file_system_):  # separer tout
-        self.device = device_
-        self.mount = mount_
-        self.file_system = file_system_
-
-        self.refresh_used()
+    def __init__(self, physical_drive_):
+        self.physical_drive = physical_drive_
+        self.refresh()
 
     # Updates all the data.
     def refresh(self):
-        self.refresh_used()
-        self.refresh_io()
-        # refresh smart
-
-    # Updates the used space data.
-    def refresh_used(self):
-        disk_used_info = psutil.disk_usage(self.mount)
-        self.total_B = disk_used_info[0]
-        self.available_B = disk_used_info[2]
-        self.used_B = disk_used_info[1]
-        self.used_percent = disk_used_info[3]
-
-    def refresh_io(self):
         disks_io_info = psutil.disk_io_counters(True)
         for disk_name, disk_io_info in disks_io_info.items():
-            if disk_name == self.device:  # TODO doesn't works on windows, use global?
+            if disk_name == self.physical_drive:
                 self.read_bytes = disk_io_info[2]
                 self.read_count = disk_io_info[0]
                 self.read_time = disk_io_info[4]
@@ -289,24 +325,10 @@ class DiskInfo:
         self.refresh()
         json = [
             {
-                "measurement": "disk",
-                "tags": {
-                    "machine": machine_name,
-                    "partition": self.device.replace("\\", "")
-                },
-                "time": str(datetime.datetime.utcnow().isoformat()),
-                "fields": {
-                    "total": self.total_B,
-                    "available": self.available_B,
-                    "used": self.used_B,
-                    "used_percent": self.used_percent
-                }
-            },
-            {
                 "measurement": "disk_io",
                 "tags": {
                     "machine": machine_name,
-                    "partition": self.device.replace("\\", "")
+                    "disk": self.physical_drive
                 },
                 "time": str(datetime.datetime.utcnow().isoformat()),
                 "fields": {
@@ -548,16 +570,17 @@ cpu = CpuInfo()
 ram = RamInfo()
 swap = SWAPInfo()
 
-interfaces = []
 interfaces_info = psutil.net_if_stats()
-for interface_name, interface_info in interfaces_info.items():
-    interfaces.append(NetInterfaceInfo(interface_name))
+interfaces = [NetInterfaceInfo(interface_name) for interface_name, interface_info in interfaces_info.items()]
 
-disks_info = psutil.disk_partitions()
-disks = []
-for curr_disk in disks_info:  # ignore partitions under 1 GB?
-    if curr_disk[2] != "":
-        disks.append(DiskInfo(curr_disk[0], curr_disk[1], curr_disk[2]))
+partitions_info = psutil.disk_partitions()
+partitions = []
+for curr_partition in partitions_info:  # ignore partitions under 1 GB?
+    if curr_partition[2] != "":
+        partitions.append(PartitionInfo(curr_partition[0]))
+
+disks_io_info = psutil.disk_io_counters(True)
+disks_io = [DiskIOInfo(disk_name) for disk_name, disks_io_info in disks_io_info.items()]
 
 temp_devices = []
 temp_unavailable = False
@@ -590,8 +613,11 @@ while True:
     for interface in interfaces:
         interface.update_influxdb()
 
-    for disk in disks:
-        disk.update_influxdb()
+    for partition in partitions:
+        partition.update_influxdb()
+
+    for disk_io in disks_io:
+        disk_io.update_influxdb()
 
     for temp_device in temp_devices:
         temp_device.update_influxdb()
