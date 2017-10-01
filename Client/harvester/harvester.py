@@ -365,7 +365,7 @@ class TemperatureDevice:
         devices_info = psutil.sensors_temperatures()
         for device_name, sensors_info in devices_info.items():
             if device_name == self.name:
-                self.sensors = [TemperatureSensor(sensor_info[0]) for sensor_info in sensors_info.items()]
+                self.sensors = [TemperatureSensor(sensor_info[0]) for sensor_info in sensors_info]
                 break
 
     # Returns the number of sensors in high temperature range (not including critical).
