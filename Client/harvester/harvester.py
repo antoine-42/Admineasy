@@ -420,9 +420,7 @@ class TemperatureDevice:
             if device_name == self.name:
                 for sensor in self.sensors:
                     if sensor.name == updated_sensor[0]:
-                        sensor.current = updated_sensor[1]
-                        sensor.high = updated_sensor[2]
-                        sensor.critical = updated_sensor[3]
+                        sensor.refresh(updated_sensor)
                 break
 
     # Updates all the data, then sends it to the influxdb database.
@@ -473,6 +471,11 @@ class TemperatureSensor:
 
     def __init__(self, name_):
         self.name = name_
+
+    def refresh(self, data):
+        self.current = data[1]
+        self.high = data[2]
+        self.critical = data[3]
 
     # Returns True if the sensor is in high temperature range, false otherwise.
     def is_high(self):
