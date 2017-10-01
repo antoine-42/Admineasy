@@ -367,7 +367,7 @@ class TemperatureDevice:
             self.sensors.append(TemperatureSensor(curr_sensor[0], curr_sensor[1], curr_sensor[2], curr_sensor[3]))
 
     # Returns the number of sensors in high temperature range (not including critical).
-    def is_high(self):
+    def high(self):
         high = 0
         for curr_sensor in self.sensors:
             if curr_sensor.is_high() and not curr_sensor.is_critical():
@@ -375,7 +375,7 @@ class TemperatureDevice:
         return high
 
     # Returns the number of sensors in critical temperature range.
-    def is_critical(self):
+    def critical(self):
         critical = 0
         for curr_sensor in self.sensors:
             if curr_sensor.is_critical():
@@ -432,8 +432,8 @@ class TemperatureDevice:
                     "average": self.average(),
                     "highest": self.highest()[0],
                     "lowest": self.lowest()[1],
-                    "is_high": self.is_high(),
-                    "is_critical": self.is_critical()
+                    "high": self.high(),
+                    "critical": self.critical()
                 }
             }
         ]
