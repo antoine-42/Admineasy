@@ -351,7 +351,7 @@ class TemperatureDevice:
         ["acpitz", "motherboard"]
     ]
 
-    def __init__(self, name_, sensors_):
+    def __init__(self, name_):
         for k, v in self.name_to_device_list:
             self.name_to_device[k] = v
 
@@ -362,9 +362,11 @@ class TemperatureDevice:
         if self.type != "":
             self.clean_name = self.type
 
-        self.sensors = []
-        for curr_sensor in sensors_:
-            self.sensors.append(TemperatureSensor(curr_sensor[0], curr_sensor[1], curr_sensor[2], curr_sensor[3]))
+        devices_info = psutil.sensors_temperatures()
+        for device_name, sensors_info in devices_info.items():
+            if device_name == self.name:
+                self.sensors = [TemperatureSensor(sensor_info[0]) for sensor_info in sensors_info.items()]
+                break
 
     # Returns the number of sensors in high temperature range (not including critical).
     def high(self):
@@ -413,8 +415,15 @@ class TemperatureDevice:
 
     # Updates all the data.
     def refresh(self):
-        pass
-        # todo
+        updated_devices_info = psutil.sensors_temperatures()
+        for device_name, updated_sensor in updated_devices_info.items():
+            if device_name == self.name:
+                for sensor in self.sensors:
+                    if sensor.name == updated_sensor[0]:
+                        sensor.current = updated_sensor[1]
+                        sensor.high = updated_sensor[2]
+                        sensor.critical = updated_sensor[3]
+                break
 
     # Updates all the data, then sends it to the influxdb database.
     def update_influxdb(self):
@@ -458,11 +467,12 @@ class TemperatureDevice:
 
 
 class TemperatureSensor:
-    def __init__(self, name_, current_, high_, critical_):
+    current = -1
+    high = -1
+    critical = -1
+
+    def __init__(self, name_):
         self.name = name_
-        self.current = current_
-        self.high = high_
-        self.critical = critical_
 
     # Returns True if the sensor is in high temperature range, false otherwise.
     def is_high(self):
@@ -590,11 +600,9 @@ disks_io = [DiskIOInfo(disk_name) for disk_name, disks_io_info in disks_io_info.
 temp_devices = []
 temp_unavailable = False
 if hasattr(psutil, "sensors_temperatures"):
-    temp_info = psutil.sensors_temperatures()
-    if temp_info is not None:
-        temp_devices = [TemperatureDevice(device_name, sensors) for device_name, sensors in temp_info.items()]
-#  for device_name, sensors in temp_info.items():
-#     temp_devices.append(TemperatureDevice(device_name, sensors))
+    sensors_info = psutil.sensors_temperatures()
+    if sensors_info is not None:
+        temp_devices = [TemperatureDevice(device_name) for device_name, sensors in sensors_info.items()]
     else:
         temp_unavailable = True
 
