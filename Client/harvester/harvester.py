@@ -440,7 +440,7 @@ class TemperatureDevice:
                 "fields": {
                     "average": self.average(),
                     "highest": self.highest()[0],
-                    "lowest": self.lowest()[1],
+                    "lowest": self.lowest()[0],
                     "high": self.high(),
                     "critical": self.critical()
                 }
