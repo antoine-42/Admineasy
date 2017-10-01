@@ -357,6 +357,11 @@ class TemperatureDevice:
 
         self.name = name_
         self.type = self.name_to_device[self.name]
+
+        self.clean_name = self.name
+        if self.type != "":
+            self.clean_name = self.type
+
         self.sensors = []
         for curr_sensor in sensors_:
             self.sensors.append(TemperatureSensor(curr_sensor[0], curr_sensor[1], curr_sensor[2], curr_sensor[3]))
@@ -420,7 +425,7 @@ class TemperatureDevice:
                 "measurement": "temp",
                 "tags": {
                     "machine": machine_name,
-                    "device": self.name
+                    "device": self.clean_name
                 },
                 "time": str(datetime.datetime.utcnow().isoformat()),
                 "fields": {
@@ -530,7 +535,7 @@ class BatteryInfo:
         self.refresh()
         json = [
             {
-                "measurement": "fan",
+                "measurement": "battery",
                 "tags": {
                     "machine": machine_name
                 },
