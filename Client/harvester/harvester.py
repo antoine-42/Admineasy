@@ -2,18 +2,30 @@ import sys
 import time
 import datetime
 import collections
-import platform  # system info
-import psutil  # hardware info
-import cpuinfo  # detailed CPU info
-# import pySMART  # hard drive smart info, requires admin. DOESNT FUCKING WORK
-import influxdb  # communication with influxdb
+import platform  # System info.
+import psutil  # Hardware info.
+import cpuinfo  # Detailed CPU info.
+# import pySMART  # Hard drive SMART info, requires admin. DOESNT FUCKING WORK.
+import influxdb  # Communication with influxdb.
 
 
 #########################################
 #                CLASSES                #
 #########################################
+class MachineInfo:
+    def __init__(self):
+        self.name = platform.node()
+
+        self.os_name = platform.system()
+        self.os_version = platform.release()
+        self.os_full = platform.platform()
+
+        self.boot_timestamp = psutil.boot_time()
+
+
 class UserInfo:
-    start = time.time() # Timestamp of the first connection of this user
+    # Timestamp of the first connection of this user
+    start = time.time()
 
     def __init__(self, name_):
         self.name = name_
@@ -70,7 +82,7 @@ class CpuInfo:
             {
                 "measurement": "cpu",
                 "tags": {
-                    "machine": machine_name
+                    "machine": machine.name
                 },
                 "time": str(datetime.datetime.utcnow().isoformat()),
                 "fields": {
@@ -106,7 +118,7 @@ class RamInfo:
             {
                 "measurement": "ram",
                 "tags": {
-                    "machine": machine_name
+                    "machine": machine.name
                 },
                 "time": str(datetime.datetime.utcnow().isoformat()),
                 "fields": {
@@ -150,7 +162,7 @@ class SWAPInfo:
             {
                 "measurement": "swap",
                 "tags": {
-                    "machine": machine_name
+                    "machine": machine.name
                 },
                 "time": str(datetime.datetime.utcnow().isoformat()),
                 "fields": {
@@ -219,7 +231,7 @@ class NetInterfaceInfo:
             {
                 "measurement": "network",
                 "tags": {
-                    "machine": machine_name,
+                    "machine": machine.name,
                     "interface": self.name
                 },
                 "time": str(datetime.datetime.utcnow().isoformat()),
@@ -265,11 +277,11 @@ class PartitionInfo:
 
     # Updates the used space data.
     def refresh_used(self):
-        partition_used_info = psutil.disk_usage(self.mount)
-        self.total_B = partition_used_info[0]
-        self.available_B = partition_used_info[2]
-        self.used_B = partition_used_info[1]
-        self.used_percent = partition_used_info[3]
+        partitions_info = psutil.disk_usage(self.mount)
+        self.total_B = partitions_info[0]
+        self.available_B = partitions_info[2]
+        self.used_B = partitions_info[1]
+        self.used_percent = partitions_info[3]
 
     # Updates the SMART data.
     def refresh_smart(self):
@@ -283,7 +295,7 @@ class PartitionInfo:
             {
                 "measurement": "partition",
                 "tags": {
-                    "machine": machine_name,
+                    "machine": machine.name,
                     "partition": self.device.replace("\\", "")
                 },
                 "time": str(datetime.datetime.utcnow().isoformat()),
@@ -330,7 +342,7 @@ class DiskIOInfo:
             {
                 "measurement": "disk_io",
                 "tags": {
-                    "machine": machine_name,
+                    "machine": machine.name,
                     "disk": self.physical_drive
                 },
                 "time": str(datetime.datetime.utcnow().isoformat()),
@@ -442,7 +454,7 @@ class TemperatureDevice:
             {
                 "measurement": "temp",
                 "tags": {
-                    "machine": machine_name,
+                    "machine": machine.name,
                     "device": self.clean_name
                 },
                 "time": str(datetime.datetime.utcnow().isoformat()),
@@ -460,7 +472,7 @@ class TemperatureDevice:
             json.append({
                 "measurement": "temp_advanced",
                 "tags": {
-                    "machine": machine_name,
+                    "machine": machine.name,
                     "device": self.name,
                     "sensor": sensor.name
                 },
@@ -522,7 +534,7 @@ class FanInfo:
             {
                 "measurement": "fan",
                 "tags": {
-                    "machine": machine_name,
+                    "machine": machine.name,
                     "device": self.name
                 },
                 "time": str(datetime.datetime.utcnow().isoformat()),
@@ -561,7 +573,7 @@ class BatteryInfo:
             {
                 "measurement": "battery",
                 "tags": {
-                    "machine": machine_name
+                    "machine": machine.name
                 },
                 "time": str(datetime.datetime.utcnow().isoformat()),
                 "fields": {
@@ -578,45 +590,43 @@ class BatteryInfo:
 #                Init                #
 ######################################
 # InfluxDB
-client = influxdb.InfluxDBClient(database="admineasy") # todo: create user "admineasy-client", "1337"
-# client = influxdb.InfluxDBClient(host="192.168.1.33", database="admineasy", username="admineasy-client", password="1337")
+client = influxdb.InfluxDBClient(database="admineasy")  # todo: create user "admineasy-client", "1337"
+'''
+client = influxdb.InfluxDBClient(
+    host="192.168.1.33", database="admineasy", username="admineasy-client", password="1337"
+)'''
 
 # Platform
-platform_os_name = platform.system()
-platform_os_version = platform.release()
-platform_os_full = platform.platform()
-machine_name = platform.node()
+machine = MachineInfo()
 
-users_info = psutil.users()
+users_init_info = psutil.users()
 users = []
-for user_info in users_info:
-    users.append(UserInfo(user_info[0]))
-
-boot_timestamp = psutil.boot_time()
+for user_init_info in users_init_info:
+    users.append(UserInfo(user_init_info[0]))
 
 # Devices Data
 cpu = CpuInfo()
 ram = RamInfo()
 swap = SWAPInfo()
 
-interfaces_info = psutil.net_if_stats()
-interfaces = [NetInterfaceInfo(interface_name) for interface_name, interface_info in interfaces_info.items()]
+interfaces_init_info = psutil.net_if_stats()
+interfaces = [NetInterfaceInfo(interface_name) for interface_name, interface_info in interfaces_init_info.items()]
 
-partitions_info = psutil.disk_partitions()
+partitions_init_info = psutil.disk_partitions()
 partitions = []
-for curr_partition in partitions_info:  # ignore partitions under 1 GB?
+for curr_partition in partitions_init_info:  # ignore partitions under 1 GB?
     if curr_partition[2] != "":
         partitions.append(PartitionInfo(curr_partition[0]))
 
-disks_io_info = psutil.disk_io_counters(True)
-disks_io = [DiskIOInfo(disk_name) for disk_name, disks_io_info in disks_io_info.items()]
+disks_io_init_info = psutil.disk_io_counters(True)
+disks_io = [DiskIOInfo(disk_name) for disk_name, disks_io_info in disks_io_init_info.items()]
 
 temp_devices = []
 temp_unavailable = False
 if hasattr(psutil, "sensors_temperatures"):
-    sensors_info = psutil.sensors_temperatures()
-    if sensors_info is not None:
-        temp_devices = [TemperatureDevice(device_name) for device_name, sensors in sensors_info.items()]
+    sensors_init_info = psutil.sensors_temperatures()
+    if sensors_init_info is not None:
+        temp_devices = [TemperatureDevice(device_name) for device_name, sensors in sensors_init_info.items()]
     else:
         temp_unavailable = True
 
@@ -640,8 +650,8 @@ while True:
     for interface in interfaces:
         interface.update_influxdb()
 
-    for partition in partitions:
-        partition.update_influxdb()
+    for curr_partition in partitions:
+        curr_partition.update_influxdb()
 
     for disk_io in disks_io:
         disk_io.update_influxdb()
