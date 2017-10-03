@@ -37,15 +37,18 @@ class CpuInfo:
     used_percent = -1
 
     def __init__(self):
+        # Name
         cpu_info = cpuinfo.get_cpu_info()
         self.name = cpu_info["brand"]
 
+        # Core info
         self.logical_cores = psutil.cpu_count()
         self.physical_cores = psutil.cpu_count(False)
         self.hyper_threading = True
         if self.logical_cores == self.physical_cores:
             self.hyper_threading = False
 
+        # Frequency
         freq_info = psutil.cpu_freq()
         self.freq_min_mhz = freq_info[1]
         self.freq_max_mhz = freq_info[2]
@@ -57,7 +60,7 @@ class CpuInfo:
         freq_info = psutil.cpu_freq()
         self.freq_curr_mhz = freq_info[0]
 
-        # measured between every call, first call meaningless if None then average between every call
+        # measured between every call, if None first call meaningless then average between every call
         self.used_percent = psutil.cpu_percent(1)
 
     # Updates all the data, then sends it to the influxdb database.
@@ -352,16 +355,20 @@ class TemperatureDevice:
     ]
 
     def __init__(self, name_):
+        # Init name_to_device_list
         for k, v in self.name_to_device_list:
             self.name_to_device[k] = v
 
         self.name = name_
+        # Get a type from the generic name
         self.type = self.name_to_device[self.name]
 
+        # if a type is set, use that for the clean name
         self.clean_name = self.name
         if self.type != "":
             self.clean_name = self.type
 
+        # Init the sensors
         devices_info = psutil.sensors_temperatures()
         for device_name, sensors_info in devices_info.items():
             if device_name == self.name:
@@ -418,17 +425,19 @@ class TemperatureDevice:
     # Updates all the data.
     def refresh(self):
         updated_devices_info = psutil.sensors_temperatures()
-        for device_name, updated_sensor in updated_devices_info.items():
-            if device_name == self.name:
-                for sensor in self.sensors:
-                    if sensor.name == updated_sensor[0]:
-                        sensor.refresh(updated_sensor)
+        for updated_device_name, updated_sensors in updated_devices_info.items():
+            if updated_device_name == self.name:
+
+                for updated_sensor in updated_sensors:
+                    for sensor in self.sensors:
+                        if sensor.name == updated_sensor[0]:
+                            sensor.refresh(updated_sensor)
                 break
 
     # Updates all the data, then sends it to the influxdb database.
     def update_influxdb(self):
         self.refresh()
-
+        # Basic temp info, for every device
         json = [
             {
                 "measurement": "temp",
@@ -446,7 +455,7 @@ class TemperatureDevice:
                 }
             }
         ]
-
+        # Advanced temp info, for every sensor
         for sensor in self.sensors:
             json.append({
                 "measurement": "temp_advanced",
@@ -473,6 +482,7 @@ class TemperatureSensor:
         self.high = high_
         self.critical = critical_
 
+    # Updates all the data.
     def refresh(self, data):
         self.current = data[1]
         self.high = data[2]
@@ -568,8 +578,8 @@ class BatteryInfo:
 #                Init                #
 ######################################
 # InfluxDB
-# client = influxdb.InfluxDBClient(database="admineasy") # todo: create user "admineasy-client", "1337"
-client = influxdb.InfluxDBClient(host="192.168.1.33", database="admineasy", username="admineasy-client", password="1337")
+client = influxdb.InfluxDBClient(database="admineasy") # todo: create user "admineasy-client", "1337"
+# client = influxdb.InfluxDBClient(host="192.168.1.33", database="admineasy", username="admineasy-client", password="1337")
 
 # Platform
 platform_os_name = platform.system()
