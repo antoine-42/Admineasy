@@ -285,7 +285,7 @@ class PartitionInfo:
 
     # Updates the SMART data.
     def refresh_smart(self):
-        # TODO
+        # TODO: SMART collection
         pass
 
     # Updates all the data, then sends it to the influxdb database.
@@ -361,6 +361,7 @@ class DiskIOInfo:
 
 class TemperatureDevice:
     name_to_device = collections.defaultdict(str)
+    # noinspection SpellCheckingInspection
     name_to_device_list = [
         ["coretemp", "CPU"],
         ["acpitz", "motherboard"]
