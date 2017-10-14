@@ -7,6 +7,7 @@ import psutil  # Hardware info.
 import cpuinfo  # Detailed CPU info.
 # import pySMART  # Hard drive SMART info, requires admin. DOESNT FUCKING WORK.
 import influxdb  # Communication with influxdb.
+import psycopg2  # Communication with posgreSQL.
 
 
 #########################################
@@ -91,7 +92,7 @@ class CpuInfo:
                 }
             }
         ]
-        return client.write_points(json)
+        return influxdb_connection.write_points(json)
 
 
 class RamInfo:
@@ -129,7 +130,7 @@ class RamInfo:
                 }
             }
         ]
-        return client.write_points(json)
+        return influxdb_connection.write_points(json)
 
 
 class SWAPInfo:
@@ -175,7 +176,7 @@ class SWAPInfo:
                 }
             }
         ]
-        return client.write_points(json)
+        return influxdb_connection.write_points(json)
 
 
 class NetInterfaceInfo:
@@ -250,7 +251,7 @@ class NetInterfaceInfo:
                 }
             }
         ]
-        return client.write_points(json)
+        return influxdb_connection.write_points(json)
 
 
 class PartitionInfo:
@@ -307,7 +308,7 @@ class PartitionInfo:
                 }
             }
         ]
-        return client.write_points(json)
+        return influxdb_connection.write_points(json)
 
 
 class DiskIOInfo:
@@ -356,7 +357,7 @@ class DiskIOInfo:
                 }
             }
         ]
-        return client.write_points(json)
+        return influxdb_connection.write_points(json)
 
 
 class TemperatureDevice:
@@ -485,7 +486,7 @@ class TemperatureDevice:
                 }
             })
 
-        return client.write_points(json)
+        return influxdb_connection.write_points(json)
 
 
 class TemperatureSensor:
@@ -544,7 +545,7 @@ class FanInfo:
                 }
             }
         ]
-        return client.write_points(json)
+        return influxdb_connection.write_points(json)
 
 
 class BatteryInfo:
@@ -584,18 +585,19 @@ class BatteryInfo:
                 }
             }
         ]
-        return client.write_points(json)
+        return influxdb_connection.write_points(json)
 
 
 ######################################
 #                Init                #
 ######################################
-# InfluxDB
-client = influxdb.InfluxDBClient(database="admineasy")  # todo: create user "admineasy-client", "1337"
+# Databases
+influxdb_connection = influxdb.InfluxDBClient(database="admineasy")  # todo: create user "admineasy-client", "1337"
 '''
 client = influxdb.InfluxDBClient(
     host="192.168.1.33", database="admineasy", username="admineasy-client", password="1337"
 )'''
+postgres_connection = psycopg2.connect(host="localhost", database="admineasy", user="postgres", password="postgres")
 
 # Platform
 machine = MachineInfo()
