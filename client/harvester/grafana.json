@@ -6,7 +6,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "hideControls": false,
-  "id": 7,
+  "id": 2,
   "links": [],
   "refresh": "5s",
   "rows": [
@@ -34,7 +34,7 @@
             "thresholdMarkers": false
           },
           "id": 4,
-          "interval": null,
+          "interval": "10s",
           "links": [],
           "mappingType": 1,
           "mappingTypes": [
@@ -61,7 +61,7 @@
               "to": "null"
             }
           ],
-          "span": 1,
+          "span": 2,
           "sparkline": {
             "fillColor": "rgba(31, 118, 189, 0.18)",
             "full": true,
@@ -132,7 +132,7 @@
           "colorBackground": true,
           "colorValue": false,
           "colors": [
-            "rgba(50, 172, 45, 0.97)",
+            "rgba(19, 93, 165, 0.97)",
             "rgba(237, 129, 40, 0.89)",
             "rgba(245, 54, 54, 0.9)"
           ],
@@ -146,7 +146,7 @@
             "thresholdMarkers": true
           },
           "id": 23,
-          "interval": null,
+          "interval": "10s",
           "links": [],
           "mappingType": 2,
           "mappingTypes": [
@@ -264,7 +264,7 @@
             "thresholdMarkers": false
           },
           "id": 20,
-          "interval": null,
+          "interval": "10s",
           "links": [],
           "mappingType": 1,
           "mappingTypes": [
@@ -291,7 +291,7 @@
               "to": "null"
             }
           ],
-          "span": 1,
+          "span": 2,
           "sparkline": {
             "fillColor": "rgba(31, 118, 189, 0.18)",
             "full": true,
@@ -377,7 +377,7 @@
             "thresholdMarkers": false
           },
           "id": 5,
-          "interval": null,
+          "interval": "10s",
           "links": [],
           "mappingType": 1,
           "mappingTypes": [
@@ -490,7 +490,7 @@
             "thresholdMarkers": false
           },
           "id": 21,
-          "interval": null,
+          "interval": "10s",
           "links": [],
           "mappingType": 1,
           "mappingTypes": [
@@ -603,7 +603,7 @@
             "thresholdMarkers": false
           },
           "id": 16,
-          "interval": null,
+          "interval": "10s",
           "links": [],
           "mappingType": 1,
           "mappingTypes": [
@@ -683,8 +683,8 @@
                 {
                   "condition": "AND",
                   "key": "partition",
-                  "operator": "=",
-                  "value": "/dev/sda2"
+                  "operator": "=~",
+                  "value": "/^$system_drive$/"
                 }
               ]
             }
@@ -722,7 +722,7 @@
             "thresholdMarkers": false
           },
           "id": 24,
-          "interval": null,
+          "interval": "10s",
           "links": [],
           "mappingType": 1,
           "mappingTypes": [
@@ -802,133 +802,14 @@
                 {
                   "condition": "AND",
                   "key": "partition",
-                  "operator": "=",
-                  "value": "/dev/md0p1"
-                }
-              ]
-            }
-          ],
-          "thresholds": "",
-          "title": "Raid Array",
-          "type": "singlestat",
-          "valueFontSize": "120%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
-        },
-        {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "datasource": "influxdb-admineasy",
-          "decimals": null,
-          "format": "bytes",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": false
-          },
-          "id": 17,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "span": 2,
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
-          },
-          "tableColumn": "",
-          "targets": [
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "partition",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "available"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "machine",
                   "operator": "=~",
-                  "value": "/^$host$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "partition",
-                  "operator": "=",
-                  "value": "/dev/md0p1"
+                  "value": "/^$storage_drive$/"
                 }
               ]
             }
           ],
           "thresholds": "",
-          "title": "Raid Array - Free",
+          "title": "Storage",
           "type": "singlestat",
           "valueFontSize": "120%",
           "valueMaps": [
@@ -1602,8 +1483,8 @@
                 {
                   "condition": "AND",
                   "key": "disk",
-                  "operator": "=",
-                  "value": "sda2"
+                  "operator": "=~",
+                  "value": "/^$system_drive_io$/"
                 }
               ]
             },
@@ -1667,8 +1548,8 @@
                 {
                   "condition": "AND",
                   "key": "disk",
-                  "operator": "=",
-                  "value": "sda2"
+                  "operator": "=~",
+                  "value": "/^$system_drive_io$/"
                 }
               ]
             },
@@ -1717,8 +1598,8 @@
                 {
                   "condition": "AND",
                   "key": "partition",
-                  "operator": "=",
-                  "value": "/dev/sda2"
+                  "operator": "=~",
+                  "value": "/^$system_drive$/"
                 }
               ]
             }
@@ -1726,7 +1607,7 @@
           "thresholds": [],
           "timeFrom": null,
           "timeShift": null,
-          "title": "C:",
+          "title": "System",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -1861,8 +1742,8 @@
                 {
                   "condition": "AND",
                   "key": "disk",
-                  "operator": "=",
-                  "value": "md0"
+                  "operator": "=~",
+                  "value": "/^$storage_drive_io$/"
                 }
               ]
             },
@@ -1926,8 +1807,8 @@
                 {
                   "condition": "AND",
                   "key": "disk",
-                  "operator": "=",
-                  "value": "md0"
+                  "operator": "=~",
+                  "value": "/^$storage_drive_io$/"
                 }
               ]
             },
@@ -1976,8 +1857,8 @@
                 {
                   "condition": "AND",
                   "key": "partition",
-                  "operator": "=",
-                  "value": "/dev/md0p1"
+                  "operator": "=~",
+                  "value": "/^$storage_drive$/"
                 }
               ]
             }
@@ -1985,7 +1866,7 @@
           "thresholds": [],
           "timeFrom": null,
           "timeShift": null,
-          "title": "D:",
+          "title": "Storage",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -2126,6 +2007,12 @@
                       "10s"
                     ],
                     "type": "non_negative_derivative"
+                  },
+                  {
+                    "params": [
+                      " / 8"
+                    ],
+                    "type": "math"
                   }
                 ]
               ],
@@ -2138,8 +2025,8 @@
                 {
                   "condition": "AND",
                   "key": "interface",
-                  "operator": "=",
-                  "value": "enp3s0"
+                  "operator": "=~",
+                  "value": "/^$interface$/"
                 }
               ]
             }
@@ -2231,6 +2118,12 @@
                       "10s"
                     ],
                     "type": "non_negative_derivative"
+                  },
+                  {
+                    "params": [
+                      " / 8"
+                    ],
+                    "type": "math"
                   }
                 ]
               ],
@@ -2243,8 +2136,8 @@
                 {
                   "condition": "AND",
                   "key": "interface",
-                  "operator": "=",
-                  "value": "enp3s0"
+                  "operator": "=~",
+                  "value": "/^$interface$/"
                 }
               ]
             },
@@ -2292,7 +2185,7 @@
                   },
                   {
                     "params": [
-                      " *-1"
+                      " /8*-1"
                     ],
                     "type": "math"
                   }
@@ -2307,8 +2200,8 @@
                 {
                   "condition": "AND",
                   "key": "interface",
-                  "operator": "=",
-                  "value": "enp3s0"
+                  "operator": "=~",
+                  "value": "/^$interface$/"
                 }
               ]
             }
@@ -2369,7 +2262,7 @@
             "thresholdMarkers": false
           },
           "id": 14,
-          "interval": null,
+          "interval": "10s",
           "links": [],
           "mappingType": 1,
           "mappingTypes": [
@@ -2449,8 +2342,8 @@
                 {
                   "condition": "AND",
                   "key": "interface",
-                  "operator": "=",
-                  "value": "enp3s0"
+                  "operator": "=~",
+                  "value": "/^$interface$/"
                 }
               ]
             }
@@ -2488,7 +2381,7 @@
             "thresholdMarkers": false
           },
           "id": 15,
-          "interval": null,
+          "interval": "10s",
           "links": [],
           "mappingType": 1,
           "mappingTypes": [
@@ -2568,8 +2461,8 @@
                 {
                   "condition": "AND",
                   "key": "interface",
-                  "operator": "=",
-                  "value": "enp3s0"
+                  "operator": "=~",
+                  "value": "/^$interface$/"
                 }
               ]
             }
@@ -2600,7 +2493,11 @@
       "height": "300",
       "panels": [
         {
-          "aliasColors": {},
+          "aliasColors": {
+            "CPU Average": "#7EB26D",
+            "CPU Highest": "#E24D42",
+            "Motherboard Average": "#EAB839"
+          },
           "bars": false,
           "dashLength": 10,
           "dashes": false,
@@ -2608,7 +2505,7 @@
           "decimals": 0,
           "fill": 1,
           "id": 22,
-          "interval": "10s",
+          "interval": "30s",
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -2792,7 +2689,7 @@
           "title": "System Temperatures",
           "tooltip": {
             "shared": true,
-            "sort": 0,
+            "sort": 2,
             "value_type": "individual"
           },
           "type": "graph",
@@ -2840,9 +2737,9 @@
       {
         "allValue": null,
         "current": {
-          "tags": [],
-          "text": "banana",
-          "value": "banana"
+          "selected": true,
+          "text": "antoine-Lenovo-Y50-70",
+          "value": "antoine-Lenovo-Y50-70"
         },
         "hide": 0,
         "includeAll": false,
@@ -2856,18 +2753,143 @@
             "value": "antoine_main"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "banana",
             "value": "banana"
+          },
+          {
+            "selected": true,
+            "text": "antoine-Lenovo-Y50-70",
+            "value": "antoine-Lenovo-Y50-70"
           }
         ],
-        "query": "antoine_main, banana",
+        "query": "antoine_main, banana, antoine-Lenovo-Y50-70",
+        "type": "custom"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": "enp9s0",
+          "value": "enp9s0"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "interface",
+        "options": [
+          {
+            "selected": false,
+            "text": "Ethernet",
+            "value": "Ethernet"
+          },
+          {
+            "selected": false,
+            "text": "enp3s0",
+            "value": "enp3s0"
+          },
+          {
+            "selected": true,
+            "text": "enp9s0",
+            "value": "enp9s0"
+          }
+        ],
+        "query": "Ethernet, enp3s0, enp9s0",
+        "type": "custom"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": "/dev/mapper/mint--vg-root",
+          "value": "/dev/mapper/mint--vg-root"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "system_drive",
+        "options": [
+          {
+            "selected": true,
+            "text": "/dev/mapper/mint--vg-root",
+            "value": "/dev/mapper/mint--vg-root"
+          }
+        ],
+        "query": "/dev/mapper/mint--vg-root",
+        "type": "custom"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": "sda3",
+          "value": "sda3"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "system_drive_io",
+        "options": [
+          {
+            "selected": true,
+            "text": "sda3",
+            "value": "sda3"
+          }
+        ],
+        "query": "sda3",
+        "type": "custom"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": "/dev/md0p1",
+          "value": "/dev/md0p1"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "storage_drive",
+        "options": [
+          {
+            "selected": true,
+            "text": "/dev/md0p1",
+            "value": "/dev/md0p1"
+          }
+        ],
+        "query": "/dev/md0p1",
+        "type": "custom"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": "md0",
+          "value": "md0"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "storage_drive_io",
+        "options": [
+          {
+            "selected": true,
+            "text": "md0",
+            "value": "md0"
+          }
+        ],
+        "query": "md0",
         "type": "custom"
       }
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {
@@ -2897,5 +2919,5 @@
   },
   "timezone": "browser",
   "title": "admineasy-banana",
-  "version": 2
+  "version": 12
 }

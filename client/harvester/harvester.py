@@ -1,11 +1,11 @@
 import sys
 import time
 import datetime
-import collections
+import collections  # for default dict
 import platform  # System info.
 import psutil  # Hardware info.
 import cpuinfo  # Detailed CPU info.
-# import pySMART  # Hard drive SMART info, requires admin. DOESNT FUCKING WORK.
+import pySMART  # Hard drive SMART info, requires admin. DOESNT FUCKING WORK. TODO make it work
 import influxdb  # Communication with influxdb.
 import psycopg2  # Communication with posgreSQL.
 
@@ -45,7 +45,6 @@ class UserInfo:
 
 
 class CpuInfo:
-    # TODO: per core frequency and usage
     freq_curr_mhz = -1
     used_percent = -1
 
@@ -179,8 +178,25 @@ class SWAPInfo:
         return influxdb_connection.write_points(json)
 
 
+class AllNetInterfaceInfo:
+    def __init__(self):
+        interfaces_init_info = psutil.net_if_stats()
+        self.interfaces = [NetInterfaceInfo(interface_name)
+                           for interface_name, interface_info
+                           in interfaces_init_info.items()]
+
+    # Updates all the data.
+    def refresh(self):
+        for interface in self.interfaces:
+            interface.refresh()
+
+    # Updates all the data, then sends it to the influxdb database.
+    def update_influxdb(self):
+        for interface in self.interfaces:
+            interface.update_influxdb()
+
+
 class NetInterfaceInfo:
-    # TODO: data collection for all interfaces
     sent_B = -1
     sent_packets = -1
     received_B = -1
@@ -210,10 +226,10 @@ class NetInterfaceInfo:
     def refresh(self):
         counters_info = psutil.net_io_counters()
 
-        self.sent_B = counters_info[0]
+        self.sent_B = int(counters_info[0] / 8)
         self.sent_packets = counters_info[2]
 
-        self.received_B = counters_info[1]
+        self.received_B = int(counters_info[1] / 8)
         self.received_packets = counters_info[3]
 
         self.total_B = self.sent_B + self.received_B
@@ -225,7 +241,7 @@ class NetInterfaceInfo:
         self.in_error = counters_info[4]
         self.in_drop = counters_info[6]
 
-    # Updates all the data, then sends it to the influxdb database.
+    #  Sends all the data to the influxdb database. Will not update the data on its own.
     def update_influxdb(self):
         self.refresh()
         json = [
@@ -260,8 +276,12 @@ class PartitionInfo:
     used_B = -1
     used_percent = -1
 
+    assessment = ""
+    smart_attributes = []
+
     def __init__(self, device_):
         self.device = device_
+        self.smart = pySMART.Device(self.device)
 
         for partition in psutil.disk_partitions():
             if partition[0] == self.device:
@@ -274,7 +294,7 @@ class PartitionInfo:
     # Updates all the data.
     def refresh(self):
         self.refresh_used()
-        # self.refresh_smart()
+        self.refresh_smart()
 
     # Updates the used space data.
     def refresh_used(self):
@@ -286,8 +306,8 @@ class PartitionInfo:
 
     # Updates the SMART data.
     def refresh_smart(self):
-        # TODO: SMART collection
-        pass
+        self.assessment = self.smart.assessment
+        self.smart_attributes = self.smart.all_attributes()
 
     # Updates all the data, then sends it to the influxdb database.
     def update_influxdb(self):
@@ -328,10 +348,10 @@ class DiskIOInfo:
         disks_io_info = psutil.disk_io_counters(True)
         for disk_name, disk_io_info in disks_io_info.items():
             if disk_name == self.physical_drive:
-                self.read_bytes = disk_io_info[2]
+                self.read_bytes = int(disk_io_info[2] / 8)
                 self.read_count = disk_io_info[0]
                 self.read_time = disk_io_info[4]
-                self.write_bytes = disk_io_info[3]
+                self.write_bytes = int(disk_io_info[3] / 8)
                 self.write_count = disk_io_info[1]
                 self.write_time = disk_io_info[5]
                 break
@@ -591,6 +611,7 @@ class BatteryInfo:
 ######################################
 #                Init                #
 ######################################
+<<<<<<< HEAD
 # Databases
 influxdb_connection = influxdb.InfluxDBClient(database="admineasy")  # todo: create user "admineasy-client", "1337"
 '''
@@ -598,6 +619,14 @@ client = influxdb.InfluxDBClient(
     host="192.168.1.33", database="admineasy", username="admineasy-client", password="1337"
 )'''
 postgres_connection = psycopg2.connect(host="localhost", database="admineasy", user="postgres", password="postgres")
+=======
+# InfluxDB
+'''
+client = influxdb.InfluxDBClient(database="admineasy")  # todo: create user "admineasy-client", "1337"
+'''
+client = influxdb.InfluxDBClient(
+    host="192.168.1.33", database="admineasy", username="admineasy-client", password="1337")
+>>>>>>> b847e1d15a1615547b668d1efe5ea9bc9f0e9c0d
 
 # Platform
 machine = MachineInfo()
@@ -612,8 +641,7 @@ cpu = CpuInfo()
 ram = RamInfo()
 swap = SWAPInfo()
 
-interfaces_init_info = psutil.net_if_stats()
-interfaces = [NetInterfaceInfo(interface_name) for interface_name, interface_info in interfaces_init_info.items()]
+all_net_interfaces = AllNetInterfaceInfo()
 
 partitions_init_info = psutil.disk_partitions()
 partitions = []
@@ -646,12 +674,13 @@ battery = BatteryInfo()
 #                Execution                #
 ###########################################
 while True:
+    print("\nUpdating at " + str(datetime.datetime.utcnow().isoformat()))
+
     cpu.update_influxdb()
     ram.update_influxdb()
     swap.update_influxdb()
 
-    for interface in interfaces:
-        interface.update_influxdb()
+    all_net_interfaces.update_influxdb()
 
     for curr_partition in partitions:
         curr_partition.update_influxdb()
@@ -667,5 +696,7 @@ while True:
 
     if battery.available:
         battery.update_influxdb()
+
+    print("Update finished at " + str(datetime.datetime.utcnow().isoformat()))
 
     time.sleep(5)
