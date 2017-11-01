@@ -5,9 +5,9 @@ import collections  # for default dict
 import platform  # System info.
 import psutil  # Hardware info.
 import cpuinfo  # Detailed CPU info.
-import pySMART  # Hard drive SMART info, requires admin. DOESNT FUCKING WORK. TODO make it work
+# import pySMART  # Hard drive SMART info, requires admin. DOESNT FUCKING WORK. TODO make it work
 import influxdb  # Communication with influxdb.
-#import psycopg2  # Communication with PostgreSQL.
+# import psycopg2  # Communication with PostgreSQL.
 
 
 #########################################
@@ -281,7 +281,7 @@ class PartitionInfo:
 
     def __init__(self, device_):
         self.device = device_
-        self.smart = pySMART.Device(self.device)
+        # self.smart = pySMART.Device(self.device)
 
         for partition in psutil.disk_partitions():
             if partition[0] == self.device:
@@ -294,7 +294,7 @@ class PartitionInfo:
     # Updates all the data.
     def refresh(self):
         self.refresh_used()
-        self.refresh_smart()
+        # self.refresh_smart()
 
     # Updates the used space data.
     def refresh_used(self):
