@@ -7,7 +7,7 @@ import psutil  # Hardware info.
 import cpuinfo  # Detailed CPU info.
 import pySMART  # Hard drive SMART info, requires admin. DOESNT FUCKING WORK. TODO make it work
 import influxdb  # Communication with influxdb.
-import psycopg2  # Communication with posgreSQL.
+#import psycopg2  # Communication with PostgreSQL.
 
 
 #########################################
@@ -611,22 +611,14 @@ class BatteryInfo:
 ######################################
 #                Init                #
 ######################################
-<<<<<<< HEAD
 # Databases
-influxdb_connection = influxdb.InfluxDBClient(database="admineasy")  # todo: create user "admineasy-client", "1337"
-'''
-client = influxdb.InfluxDBClient(
-    host="192.168.1.33", database="admineasy", username="admineasy-client", password="1337"
-)'''
-postgres_connection = psycopg2.connect(host="localhost", database="admineasy", user="postgres", password="postgres")
-=======
+# postgres_connection = psycopg2.connect(host="localhost", database="admineasy", user="postgres", password="postgres")
 # InfluxDB
 '''
 client = influxdb.InfluxDBClient(database="admineasy")  # todo: create user "admineasy-client", "1337"
 '''
-client = influxdb.InfluxDBClient(
+influxdb_connection = influxdb.InfluxDBClient(
     host="192.168.1.33", database="admineasy", username="admineasy-client", password="1337")
->>>>>>> b847e1d15a1615547b668d1efe5ea9bc9f0e9c0d
 
 # Platform
 machine = MachineInfo()
