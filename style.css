@@ -1,0 +1,109 @@
+@font-face {
+	font-family: "Gabriola";  /* declare la police gabriola */
+	src: url('Gabriola.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: "Cambria";   /* declare la police Cambria */
+	src: url('Cambria.ttf') format('truetype');
+}
+
+*{                        /* remet tout à zéro pour s'adapter à chaque navigateur */
+	margin: 0px;
+	padding: 0px;
+	font-family: Cambria;
+}
+
+
+h1 {                          /* mon prenom nom du site */
+	font-family: Gabriola;
+	margin-top: 20px;
+	font-size: 50px;
+	font-weight: normal;
+	text-align: center;
+}
+
+header{
+	height: 100px;
+}
+/******************************************** MENU ***************************************************/
+
+ul {                        /* met le menu au milieu */
+	display: table;
+	margin: 0 auto;
+}
+
+nav {                          /* menu fond */
+	width: 100%;
+	background-color: grey;
+	border-top: 3px solid skyblue;
+	border-bottom: 3px solid skyblue;
+}
+ 
+nav a {
+	text-decoration: none;  /* retire soulignement liens */
+	display: inline-block;
+}
+
+nav  > ul > li {
+	list-style-type: none;  /* retire les points des listes */
+	float: left;
+	position: relative;
+}
+
+nav ul li a{                            /* les liens du menu */
+	padding: 20px 30px; 
+	color: white;
+	text-transform: uppercase;   /* met en majuscules */
+	font-size: 25px;
+}
+
+/**************************************** PIED DE PAGE **********************************/
+
+footer {            
+	height: 20px;       
+	background-color: grey;
+	color: white;
+	text-align: center;
+	font-size: 15px;      
+	margin-top: 25px;  
+	margin-bottom: 5px;  
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border-top: 2px solid skyblue;
+	border-bottom: 2px solid skyblue;
+	width:100%;
+}
+
+.gauchepdp {                           /* pied de page a gauche */
+	float: left;
+	margin-left: 15px;
+}
+	 
+.droitepdp {                      /* pied de page a droite */
+	float: right;
+	margin-right: 15px;
+}
+
+.droitepdp a {  /* envoyer mail */
+	color: white;
+}
+
+.droitepdp a:hover {
+	color: blue;
+}
+
+/**************************************************************************************/
+/**************************** POUR LES TABLETTES *************************************************************/
+@media screen and (max-width: 1024px){
+
+	nav ul li a{                            /* les liens du menu */
+	padding: 10px 20px;   /* onglets plus petits */
+	font-size: 20px;   /* police plus petite */
+	}
+	.sousmenu li a {                   /* liens des sous menu */
+	padding: 5px 20px;  
+	font-size: 15px;    /* police plus petite */
+	width: 150px;      /* sous onglets plus petits */
+	}
+}
