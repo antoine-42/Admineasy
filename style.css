@@ -58,6 +58,10 @@ nav ul li a{                            /* les liens du menu */
 	font-size: 25px;
 }
 
+ul li a:hover {                         /* quand on passe la souris menu */
+	background-color: skyblue/*#8F5FA6*/;
+}
+
 /**************************************** PIED DE PAGE **********************************/
 
 footer {            
