@@ -23,8 +23,13 @@ h1 {                          /* mon prenom nom du site */
 	text-align: center;
 }
 
-header{
+#titre_principal{
 	height: 100px;
+}
+
+#bloc_page{
+	width:80%;
+	margin:auto;
 }
 /******************************************** MENU ***************************************************/
 
@@ -36,8 +41,8 @@ ul {                        /* met le menu au milieu */
 nav {                          /* menu fond */
 	width: 100%;
 	background-color: grey;
-	border-top: 3px solid skyblue;
-	border-bottom: 3px solid skyblue;
+	border-top: 3px solid darkblue;
+	border-bottom: 3px solid darkblue;
 }
  
 nav a {
@@ -59,9 +64,53 @@ nav ul li a{                            /* les liens du menu */
 }
 
 ul li a:hover {                         /* quand on passe la souris menu */
-	background-color: skyblue/*#8F5FA6*/;
+	background-color: darkblue;
 }
 
+/**************************************** CONTACT **********************************/
+.contact h2{
+	text-align:center;
+}
+
+.contact_form{
+	margin: auto;
+	margin-top: 30px;
+	font-size: 17px; 
+	text-align: justify;
+	width: 90%;
+	padding-bottom: 100px;
+}
+
+.contact_form fieldset{
+	padding: 20px;
+	margin: 20px;
+}
+
+.contact_form legend  {
+	font-weight: bold;
+	font-size: 20px;
+}
+
+#contact_button input{
+	background: lightgrey;
+	border:none;
+	font:bold 12px;
+	padding:6px 6px 6px 6px;
+	box-shadow:1px 1px 3px #999;
+	color:black;
+}
+
+#contact_button input:hover{
+	background:skyblue;
+}
+
+#prenom,
+#nom,
+#mail,
+#objet,
+#message{
+	 display: block;
+}
 /**************************************** PIED DE PAGE **********************************/
 
 footer {            
@@ -74,8 +123,8 @@ footer {
 	margin-bottom: 5px;  
 	padding-top: 5px;
 	padding-bottom: 5px;
-	border-top: 2px solid skyblue;
-	border-bottom: 2px solid skyblue;
+	border-top: 2px solid darkblue;
+	border-bottom: 2px solid darkblue;
 	width:100%;
 }
 
