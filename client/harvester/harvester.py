@@ -2,12 +2,13 @@ import sys
 import time
 import datetime
 import collections  # for default dict
+# import multiprocessing  # multithreading
 import platform  # System info.
 import psutil  # Hardware info.
 import cpuinfo  # Detailed CPU info.
 # import pySMART  # Hard drive SMART info, requires admin. DOESNT FUCKING WORK. TODO make it work
 import influxdb  # Communication with influxdb.
-# import psycopg2  # Communication with PostgreSQL.
+import psycopg2  # Communication with PostgreSQL.
 
 
 #########################################
@@ -23,25 +24,22 @@ class MachineInfo:
 
         self.boot_timestamp = psutil.boot_time()
 
+    def print(self):
+        print("Machine name: %s  OS: %s" % (self.name, self.os_full))
+
 
 class UserInfo:
-    # Timestamp of the first connection of this user
-    start = time.time()
-
     def __init__(self, name_):
         self.name = name_
-        self.sessions = 1
-        self.refresh()
+        min_time = time.time()
+        users = psutil.users()
+        for user in users:
+            if self.name == user.name and min_time > user.started:
+                min_time = user.started
+        self.start = datetime.datetime.utcfromtimestamp(min_time).isoformat()
 
-    # Updates all the data.
-    def refresh(self):
-        users_info = psutil.users()
-        self.sessions = 0
-        for user_info in users_info:
-            if user_info[0] == self.name:
-                self.sessions += 1
-                if user_info[3] < self.start:
-                    self.start = user_info[3]
+    def print(self):
+        print("Username: %s  connected at: %s" % (self.name, self.start))
 
 
 class CpuInfo:
@@ -93,6 +91,9 @@ class CpuInfo:
         ]
         return influxdb_connection.write_points(json)
 
+    def print(self):
+        print("CPU: %s  Cores: %d  Hyperthreading: %s" % (self.name, self.physical_cores, self.hyper_threading))
+
 
 class RamInfo:
     total_B = -1
@@ -130,6 +131,9 @@ class RamInfo:
             }
         ]
         return influxdb_connection.write_points(json)
+
+    def print(self):
+        print("RAM: %f GB  Used: %f GB" % (self.total_B / 1000000000, self.used_B / 1000000000))
 
 
 class SWAPInfo:
@@ -177,6 +181,9 @@ class SWAPInfo:
         ]
         return influxdb_connection.write_points(json)
 
+    def print(self):
+        print("SWAP: %f GB  Used: %f GB" % (self.total_B / 1000000000, self.used_B / 1000000000))
+
 
 class AllNetInterfaceInfo:
     def __init__(self):
@@ -184,6 +191,12 @@ class AllNetInterfaceInfo:
         self.interfaces = [NetInterfaceInfo(interface_name)
                            for interface_name, interface_info
                            in interfaces_init_info.items()]
+
+    def get_names(self):
+        names = ""
+        for interface in self.interfaces:
+            names += interface.name
+        return names
 
     # Updates all the data.
     def refresh(self):
@@ -194,6 +207,10 @@ class AllNetInterfaceInfo:
     def update_influxdb(self):
         for interface in self.interfaces:
             interface.update_influxdb()
+
+    def print(self):
+        for interface in self.interfaces:
+            interface.print()
 
 
 class NetInterfaceInfo:
@@ -269,6 +286,40 @@ class NetInterfaceInfo:
         ]
         return influxdb_connection.write_points(json)
 
+    def print(self):
+        print("Interface: %s    received: %f MB  sent: %f MB  errors: %d" % (
+            self.name, self.received_B / 1000000, self.sent_B / 1000000,
+            self.in_error+self.out_drop+self.out_drop+self.in_drop))
+
+
+class AllPartitionsInfo:
+    def __init__(self):
+        partitions_init_info = psutil.disk_partitions()
+        self.partitions = []
+        for curr_partition in partitions_init_info:  # ignore partitions under 1 GB?
+            if curr_partition[2] != "":
+                self.partitions.append(PartitionInfo(curr_partition[0]))
+
+    def get_names(self):
+        names = ""
+        for partition in self.partitions:
+            names += partition.device
+        return names
+
+    # Updates all the data.
+    def refresh(self):
+        for partition in self.partitions:
+            partition.refresh()
+
+    # Updates all the data, then sends it to the influxdb database.
+    def update_influxdb(self):
+        for partition in self.partitions:
+            partition.update_influxdb()
+
+    def print(self):
+        for partition in self.partitions:
+            partition.print()
+
 
 class PartitionInfo:
     total_B = -1
@@ -329,6 +380,10 @@ class PartitionInfo:
             }
         ]
         return influxdb_connection.write_points(json)
+
+    def print(self):
+        print("Disk: %s    mount: %s  file system: %s  total: %s GB  used: %s GB" % (
+            self.device, self.mount, self.file_system, self.total_B / 1000000000, self.used_B / 1000000000))
 
 
 class DiskIOInfo:
@@ -612,34 +667,92 @@ class BatteryInfo:
 #                Init                #
 ######################################
 # Databases
-# postgres_connection = psycopg2.connect(host="localhost", database="admineasy", user="postgres", password="postgres")
-# InfluxDB
-'''
-client = influxdb.InfluxDBClient(database="admineasy")  # todo: create user "admineasy-client", "1337"
-'''
-influxdb_connection = influxdb.InfluxDBClient(
-    host="192.168.1.33", database="admineasy", username="admineasy-client", password="1337")
+# PostgreSQL
+class PostgreSQLconn:
+    machine = None
+    users = None
+    cpu = None
+    ram = None
+    swap = None
+    net_ifaces = None
+    disks = None
 
-# Platform
+    postgres_connection = None
+    postgres_cursor = None
+
+    def __init__(self):
+        self.create_measurements()
+
+        try:
+            self.connect()
+        except psycopg2.OperationalError as err:
+            print("Can't connect to PostgreSQL database")
+            print(err)
+            return
+
+        self.postgres_cursor.execute("""SELECT count(*) from machines WHERE name='desktop'""")
+        if self.postgres_cursor.fetchall()[0][0] == 0:
+            self.create_entry()
+        else:
+            self.update_db()
+
+    def create_measurements(self):
+        self.machine = MachineInfo()
+
+        users_init_info = psutil.users()
+        self.users = []
+        for user_init_info in users_init_info:
+            self.users.append(UserInfo(user_init_info[0]))
+
+        self.cpu = CpuInfo()
+        self.ram = RamInfo()
+        self.swap = SWAPInfo()
+        self.net_ifaces = AllNetInterfaceInfo()
+        self.disks = AllPartitionsInfo()
+
+    def connect(self):
+        self.postgres_connection = psycopg2.connect(
+            host="10.8.0.1", database="admineasy", user="admineasy_client", password="1337"
+        )
+        self.postgres_cursor = self.postgres_connection.cursor()
+
+    def create_entry(self):
+        self.postgres_cursor.execute(
+            """INSERT INTO machines VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', %d, %d, '%s', %d, %d, %d, %d, '%s', '%s');"""
+            % (self.machine.name, self.machine.os_full, self.machine.os_name, self.machine.os_version,
+                self.users[0].name, self.users[0].start, self.cpu.name, self.cpu.physical_cores, self.cpu.logical_cores,
+                self.cpu.hyper_threading, self.cpu.freq_min_mhz, self.cpu.freq_max_mhz,
+                self.ram.total_B / 1000000, self.swap.total_B / 1000000, self.net_ifaces.get_names(), self.disks.get_names()
+               )
+        )
+        self.postgres_connection.commit()
+
+    def update_db(self):
+        self.postgres_cursor.execute("""SELECT * FROM machines WHERE name='%s';""" % self.machine.name)
+        result = self.postgres_cursor.fetchall()[0]
+
+        #self.postgres_cursor.execute("""UPDATE machines SET ram_total=32000 WHERE name='%s';""" % (self.machine.name))
+        #self.postgres_connection.commit()
+
+
+postgres = PostgreSQLconn()
+
+
+# InfluxDB
+influxdb_connection = influxdb.InfluxDBClient(
+    host="10.8.0.1", database="admineasy", username="admineasy-client", password="1337")
+
+
 machine = MachineInfo()
 
-users_init_info = psutil.users()
-users = []
-for user_init_info in users_init_info:
-    users.append(UserInfo(user_init_info[0]))
-
 # Devices Data
-cpu = CpuInfo()
-ram = RamInfo()
-swap = SWAPInfo()
-
-all_net_interfaces = AllNetInterfaceInfo()
-
-partitions_init_info = psutil.disk_partitions()
-partitions = []
-for curr_partition in partitions_init_info:  # ignore partitions under 1 GB?
-    if curr_partition[2] != "":
-        partitions.append(PartitionInfo(curr_partition[0]))
+devices_data = {
+    "cpu":        CpuInfo(),
+    "ram":        RamInfo(),
+    "swap":       SWAPInfo(),
+    "net_ifaces": AllNetInterfaceInfo(),
+    "partitions": AllPartitionsInfo()
+}
 
 disks_io_init_info = psutil.disk_io_counters(True)
 disks_io = [DiskIOInfo(disk_name) for disk_name, disks_io_info in disks_io_init_info.items()]
@@ -665,17 +778,13 @@ battery = BatteryInfo()
 ###########################################
 #                Execution                #
 ###########################################
+
 while True:
-    print("\nUpdating at " + str(datetime.datetime.utcnow().isoformat()))
+    print("nUpdating at %s\n" % datetime.datetime.utcnow().isoformat())
 
-    cpu.update_influxdb()
-    ram.update_influxdb()
-    swap.update_influxdb()
-
-    all_net_interfaces.update_influxdb()
-
-    for curr_partition in partitions:
-        curr_partition.update_influxdb()
+    for device in devices_data:
+        devices_data[device].update_influxdb()
+        devices_data[device].print()
 
     for disk_io in disks_io:
         disk_io.update_influxdb()
@@ -689,6 +798,5 @@ while True:
     if battery.available:
         battery.update_influxdb()
 
-    print("Update finished at " + str(datetime.datetime.utcnow().isoformat()))
-
+    print("\nUpdate finished at %s\n" % datetime.datetime.utcnow().isoformat())
     time.sleep(5)
