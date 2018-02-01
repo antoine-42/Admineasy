@@ -1,5 +1,5 @@
 var Accueil = {
-	nbAlertes: 2,
+	nbAlertes: 7,
 
 	setAlerte: function(){
 		this.nbAlertes++;
@@ -7,15 +7,15 @@ var Accueil = {
 
 	afficherAlerte: function(){
 		if(this.nbAlertes==0){
-			document.getElementById("alerte").src="./img/ok.png";
+			document.getElementById("alerte").style.color="green";
 			document.getElementById("texte").innerHTML += "<br><p>Il n'y a pas d'alerte</p>";
 			
 		}else if(this.nbAlertes==1){
-			document.getElementById("alerte").src="./img/moy.jpg";
+			document.getElementById("alerte").style.color="orange";
 			document.getElementById("texte").innerHTML += "<br><p>Il y a 1 alerte</p>";
 
 		}else if(this.nbAlertes>1){
-			document.getElementById("alerte").src="./img/bad.png";
+			document.getElementById("alerte").style.color="red";
 			document.getElementById("texte").innerHTML += "<br><p>Il y a "+this.nbAlertes+" alertes</p>";
 		}
 
