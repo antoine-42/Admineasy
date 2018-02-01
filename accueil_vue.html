@@ -3,10 +3,37 @@
 	<head>
 		<meta charset="UTF-8" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-		<link rel="stylesheet" href="./css/style.css">
-		<script src="./js/accueil.js"></script>
+	<link rel="stylesheet" href="./css/style.css">
+	<script type="text/javascript" src="./js/requete.js"></script>
+	<script src="./js/accueil.js"></script>
 
-			<title>AdminEasy</title>
+	<script type="text/javascript">
+
+	function search(){
+		console.log("search");
+		element=document.getElementById("modele").value;
+		var requete= creerRequete();
+		var url="accueil.php";
+
+		requete.open("POST", url, true);
+		requete.onreadystatechange=function(){
+			afficherResultat(requete);
+		}
+
+		requete.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+		requete.send("CPU-Modele"+ escape(element));
+	}
+
+	 function afficherResultat(requete){
+		if(requete.readyState==4 && requete.status==200){
+			elem=document.getElementById("test");
+			elem.innerHTML=requete.responseText;
+		}
+	}
+	</script>
+
+		<title>AdminEasy</title>
 	</head>
 	<body onload="Accueil.afficherAlerte()">
 		<header id="titre_principal">	
@@ -34,6 +61,13 @@
 			<i id="alerte" class="material-icons" style="font-size:48px;color:red">warning</i>
 				
 		</div>
+
+		<div id="test">
+			<label for="modele">CPU_Modele :</label>
+			<input type="text" name="modele" id="modele">
+			<input type="submit" value="Envoyer"  onclick="search()"/>
+		</div>
+
 <!-- ........................................... PIED DE PAGE ..................................... -->
 		<footer>  
 			<p class="gauchepdp">

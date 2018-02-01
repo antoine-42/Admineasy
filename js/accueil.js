@@ -1,3 +1,5 @@
+
+
 var Accueil = {
 	nbAlertes: 7,
 
@@ -20,5 +22,27 @@ var Accueil = {
 		}
 
 	},
+
+	/* search: function(){
+		element=document.getElementById("modele").value;
+		var requete= creerRequete();
+		var url="accueil.php";
+
+		requete.open("POST", url, true);
+		requete.onreadystatechange=function(){
+			afficherResultat(requete);
+		}
+
+		requete.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+		requete.send("CPU-Modele"+ escape(element));
+	},
+
+	 afficherResultat: function(requete){
+		if(requete.readyState==4 && requete.status==200){
+			elem=document.getElementById("test");
+			elem.innerHTML=requete.responseText;
+		}
+	}*/
 
 };
