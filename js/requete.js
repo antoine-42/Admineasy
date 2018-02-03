@@ -33,7 +33,7 @@ function creerRequete(){
 
     }
 
-    
+    console.log("xhr "+xhr);
 
     return xhr;
 

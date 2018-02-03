@@ -1,7 +1,7 @@
 
 
 var Accueil = {
-	nbAlertes: 7,
+	nbAlertes: 0,
 
 	setAlerte: function(){
 		this.nbAlertes++;
