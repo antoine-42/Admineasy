@@ -6,7 +6,7 @@
 		$element="raté";
 	}
 
-try{
+/*try{
 	$bdd = new PDO('mysql:host=localhost;dbname=dacostam;charset=utf8', 'dacostam', 'dacostam');
 }catch (Exception $e){
         die('Erreur : ' . $e->getMessage());
@@ -22,4 +22,19 @@ try{
 	echo $retour;
 	$reponse->closeCursor(); // Termine le traitement de la requête
 	
+	*/
+
+// influx
+
+
+$client = new \crodas\InfluxPHP\Client(
+   "10.8.0.1",  //host
+   8086,   //port
+   "admineasy-client",  //user
+   "1337"   //password
+);
+
+
+
+
 ?>
