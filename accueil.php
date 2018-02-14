@@ -35,10 +35,13 @@ $client = new \crodas\InfluxPHP\Client(
 );
 
 
-$db= $client->admineasy;
+//$db= $client->admineasy;
 $db = $client->getDatabase("admineasy");
 
+echo "PHP";
+
 foreach ($db->query("SELECT * FROM ram") as $row) {
+
 	var_dump($row, $row->time);
 }
 
