@@ -1,10 +1,10 @@
 <?php
 
-	if(isset($_POST['modele'])){
+	/*if(isset($_POST['modele'])){
 		$element=$_POST['modele'];
 	}else{
 		$element="raté";
-	}
+	}*/
 
 /*try{
 	$bdd = new PDO('mysql:host=localhost;dbname=dacostam;charset=utf8', 'dacostam', 'dacostam');
