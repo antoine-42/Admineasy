@@ -36,9 +36,11 @@
 			elem.innerHTML=requete.responseText;
 		}
 	}*/
-	function search(){
-		var pg = require('/home/invite/js_node/node_modules/pg') ;
+
+			var pg = require('/home/invite/js_node/node_modules/pg') ;
 var conString = "postres://admineasy_client:1337@10.8.0.1:5432/admineasy" ;
+	function search(){
+
 
 var client = new pg.Client(conString) ;
 client.connect() ;
