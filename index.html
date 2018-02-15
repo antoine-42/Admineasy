@@ -10,9 +10,9 @@
 
 	<script type="text/javascript">
 
-	/*function search(){
+	function search(){
 	
-		/*element=document.getElementById("modele").value;
+		//element=document.getElementById("modele").value;
 			console.log("search: "+element);
 		var requete= creerRequete();
 		var url="accueil.php";
@@ -22,9 +22,9 @@
 			afficherResultat(requete);
 		}
 
-		requete.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		//requete.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-		requete.send("modele="+ escape(element));
+		//requete.send("modele="+ escape(element));
 	}
 
 	 function afficherResultat(requete){
@@ -35,22 +35,9 @@
 				console.log("RESP: "+requete.responseText);
 			elem.innerHTML=requete.responseText;
 		}
-	}*/
-
-
-	function search(){
-		var sys = require("sys"),
-my_http = require("http");
-my_http.createServer(function(request,response){
-  sys.puts("I got kicked");
-  response.writeHeader(200, {"Content-Type": "text/plain"});
-  response.write("Hello World");
-  response.end();
-}).listen(8080);
-sys.puts("Server Running on 8080"); 
-
-
 	}
+
+
 	</script>
 
 		<title>AdminEasy</title>
