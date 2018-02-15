@@ -8,38 +8,6 @@
 	<script src="./js/accueil.js"></script>
 	<script type="text/javascript" src="./js/bd.js"></script>
 
-	<script type="text/javascript">
-
-	function search(){
-	
-		element=document.getElementById("modele").value;
-			console.log("search: "+element);
-		var requete= creerRequete();
-		var url="accueil.php";
-
-		requete.open("POST", url, true);
-		requete.onreadystatechange=function(){
-			afficherResultat(requete);
-		}
-
-		requete.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-		requete.send("modele="+ escape(element));
-	}
-
-	 function afficherResultat(requete){
-	 		console.log("afficherResultat");
-		if(requete.readyState==4 && requete.status==200){
-			console.log("afficherIIIFFFF");
-			elem=document.getElementById("test");
-				console.log("RESP: "+requete.responseText);
-			elem.innerHTML=requete.responseText;
-		}
-	}
-
-
-	</script>
-
 		<title>AdminEasy</title>
 	</head>
 	<body onload="Accueil.afficherAlerte()">
@@ -47,7 +15,7 @@
 		<h1>AdminEasy</h1>	
 		</header>
 		<!-- .....................................MENU........................................... -->
-	<nav>  <!-- lien de navigation -->
+		<nav>  <!-- lien de navigation -->
 			<ul>    <!-- accueil -->
 				<li class="menuaccueil"><a href="index.html">Accueil</a></li>	
 				<li class="menureseau"><a href="reseau_vue">Réseau</a>			
@@ -58,18 +26,8 @@
 			</ul>
 		</nav>
 		<!-- ................................................................................ -->
-		
-		<div id="accueil">
-			<i id="alerte" class="material-icons" style="font-size:48px;color:red">warning</i>
-				
-		</div>
-
-		<div id="test">
-		<form id="monform">
-				CPU_Modele
-				<input id="modele" type="text"/>
-				<input name="rechercher" type="button" value="Envoyer"  onclick="search()"/>
-			</form>
+		<div id="bloc_page">
+			
 		</div>
 
 <!-- ........................................... PIED DE PAGE ..................................... -->
