@@ -49,7 +49,7 @@ foreach ($db->query("SELECT * FROM ram") as $row) {
 // postgre
 ///psql -d admineasy -U admineasy_client -h 10.8.0.1
 
-
+echo "ici";
 // Connexion, sélection de la base de données
 $dbconn = pg_connect("host=10.8.0.1 dbname=admineasy user=admineasy-client password=1337")
     or die('Connexion impossible : ' . pg_last_error());
