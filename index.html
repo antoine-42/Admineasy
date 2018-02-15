@@ -22,9 +22,9 @@
 			afficherResultat(requete);
 		}
 
-		//requete.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		requete.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-		//requete.send("modele="+ escape(element));
+		requete.send();
 	}
 
 	 function afficherResultat(requete){
