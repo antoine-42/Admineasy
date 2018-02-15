@@ -75,4 +75,7 @@ pg_free_result($result);
 // Ferme la connexion
 pg_close($dbconn);
 
+
+
+
 ?>

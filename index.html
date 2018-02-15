@@ -6,12 +6,13 @@
 	<link rel="stylesheet" href="./css/style.css">
 	<script type="text/javascript" src="./js/requete.js"></script>
 	<script src="./js/accueil.js"></script>
+	<script type="text/javascript" src="./js/bd.js"></script>
 
 	<script type="text/javascript">
 
-	function search(){
+	/*function search(){
 	
-		element=document.getElementById("modele").value;
+		/*element=document.getElementById("modele").value;
 			console.log("search: "+element);
 		var requete= creerRequete();
 		var url="accueil.php";
@@ -34,7 +35,7 @@
 				console.log("RESP: "+requete.responseText);
 			elem.innerHTML=requete.responseText;
 		}
-	}
+	}*/
 	</script>
 
 		<title>AdminEasy</title>
@@ -70,7 +71,7 @@
 		<form id="monform">
 				CPU_Modele
 				<input id="modele" type="text"/>
-				<input name="rechercher" type="button" value="Envoyer"  onclick="search()"/>
+				<input name="rechercher" type="button" value="Envoyer"  onclick="bd.js"/>
 			</form>
 		</div>
 
