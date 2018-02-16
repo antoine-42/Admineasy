@@ -55,7 +55,7 @@ $dbconn = pg_connect("host=10.8.0.1 dbname=admineasy user=admineasy-client passw
     or die('Connexion impossible : ' . pg_last_error());
 
 // Exécution de la requête SQL
-$query = "SELECT * FROM Machines";
+$query = 'SELECT * FROM Machines';
 $result = pg_query($query) or die('Échec de la requête : ' . pg_last_error());
 
 // Affichage des résultats en HTML
