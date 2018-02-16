@@ -51,7 +51,7 @@ foreach ($db->query("SELECT * FROM ram") as $row) {
 
 
 // Connexion, sélection de la base de données
-$dbconn = pg_connect("host=10.8.0.1 dbname=admineasy user=admineasy-client password=1337")
+$dbconn = pg_connect("host=10.8.0.1 dbname=admineasy user=admineasy_client password=1337")
     or die('Connexion impossible : ' . pg_last_error());
 
 // Exécution de la requête SQL
