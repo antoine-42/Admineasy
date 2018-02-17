@@ -52,10 +52,14 @@ foreach ($db->query("SELECT * FROM ram") as $row) {
 
 echo "debu PHP";
 // Connexion, sélection de la base de données
-$dbconn = pg_connect("host=10.8.0.1 dbname=admineasy user=admineasy_client password=1337 port=5432");
+$dbconn = pg_connect("host='10.8.0.1' dbname='admineasy' user='admineasy_client' password='1337' port='5432'");
   //  or die('Connexion impossible : ' . pg_last_error());
 
-echo "apres co";
+if($dbconn){
+	echo "success";
+}else{
+	echo "failed";
+}
 
 // Exécution de la requête SQL
 $query = 'SELECT * FROM Machines';
