@@ -60,7 +60,7 @@ if($dbconn){
 }else{
 	echo "failed";
 }
-
+/*
 // Exécution de la requête SQL
 $query = 'SELECT * FROM Machines';
 $result = pg_query($query) or die('Échec de la requête : ' . pg_last_error());
@@ -76,7 +76,7 @@ while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
     echo "\t</tr>\n";
 }
 echo "</table>\n";
-
+*/
 // Libère le résultat
 pg_free_result($result);
 
