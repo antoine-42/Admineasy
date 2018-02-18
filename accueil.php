@@ -50,11 +50,11 @@ foreach ($db->query("SELECT * FROM ram") as $row) {
 ///psql -d admineasy -U admineasy_client -h 10.8.0.1
 
 
-echo "debu PHP";
+echo "debut PHP";
 // Connexion, sélection de la base de données
-$dbconn = pg_connect("host=10.8.0.1 dbname=admineasy user=admineasy_client password=1337 port=5432");
-  //  or die('Connexion impossible : ' . pg_last_error());
+//$dbconn = pg_connect("host=10.8.0.1 dbname=admineasy user=admineasy_client password=1337 port=5432");
 
+$dbconn= new PDO("pgsql:host=10.8.0.1;port=5432; dbname=admineasy; user=admineasy_client; password=1337");
 if($dbconn){
 	echo "success";
 }else{
@@ -76,10 +76,11 @@ while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
     echo "\t</tr>\n";
 }
 echo "</table>\n";
-*/
+
+/
 // Libère le résultat
 pg_free_result($result);
-
+ */
 // Ferme la connexion
 pg_close($dbconn);
 
