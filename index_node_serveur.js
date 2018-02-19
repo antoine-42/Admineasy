@@ -69,41 +69,41 @@ var reaction = function(req, res)
 								'</header>'+
 								'<nav>'+
 								'<ul>'+
-				'<li class="menuaccueil"><a href="index.html">Accueil</a></li>	
-				<li class="menureseau"><a href="reseau_vue.html">Réseau</a>			
-				</li>	
-				<li class="menumachines"><a href="machines_vue.html">Machines</a>
-				</li>
-				<li class="contact"><a href="contact_vue.html">Contact</a></li>	
-			</ul>
-		</nav>'+
-		'<div id="accueil">
-			<i id="alerte" class="material-icons" style="font-size:48px;color:red">warning</i>
+				'<li class="menuaccueil"><a href="index.html">Accueil</a></li>'+	
+				'<li class="menureseau"><a href="reseau_vue.html">Réseau</a>'+			
+				'</li>	'+
+				'<li class="menumachines"><a href="machines_vue.html">Machines</a>'+
+				'</li>'+
+				'<li class="contact"><a href="contact_vue.html">Contact</a></li>'+	
+			'</ul>'+
+		'</nav>'+
+		'<div id="accueil">'+
+			'<i id="alerte" class="material-icons" style="font-size:48px;color:red">warning</i>'+
 				
-		</div>
+		'</div>'+
 
-		<div id="test">
-		<form id="monform">
-				CPU_Modele
-				<input id="modele" type="text"/>
-				<button value="Envoyer"  onclick="Node.Search()">
-				</button>
-			</form>
-		</div>
-		<div id="texte"></div>'+
-		'		<footer>  
-			<p class="gauchepdp">
-				MACK - Da Costa, Dujardin, Trugeon, Bohl
-			</p>
-			<p class="droitepdp">
-				<a href="contact_vue.html">Contact</a>
-			</p>
+		'<div id="test">'+
+		'<form id="monform">'+
+				'CPU_Modele'+
+				'<input id="modele" type="text"/>'+
+				'<button value="Envoyer"  onclick="Node.Search()">'+
+				'</button>'+
+			'</form>'+
+		'</div>'+
+		'<div id="texte"></div>'+
+		'		<footer>  '+
+			'<p class="gauchepdp">'+
+				'MACK - Da Costa, Dujardin, Trugeon, Bohl'+
+			'</p>'+
+			'<p class="droitepdp">'+
+				'<a href="contact_vue.html">Contact</a>'+
+			'</p>'+
 			
-			<p>
-				Projet dans le cadre du DUT informatique - IUT Fontainebleau - 2017/2018
-			</p>
-			<div style="clear : both"></div>
-		</footer>'+
+			'<p>'+
+				'Projet dans le cadre du DUT informatique - IUT Fontainebleau - 2017/2018'+
+			'</p>'+
+			'<div style="clear : both"></div>'+
+		'</footer>'+
 							'</body>'+
 						'</html>' ;
 
