@@ -27,9 +27,10 @@ http.createServer(function(request,response)
 
   console.log(list);
 
-  response.end("name : "+list.name+" os-simple : "+list.os_simple+" cpu-name : "+list.cpu_name);
+  response.write("name : "+list.name+" os-simple : "+list.os_simple+" cpu-name : "+list.cpu_name);
   console.log(list.name);
   console.log(list.os_simple);
   console.log(list.cpu_name);
+  response.end();
 }).listen(8080,'192.168.1.21');
 console.log("Server Running at http://192.168.1.21:8080/"); 
