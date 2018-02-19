@@ -17,7 +17,7 @@
 		var requete= creerRequete();
 		var url="accueil.php";
 
-		requete.open("POST", url, true);
+		requete.open("GET", url, true);
 		requete.onreadystatechange=function(){
 			afficherResultat(requete);
 		}
