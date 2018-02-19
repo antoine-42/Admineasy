@@ -58,6 +58,8 @@ $db = 'admineasy';
 $username = 'admineasy_client';
 $password = '1337';
 $dsn = "pgsql:host=$host;port=5432;dbname=$db;user=$username;password=$password";
+
+//echo $dsn ;
  
 $try{
 	// create a PostgreSQL database connection
@@ -69,6 +71,7 @@ $try{
 	}
 }catch (PDOException $e){
 	// report error message
+	echo "PDO error" ;
 	echo $e->getMessage();
 }
 /*

@@ -1,3 +1,5 @@
+
+var Node={Search: function(){
 /**Variables**/
 var PORT = 8888 ; //Port d'écoute
 
@@ -5,8 +7,29 @@ var PORT = 8888 ; //Port d'écoute
 var http = require("http") ;								//Module pour communiquer en HTML
 var url = require("url") ;									//Module pour gérer les URL
 var querystring = require("querystring") ;					//Module pour analyser une requete
-//var pg = require("pg") ;									//Module pour se connecter à Postgres
+var pg = require("/home/invite/js_node/node_modules/pg") ;			//Module pour se connecter à Postgres
 
+/*****************************************************/
+
+var conString = "postres://admineasy_client:1337@10.8.0.1:5432/admineasy" ;
+
+var client = new pg.Client(conString) ;
+client.connect() ;
+
+var query = client.query("select * from machines") ;
+
+var list;
+
+query.on('row', function(row)  // 
+	{
+		list = row ;  // on recupere ligne dans list
+	}) ;
+query.on('end', function(end)  // requette fini
+	{
+		client.end() ;  // on arrete le client
+	}) ;
+
+/*********************************************************/
 
 /*Réaction lors de l'appel de la page
  * @params req		//Informations au sujet de la page appelée, des paramètres, des champs de requete formulaire [...]
@@ -43,8 +66,12 @@ var reaction = function(req, res)
 									'<p>Ceci est un test</p>'+
 							'</body>'+
 						'</html>' ;
-						
+
 						res.write(codeHtml) ;
+
+/***************************************************************************************/
+						res.write("name : "+list.name+" os-simple : "+list.os_simple+" cpu-name : "+list.cpu_name);
+/****************************************************************************************/
 					}
 					else if(page != '/favicon.ico')
 						{
@@ -71,3 +98,5 @@ var reaction = function(req, res)
 var server = http.createServer(reaction) ;
 server.listen(PORT) ; //Le serveur écoute le port 8888
 console.log("Serveur lancé (port : "+PORT+")") ;
+}
+}
