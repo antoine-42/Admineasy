@@ -91,8 +91,8 @@ var reaction = function(req, res)
 							'<head>'+
 								'<meta charset="utf-8"/>'+
 								/*'<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">'+*/
-								'<link rel="stylesheet" href="./css/style.css">'+
-								'<script src="./js/accueil.js"></script>'+
+								'<link rel="stylesheet" href="/home/invite/mack/admineasy/css/style.css">'+
+								/*'<script src="./js/accueil.js"></script>'+*/
 								'<title>admineasy</title>'+
 							'</head>'+
 							'<body>'+
