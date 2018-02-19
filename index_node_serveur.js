@@ -64,7 +64,7 @@ var reaction = function(req, res)
 						/**Affichage**/
 						
 						
-        response.writeHead(200, headers);	//Code de retour indiquant que la page fonctionne (404 --> non trouvée...), type de retour(html, image...)
+        res.writeHead(200, headers);	//Code de retour indiquant que la page fonctionne (404 --> non trouvée...), type de retour(html, image...)
 						//Prépare le code HTML
 						codeHtml = '<!DOCTYPE html>'+
 						'<html>'+
