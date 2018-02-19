@@ -52,7 +52,7 @@ var reaction = function(req, res)
 							
 						/**Affichage**/
 						
-						res.writeHead(200, {"Content-Type": "text"}) ; 	//Code de retour indiquant que la page fonctionne (404 --> non trouvée...), type de retour(html, image...)
+						res.writeHead(200, {"Content-Type": "text/html"}) ; 	//Code de retour indiquant que la page fonctionne (404 --> non trouvée...), type de retour(html, image...)
 						//Prépare le code HTML
 						codeHtml = '<!DOCTYPE html>'+
 						'<html>'+
@@ -63,7 +63,7 @@ var reaction = function(req, res)
 								'<script src="./js/accueil.js"></script>'+
 								'<title>admineasy</title>'+
 							'</head>'+
-							'<body onload="Accueil.afficherAlerte()">'+
+							'<body>'+
 							'<header id="titre_principal">'+
 
 								'<h1>AdminEasy</h1>'+
