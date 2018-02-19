@@ -68,7 +68,7 @@ var reaction = function(req, res)
 								'<h1>AdminEasy</h1>'+
 								'</header>'+
 								'<nav>'+
-								'<ul>    <!-- accueil -->
+								'<ul>   
 				<li class="menuaccueil"><a href="index.html">Accueil</a></li>	
 				<li class="menureseau"><a href="reseau_vue.html">Réseau</a>			
 				</li>	
