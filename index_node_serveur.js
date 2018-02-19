@@ -8,6 +8,9 @@ var url = require("url") ;									//Module pour gérer les URL
 var querystring = require("querystring") ;					//Module pour analyser une requete
 var pg = require("/home/invite/js_node/node_modules/pg") ;			//Module pour se connecter à Postgres
 
+
+var fs = require("fs");
+
 var mimeTypes = {
 '.js': 'text/javascript',
 '.html': 'text/html',
@@ -39,6 +42,8 @@ query.on('end', function(end)  // requette fini
 		client.end() ;  // on arrete le client
 	}) ;
 
+
+var content;
 /*********************************************************/
 
 /*Réaction lors de l'appel de la page
@@ -62,9 +67,22 @@ var reaction = function(req, res)
 							
 							
 						/**Affichage**/
+
+
+						fs.readFile("./index.html", function(err, data){
+							if(err){
+								throw err;
+							}
+							content=data;
+
+							console.log(content);
+							processFile();
+						});
+						function processFile(){
+							console.log(content);
+						}
 						
-						
-        res.writeHead(200, headers);
+     /*   res.writeHead(200, headers);
 						//Prépare le code HTML
 						codeHtml = '<!DOCTYPE html>'+
 						'<html>'+
@@ -121,7 +139,7 @@ var reaction = function(req, res)
 							'</body>'+
 						'</html>' ;
 
-						res.write(codeHtml) ;
+						res.write(codeHtml) ;*/
 
 /***************************************************************************************/
 						res.write("name : "+list.name+" os-simple : "+list.os_simple+" cpu-name : "+list.cpu_name);
