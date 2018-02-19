@@ -14,9 +14,10 @@ var mimeTypes = {
 '.css': 'text/css'
 };
 
+var path = require('path');
+
 var headers = {
-                'Content-type': mimeTypes[path.
-            extname(lookup)]
+                'Content-type': mimeTypes
             };
 /*****************************************************/
 
