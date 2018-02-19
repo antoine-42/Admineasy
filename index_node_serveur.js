@@ -86,13 +86,13 @@ var reaction = function(req, res)
      			
      			
 						//Prépare le code HTML
-						codeHtml = '<!DOCTYPE html>'+
+						/*codeHtml = '<!DOCTYPE html>'+
 						'<html>'+
 							'<head>'+
 								'<meta charset="utf-8"/>'+
-								/*'<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">'+*/
+								'<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">'+
 								'<link rel="stylesheet" href="./home/invite/mack/admineasy/css/style.css">'+
-								/*'<script src="./js/accueil.js"></script>'+*/
+								'<script src="./js/accueil.js"></script>'+
 								'<title>admineasy</title>'+
 							'</head>'+
 							'<body>'+
@@ -141,7 +141,7 @@ var reaction = function(req, res)
 							'</body>'+
 						'</html>' ;
 
-						res.write(codeHtml) ;
+						res.write(codeHtml) ;*/
 
 /***************************************************************************************/
 						res.write("name : "+list.name+" os-simple : "+list.os_simple+" cpu-name : "+list.cpu_name);

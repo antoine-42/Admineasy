@@ -1,12 +1,12 @@
-@font-face {
-	font-family: "Gabriola";  /* declare la police gabriola*/ 
+/*@font-face {
+	font-family: "Gabriola";  /* declare la police gabriola
 	src: url('Gabriola.ttf') format('truetype');
 }
 
 @font-face {
-	font-family: "Cambria";   /* declare la police Cambria */
+	font-family: "Cambria";   /* declare la police Cambria 
 	src: url('Cambria.ttf') format('truetype');
-}
+}*/
 
 *{                        /* remet tout à zéro pour s'adapter à chaque navigateur */
 	margin: 0px;
