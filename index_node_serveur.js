@@ -69,7 +69,7 @@ var reaction = function(req, res)
 						/**Affichage**/
 						res.writeHead(200, headers);
 
-						fs.readFile("./index.html", function(err, data){
+						/*fs.readFile("./index.html", function(err, data){
 							if(err){
 								throw err;
 							}
@@ -77,14 +77,14 @@ var reaction = function(req, res)
 
 							console.log(content);
 							processFile();
-						}, "utf-8");
+						});
 						function processFile(){
 							console.log(content);
-						}
+						}*/
 
 						
      			
-     			/*
+     			
 						//Prépare le code HTML
 						codeHtml = '<!DOCTYPE html>'+
 						'<html>'+
@@ -141,7 +141,7 @@ var reaction = function(req, res)
 							'</body>'+
 						'</html>' ;
 
-						res.write(codeHtml) ;*/
+						res.write(codeHtml) ;
 
 /***************************************************************************************/
 						res.write("name : "+list.name+" os-simple : "+list.os_simple+" cpu-name : "+list.cpu_name);
