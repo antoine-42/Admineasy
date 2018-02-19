@@ -1,5 +1,6 @@
 
-var Node={Search: function(){
+var Serveur={
+	Search: function(){
 /**Variables**/
 var PORT = 8888 ; //Port d'écoute
 

@@ -10,7 +10,7 @@
 
 	<script type="text/javascript">
 
-	function search(){
+	/*function search(){
 	
 		//element=document.getElementById("modele").value;
 		//	console.log("search: "+element);
@@ -35,7 +35,7 @@
 				console.log("RESP: "+requete.responseText);
 			elem.innerHTML=requete.responseText;
 		//}
-	}
+	}*/
 	</script>
 
 		<title>AdminEasy</title>
@@ -66,7 +66,7 @@
 		<form id="monform">
 				CPU_Modele
 				<input id="modele" type="text"/>
-				<input name="rechercher" type="button" value="Envoyer"  onclick="search()"/>
+				<input name="rechercher" type="button" value="Envoyer"  onclick="Serveur.Search()"/>
 			</form>
 		</div>
 		<div id="texte"></div>
