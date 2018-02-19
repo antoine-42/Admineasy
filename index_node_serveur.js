@@ -67,7 +67,7 @@ var reaction = function(req, res)
 							
 							
 						/**Affichage**/
-
+						res.writeHead(200, headers);
 
 						fs.readFile("./index.html", function(err, data){
 							if(err){
@@ -81,8 +81,10 @@ var reaction = function(req, res)
 						function processFile(){
 							console.log(content);
 						}
+
 						
-     /*   res.writeHead(200, headers);
+     			
+     			/*
 						//Prépare le code HTML
 						codeHtml = '<!DOCTYPE html>'+
 						'<html>'+
