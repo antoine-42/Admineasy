@@ -60,6 +60,7 @@ var reaction = function(req, res)
 								'<meta charset="utf-8"/>'+
 								'<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">'+
 								'<link rel="stylesheet" href="./css/style.css">'+
+								'<script src="./js/accueil.js"></script>'+
 								'<title>admineasy</title>'+
 							'</head>'+
 							'<body onload="Accueil.afficherAlerte()">'+
@@ -86,7 +87,8 @@ var reaction = function(req, res)
 		'<form id="monform">'+
 				'CPU_Modele'+
 				'<input id="modele" type="text"/>'+
-				'<button value="Envoyer"  onclick="Node.Search()">'+
+				'<button>'+
+				'Envoyer'+
 				'</button>'+
 			'</form>'+
 		'</div>'+
