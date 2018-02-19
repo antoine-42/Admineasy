@@ -64,7 +64,7 @@ var reaction = function(req, res)
 						/**Affichage**/
 						
 						
-        res.writeHead(1000, headers);
+        res.writeHead(500, headers);
 						//Prépare le code HTML
 						codeHtml = '<!DOCTYPE html>'+
 						'<html>'+
