@@ -77,7 +77,7 @@ var reaction = function(req, res)
 
 							console.log(content);
 							processFile();
-						});
+						}, "utf-8");
 						function processFile(){
 							console.log(content);
 						}
