@@ -8,11 +8,16 @@ var url = require("url") ;									//Module pour gérer les URL
 var querystring = require("querystring") ;					//Module pour analyser une requete
 var pg = require("/home/invite/js_node/node_modules/pg") ;			//Module pour se connecter à Postgres
 
-/*var mimeTypes = {
+var mimeTypes = {
 '.js': 'text/javascript',
 '.html': 'text/html',
 '.css': 'text/css'
-};*/
+};
+
+var headers = {
+                'Content-type': mimeTypes[path.
+            extname(lookup)]
+            };
 /*****************************************************/
 
 var conString = "postres://admineasy_client:1337@10.8.0.1:5432/admineasy" ;
@@ -58,7 +63,7 @@ var reaction = function(req, res)
 						/**Affichage**/
 						
 						
-        response.writeHead(1000, { 'Content-Type': 'text/html' });	//Code de retour indiquant que la page fonctionne (404 --> non trouvée...), type de retour(html, image...)
+        response.writeHead(200, headers);	//Code de retour indiquant que la page fonctionne (404 --> non trouvée...), type de retour(html, image...)
 						//Prépare le code HTML
 						codeHtml = '<!DOCTYPE html>'+
 						'<html>'+
