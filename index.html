@@ -29,12 +29,12 @@
 
 	 function afficherResultat(requete){
 	 		console.log("afficherResultat");
-	//	if(requete.readyState==4 && requete.status==200){
+		if(requete.readyState==4 && requete.status==200){
 			console.log("afficherIIIFFFF");
 			elem=document.getElementById("test");
 				console.log("RESP: "+requete.responseText);
 			elem.innerHTML=requete.responseText;
-	//	}
+		}
 	}
 
 	</script>
