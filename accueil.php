@@ -53,14 +53,23 @@ foreach ($db->query("SELECT * FROM ram") as $row) {
 echo "debut PHP";
 // Connexion, sélection de la base de données
 //$dbconn = pg_connect("host=10.8.0.1 dbname=admineasy user=admineasy_client password=1337 port=5432");
-
-$dbconn= new PDO("pgsql:host=10.8.0.1;port=5432; dbname=admineasy; user=admineasy_client; password=1337");
-//$dbconn = pg_connect("host=10.8.0.1 dbname=admineasy user=admineasy_client password=1337 port=5432") or die('Connexion impossible : ' . pg_last_error());
-echo "apres Pdo";
-if($dbconn){
-	echo "success";
-}else{
-	echo "failed";
+$host='10.8.0.1';
+$db = 'admineasy';
+$username = 'admineasy_client';
+$password = '1337';
+$dsn = "pgsql:host=$host;port=5432;dbname=$db;user=$username;password=$password";
+ 
+$try{
+	// create a PostgreSQL database connection
+	$conn = new PDO($dsn);
+ 
+	// display a message if connected to the PostgreSQL successfully
+	if($conn){
+		echo "Connected to the <strong>$db</strong> database successfully!";
+	}
+}catch (PDOException $e){
+	// report error message
+	echo $e->getMessage();
 }
 /*
 // Exécution de la requête SQL
