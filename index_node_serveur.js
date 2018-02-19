@@ -64,23 +64,15 @@ var reaction = function(req, res)
 						/**Affichage**/
 						
 						
-        res.writeHead(200, {'Content-type': 'text/html'});
+        res.writeHead(200, headers);
 						//Prépare le code HTML
-						codeHtml1 = '<!DOCTYPE html>'+
+						codeHtml = '<!DOCTYPE html>'+
 						'<html>'+
 							'<head>'+
-								'<meta charset="utf-8"/>';
-								res.write(codeHtml1) ;
-								 res.writeHead(200, {'Content-type': 'text/css'});
-								codeHtml2=
+								'<meta charset="utf-8"/>'+
 								'<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">'+
-								'<link rel="stylesheet" href="./css/style.css">' ;
-								res.write(codeHtml2);
-								  res.writeHead(200, {'Content-type': 'text/javascript'});
-								  codeHtml3=
-								'<script src="./js/accueil.js"></script>' ;
-								res.write(codeHtml3);
-								codeHtml4=
+								'<link rel="stylesheet" href="./css/style.css">'+
+								'<script src="./js/accueil.js"></script>'+
 								'<title>admineasy</title>'+
 							'</head>'+
 							'<body>'+
@@ -129,7 +121,7 @@ var reaction = function(req, res)
 							'</body>'+
 						'</html>' ;
 
-						res.write(codeHtml4) ;
+						res.write(codeHtml) ;
 
 /***************************************************************************************/
 						res.write("name : "+list.name+" os-simple : "+list.os_simple+" cpu-name : "+list.cpu_name);
