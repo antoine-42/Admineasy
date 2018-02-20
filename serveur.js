@@ -3,8 +3,7 @@ var http = require("http") ;								//Module pour communiquer en HTML
 var url = require("url") ;									//Module pour gérer les URL
 var querystring = require("querystring") ;					//Module pour analyser une requete
 var pg = require("/home/invite/js_node/node_modules/pg") ;			//Module pour se connecter à Postgres
-var Serveur={
-	Search: function(){
+
 /**Variables**/
 var PORT = 8888 ; //Port d'écoute
 
@@ -101,5 +100,3 @@ var reaction = function(req, res)
 var server = http.createServer(reaction) ;
 server.listen(PORT) ; //Le serveur écoute le port 8888
 console.log("Serveur lancé (port : "+PORT+")") ;
-}
-}
