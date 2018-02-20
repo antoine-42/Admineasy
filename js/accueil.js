@@ -1,24 +1,25 @@
 
 
 var Accueil = {
-	nbAlertes: 1,
+	nbAlertes: 0,
 
 	setAlerte: function(){
 		this.nbAlertes++;
 	},
 
 	afficherAlerte: function(){
+		alerte=document.getElementById("alerte");
 		if(this.nbAlertes==0){
-			document.getElementById("alerte").style.color="green";
-			document.getElementById("alerte").innerHTML += "<br><p>Il n'y a pas d'alerte</p>";
+			alerte.style.color="green";
+			alerte.innerHTML += "<br><p>Il n'y a pas d'alerte</p>";
 			
 		}else if(this.nbAlertes==1){
-			document.getElementById("alerte").style.color="orange";
-			document.getElementById("alerte").innerHTML += "<br><p>Il y a 1 alerte</p>";
+			alerte.style.color="orange";
+			alerte.innerHTML += "<br><p>Il y a 1 alerte</p>";
 
 		}else if(this.nbAlertes>1){
-			document.getElementById("alerte").style.color="red";
-			document.getElementById("alerte").innerHTML += "<br><p>Il y a "+this.nbAlertes+" alertes</p>";
+			alerte.style.color="red";
+			alerte.innerHTML += "<br><p>Il y a "+this.nbAlertes+" alertes</p>";
 		}
 
 	},
