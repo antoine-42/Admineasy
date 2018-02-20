@@ -5,6 +5,7 @@ import collections  # for default dict
 # import multiprocessing  # multithreading
 import platform  # System info.
 import psutil  # Hardware info.
+import socket  # Get local IP
 import cpuinfo  # Detailed CPU info.
 # import pySMART  # Hard drive SMART info, requires admin. DOESNT FUCKING WORK. TODO make it work
 import influxdb  # Communication with influxdb.
@@ -191,6 +192,7 @@ class AllNetInterfaceInfo:
         self.interfaces = [NetInterfaceInfo(interface_name)
                            for interface_name, interface_info
                            in interfaces_init_info.items()]
+        self.localIP = socket.gethostbyname(socket.gethostname())
 
     def get_names(self):
         names = ""
@@ -718,11 +720,11 @@ class PostgreSQLconn:
 
     def create_entry(self):
         self.postgres_cursor.execute(
-            """INSERT INTO machines VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', %d, %d, '%s', %d, %d, %d, %d, '%s', '%s');"""
+            """INSERT INTO machines VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', %d, %d, '%s', %d, %d, %d, %d, '%s', '%s', '%s');"""
             % (self.machine.name, self.machine.os_full, self.machine.os_name, self.machine.os_version,
                 self.users[0].name, self.users[0].start, self.cpu.name, self.cpu.physical_cores, self.cpu.logical_cores,
                 self.cpu.hyper_threading, self.cpu.freq_min_mhz, self.cpu.freq_max_mhz,
-                self.ram.total_B / 1000000, self.swap.total_B / 1000000, self.net_ifaces.get_names(), self.disks.get_names()
+                self.ram.total_B / 1000000, self.swap.total_B / 1000000, self.net_ifaces.localIP, self.net_ifaces.get_names(), self.disks.get_names()
                )
         )
         self.postgres_connection.commit()
