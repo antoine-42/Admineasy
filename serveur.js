@@ -38,7 +38,7 @@ query.on('end', function(end)  // requette fini
 var reaction = function(req, res)
 				{
 
-					res.setHeader('Access-Control-Allow-Origin', *);
+					res.setHeader('Access-Control-Allow-Origin', '*');
 					var codeHtml ; //Chaine de caractères à écrire
 					
 					var page = url.parse(req.url).pathname ;	//Permet de savoir quelle page est demandée.
