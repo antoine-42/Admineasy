@@ -683,7 +683,7 @@ class PostgreSQLconn:
     postgres_cursor = None
 
     def __init__(self):
-        self.create_measurements()
+        self.get_measurements()
 
         try:
             self.connect()
@@ -692,13 +692,13 @@ class PostgreSQLconn:
             print(err)
             return
 
-        self.postgres_cursor.execute("""SELECT count(*) from machines WHERE name='desktop'""")
-        if self.postgres_cursor.fetchall()[0][0] == 0:
-            self.create_entry()
-        else:
+        if self.check_exists():
             self.update_db()
+        else:
+            self.create_entry()
 
-    def create_measurements(self):
+    # Get the measurements
+    def get_measurements(self):
         self.machine = MachineInfo()
 
         users_init_info = psutil.users()
@@ -712,16 +712,28 @@ class PostgreSQLconn:
         self.net_ifaces = AllNetInterfaceInfo()
         self.disks = AllPartitionsInfo()
 
+    # Connect to the database
     def connect(self):
         self.postgres_connection = psycopg2.connect(
             host="10.8.0.1", database="admineasy", user="admineasy_client", password="1337"
         )
         self.postgres_cursor = self.postgres_connection.cursor()
 
+    # Check if this computer exists
+    def check_exists(self):
+        self.postgres_cursor.execute("""SELECT * FROM machines WHERE name='%s' AND os_complete='%s';"""
+                                     % (self.machine.name, self.machine.os_full))
+        result = self.postgres_cursor.fetchall()
+        if len(result) > 0:
+            return True
+        return False
+
+    # Add this computer to the database
     def create_entry(self):
         self.postgres_cursor.execute(
             """INSERT INTO machines VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', %d, %d, '%s', %d, %d, %d, %d, '%s', '%s', '%s');"""
-            % (self.machine.name, self.machine.os_full, self.machine.os_name, self.machine.os_version,
+            % (
+                self.machine.name, self.machine.os_full, self.machine.os_name, self.machine.os_version,
                 self.users[0].name, self.users[0].start, self.cpu.name, self.cpu.physical_cores, self.cpu.logical_cores,
                 self.cpu.hyper_threading, self.cpu.freq_min_mhz, self.cpu.freq_max_mhz,
                 self.ram.total_B / 1000000, self.swap.total_B / 1000000, self.net_ifaces.localIP, self.net_ifaces.get_names(), self.disks.get_names()
@@ -729,12 +741,23 @@ class PostgreSQLconn:
         )
         self.postgres_connection.commit()
 
+    # Update the data on this computer
     def update_db(self):
-        self.postgres_cursor.execute("""SELECT * FROM machines WHERE name='%s';""" % self.machine.name)
-        result = self.postgres_cursor.fetchall()[0]
-
-        #self.postgres_cursor.execute("""UPDATE machines SET ram_total=32000 WHERE name='%s';""" % (self.machine.name))
-        #self.postgres_connection.commit()
+        self.postgres_cursor.execute(
+            """UPDATE machines SET 
+                   user_name='%s', connection_time='%s', cpu_name='%s', cpu_cores=%d, cpu_threads=%d, 
+                   cpu_hyperthreading='%s', cpu_freqmin=%d, cpu_freqmax=%d, ram_total=%d, swap_total=%d, local_ip='%s', 
+                   net_ifaces='%s', disk_names='%s'
+                WHERE name='%s' AND os_complete='%s';"""
+            % (
+                self.users[0].name, self.users[0].start, self.cpu.name, self.cpu.physical_cores, self.cpu.logical_cores,
+                self.cpu.hyper_threading, self.cpu.freq_min_mhz, self.cpu.freq_max_mhz,
+                self.ram.total_B / 1000000, self.swap.total_B / 1000000, self.net_ifaces.localIP,
+                self.net_ifaces.get_names(), self.disks.get_names(),
+                self.machine.name, self.machine.os_full
+               )
+        )
+        self.postgres_connection.commit()
 
 
 postgres = PostgreSQLconn()
@@ -782,7 +805,7 @@ battery = BatteryInfo()
 ###########################################
 
 while True:
-    print("nUpdating at %s\n" % datetime.datetime.utcnow().isoformat())
+    print("\nUpdating at %s\n" % datetime.datetime.utcnow().isoformat())
 
     for device in devices_data:
         devices_data[device].update_influxdb()
