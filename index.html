@@ -14,7 +14,8 @@
 		//element=document.getElementById("modele").value;
 		//	console.log("search: "+element);
 		var requete= creerRequete();
-		var url="http://192.168.1.21:9898";
+		//var url="http://192.168.1.21:54823/ping";
+		var url="http://nailyk.ddns.net:54823/ping" ;
 
 		requete.open("POST", url, true);
 		requete.onreadystatechange=function(){
@@ -30,7 +31,7 @@
 	 		console.log("afficherResultat");
 		//if(requete.readyState==4 && requete.status==200){
 			console.log("afficherIIIFFFF");
-			elem=document.getElementById("test");
+			elem=document.getElementById("texte");
 				console.log("RESP: "+requete.responseText);
 			elem.innerHTML=requete.responseText;
 		//}
