@@ -62,11 +62,11 @@ console.log("APRES QUERY");
 												console.log("RETOUR "+retour);
 
 												var code=
-												'<tr><a href="index.html">'
-												+'<td>'+retour[0]+'</td>'
+												'<tr>'
+												+'<td><a href="index.html">'+retour[0]+'</a></td>'
 												+'<td>'+retour[1]+'</td>'
 												+'<td>'+retour[2]+'</td>'
-												+'</a></tr>';
+												+'</tr>';
 
 												callback(tableau+code+'</tbody></table>') ;
 
