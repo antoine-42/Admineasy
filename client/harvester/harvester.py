@@ -16,6 +16,7 @@ if __name__ == "__main__":
 
     # Devices Data
     machine = MachineInfo()
+    self_monitor = SelfMonitor()
     devices_data = {
         "users":        AllUserInfo(),
         "cpu":          CpuInfo(),
@@ -27,7 +28,6 @@ if __name__ == "__main__":
         "temp":         AllTempInfo(),
         "fans":         AllFansInfo(),
         "battery":      BatteryInfo(),
-        "self_monitor": SelfMonitor()
     }
 
     postgres.get_measurements([
@@ -58,6 +58,8 @@ if __name__ == "__main__":
         update_end = datetime.datetime.now()
         update_duration = (update_end - update_start).total_seconds()
         if DEBUG:
+            self_monitor.refresh()
+            self_monitor.print()
             print("\nUpdate %s finished at %s  duration: %s s\n" %
                   (update_n, update_end.isoformat(), round(update_duration, 3)))
 

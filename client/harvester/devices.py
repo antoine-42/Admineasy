@@ -770,7 +770,7 @@ class BatteryInfo(DeviceInfo):
             self.is_plugged, self.percent_left, self.seconds_left))
 
 
-class SelfMonitor(DeviceInfo):
+class SelfMonitor:
     cpu_percent = -1
     ram_percent = -1
 
