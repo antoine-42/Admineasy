@@ -42,7 +42,10 @@ console.log("APRES QUERY");
 									
 									var rows = res.rows ;
 									console.log("rows: "+rows);
-									if(rows[0]==undefined) console.log("IF: rows[0]=" +rows[0]);
+									if(rows[0]==undefined) {
+										console.log("IF: rows[0]=" +rows[0]);
+										callback("Bonjour");
+									}
 
 									rows.map(row =>
 											{
