@@ -62,7 +62,7 @@ console.log("APRES QUERY");
 												console.log("RETOUR "+retour);
 
 												var code=
-												'<tr><a href=http://nailyk.ddns.net:54823/machine?ip='+retour[1]+'>'
+												'<tr><a href="index.html">'
 												+'<td>'+retour[0]+'</td>'
 												+'<td>'+retour[1]+'</td>'
 												+'<td>'+retour[2]+'</td>'
