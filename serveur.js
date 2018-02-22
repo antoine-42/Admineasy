@@ -38,8 +38,9 @@ var machine_get = function(ip, callback)
 console.log("APRES QUERY");
 		client.query(query).then(res =>
 								{
-									console.log("rows");
+									
 									var rows = res.rows ;
+									console.log("rows: "+rows);
 									rows.map(row =>
 											{
 												console.log("rows map");
