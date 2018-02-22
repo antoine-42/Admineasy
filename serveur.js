@@ -42,7 +42,7 @@ console.log("APRES QUERY");
 									
 									var rows = res.rows ;
 									console.log("rows: "+rows);
-									if(rows==null) console.log("IF");
+									if(rows[0]!=null) console.log("IF: rows[0]=" +rows[0]);
 
 									rows.map(row =>
 											{
