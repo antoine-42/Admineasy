@@ -9,7 +9,7 @@
 	<script type="text/javascript">
 		function search(){
 		var requete= creerRequete();
-		var url="http://nailyk.ddns.net:54823/listmachine" ;
+		var url="http://nailyk.ddns.net:54823/machines?ip=192.168.1.42" ;
 		requete.open("POST", url, true);
 		requete.onreadystatechange=function(){
 			afficherResultat(requete);

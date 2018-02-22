@@ -43,11 +43,7 @@ console.log("APRES QUERY");
 									
 									var rows = res.rows ;
 									console.log("rows: "+rows);
-									/*if(rows[0]==undefined) {
-										console.log("IF: rows[0]=" +rows[0]);
-							
-									}else{*/
-										var tableau=
+									var tableau=
 										'<table><thead><tr>'
 										+'<th>Nom Machine</th>'
 										+'<th>IP Machine</th>'
@@ -57,19 +53,7 @@ console.log("APRES QUERY");
 									rows.map(row =>
 											{
 												console.log("rows map");
-												//var retour = `${JSON.stringify(row)}` ;
 												
-												/*
-													Formatez le retour en HTML comme vous le souhaitez.
-													Pour le moment, je ne renvoie que la ligne suivante, mais ça vous permet de voir les champs pour composer le retour HTML.
-
-													{"name":"antoine_main","os_complete":"Windows-10-10.0.16299-SP0","os_simple":"Windows","os_version":"10","user_name":"Antoin","connection_time":"2018-02-20T00:07:57.000Z","cpu_name":"Intel(R) Core(TM) i7-5820K CPU @ 3.30GHz","cpu_cores":6,"cpu_threads":12,"cpu_hyperthreading":true,"cpu_freqmin":0,"cpu_freqmax":3300,"ram_total":17070,"swap_total":22438,"local_ip":"192.168.1.42","net_ifaces":"EthernetEthernet 2Loopback Pseudo-Interface 1Local Area Connection* 10","disk_names":"C:\\D:\\"}
-
-													Attention, cas non traité : si le retour est vide (adresse IP non connue)
-														Dans ce cas, le serveur renvoit la ligne... donc rien
-												*/
-												
-
 												var retour = [];
 
 												retour[0]=row.name;
@@ -84,13 +68,9 @@ console.log("APRES QUERY");
 												+'<td>'+retour[2]+'</td>'
 												+'</tr>';
 
-
 												callback(tableau+code+'</tbody></table>') ;
 
-
-
 											}) ;
-									//}
 								})
 							.catch(err =>
 								{
@@ -137,6 +117,20 @@ console.log("APRES QUERY");
 										+'<th>Nom Machine</th>'
 										+'<th>IP Machine</th>'
 										+'<th>Nom Utilisateur</th>'
+										+'<th>OS Complet</th>'
+										+'<th>OS Simple</th>'
+										+'<th>OS Version</th>'
+										+'<th>Connection Time</th>'
+										+'<th>CPU Name</th>'
+										+'<th>CPU Cores</th>'
+										+'<th>CPU Threads</th>'
+										+'<th>CPU Hyperthreading</th>'
+										+'<th>CPU Freqmin</th>'
+										+'<th>CPU Freqmax</th>'
+										+'<th>RAM Total</th>'
+										+'<th>Swap Total</th>'
+										+'<th>Net Ifaces</th>'
+										+'<th>Disk Names</th>'
 										+'</tr></thead><tbody>';
 
 									rows.map(row =>
@@ -148,7 +142,10 @@ console.log("APRES QUERY");
 													Formatez le retour en HTML comme vous le souhaitez.
 													Pour le moment, je ne renvoie que la ligne suivante, mais ça vous permet de voir les champs pour composer le retour HTML.
 
-													{"name":"antoine_main","os_complete":"Windows-10-10.0.16299-SP0","os_simple":"Windows","os_version":"10","user_name":"Antoin","connection_time":"2018-02-20T00:07:57.000Z","cpu_name":"Intel(R) Core(TM) i7-5820K CPU @ 3.30GHz","cpu_cores":6,"cpu_threads":12,"cpu_hyperthreading":true,"cpu_freqmin":0,"cpu_freqmax":3300,"ram_total":17070,"swap_total":22438,"local_ip":"192.168.1.42","net_ifaces":"EthernetEthernet 2Loopback Pseudo-Interface 1Local Area Connection* 10","disk_names":"C:\\D:\\"}
+													{"name":"antoine_main","os_complete":"Windows-10-10.0.16299-SP0","os_simple":"Windows","os_version":"10","user_name":"Antoin",
+													"connection_time":"2018-02-20T00:07:57.000Z","cpu_name":"Intel(R) Core(TM) i7-5820K CPU @ 3.30GHz","cpu_cores":6,"cpu_threads":12,
+													"cpu_hyperthreading":true,"cpu_freqmin":0,"cpu_freqmax":3300,"ram_total":17070,"swap_total":22438,"local_ip":"192.168.1.42",
+													"net_ifaces":"EthernetEthernet 2Loopback Pseudo-Interface 1Local Area Connection* 10","disk_names":"C:\\D:\\"}
 
 													Attention, cas non traité : si le retour est vide (adresse IP non connue)
 														Dans ce cas, le serveur renvoit la ligne... donc rien
@@ -160,6 +157,21 @@ console.log("APRES QUERY");
 												retour[0]=row.name;
 												retour[1]=row.local_ip;
 												retour[2]=row.user_name;
+												retour[3]=row.os_complete;
+												retour[4]=row.os_simple;
+												retour[5]=row.os_version;
+												retour[6]=row.connection_time;
+												retour[7]=row.cpu_name;
+												retour[8]=row.cpu_cores;
+												retour[9]=row.cpu_threads;
+												retour[10]=row.cpu_hyperthreading;
+												retour[11]=row.cpu_freqmin;
+												retour[12]=row.cpu_freqmax;
+												retour[13]=row.ram_total;
+												retour[14]=row.swap_total;
+												retour[15]=row.net_ifaces;
+												retour[16]=row.disk_names;
+
 												console.log("RETOUR "+retour);
 
 												var code=
@@ -167,6 +179,20 @@ console.log("APRES QUERY");
 												+'<td>'+retour[0]+'</td>'
 												+'<td>'+retour[1]+'</td>'
 												+'<td>'+retour[2]+'</td>'
+												+'<td>'+retour[3]+'</td>'
+												+'<td>'+retour[4]+'</td>'
+												+'<td>'+retour[5]+'</td>'
+												+'<td>'+retour[6]+'</td>'
+												+'<td>'+retour[7]+'</td>'
+												+'<td>'+retour[8]+'</td>'
+												+'<td>'+retour[9]+'</td>'
+												+'<td>'+retour[10]+'</td>'
+												+'<td>'+retour[11]+'</td>'
+												+'<td>'+retour[12]+'</td>'
+												+'<td>'+retour[13]+'</td>'
+												+'<td>'+retour[14]+'</td>'
+												+'<td>'+retour[15]+'</td>'
+												+'<td>'+retour[16]+'</td>'
 												+'</tr>';
 
 
