@@ -5,24 +5,24 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="./css/style.css">
 	<script type="text/javascript" src="./js/requete.js"></script>
-	
+	<script type="text/javascript" src="./js/reseau.js"></script>
 	<script type="text/javascript" src="./js/bd.js"></script>
 
 		<title>AdminEasy</title>
 	</head>
-	<body>
+	<body onload="Machine.afficherMachine()">
 		<header id="titre_principal">	
 		<h1>AdminEasy</h1>	
 		</header>
 		<!-- .....................................MENU........................................... -->
 		<nav>  <!-- lien de navigation -->
 			<ul>    <!-- accueil -->
-				<li class="menuaccueil"><a href="index.html">Accueil</a></li>	
-				<li class="menureseau"><a href="reseau_vue.html">Réseau</a>			
+				<li><a href="index.html">Accueil</a></li>	
+				<li class="selected"><a href="reseau_vue.html">Réseau</a>			
 				</li>	
-				<li class="menumachines"><a href="machines_vue.html">Machines</a>
+				<li><a href="machines_vue.html">Machines</a>
 				</li>
-				<li class="contact"><a href="contact_vue.html">Contact</a></li>	
+				<li><a href="contact_vue.html">Contact</a></li>	
 			</ul>
 		</nav>
 		<!-- ................................................................................ -->
@@ -31,7 +31,7 @@
 				<h4>
 					Voici une vision d'ensemble du réseau:
 				</h4>
-
+					<i id="machine" class="material-icons" style="font-size:60px">computer</i>
 			</div>
 		</div>
 

@@ -5,18 +5,32 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="./css/style.css">
 	<script type="text/javascript" src="./js/requete.js"></script>
-	
+	<script type="text/javascript" src="./js/reseau.js"></script>
 	<script type="text/javascript">
-		function search(){
+
+		function searchIP(){
 		var requete= creerRequete();
-		var url="http://nailyk.ddns.net:54823/machine?ip=192.168.1.42" ;
+		var arg=document.getElementById("ip").value;
+		var url="http://nailyk.ddns.net:54823/machine?ip="+arg ;
 		requete.open("POST", url, true);
 		requete.onreadystatechange=function(){
 			afficherResultat(requete);
 		}
 
 		requete.send();
-	}
+		}
+
+		function search(){
+		var requete= creerRequete();
+		var url="http://nailyk.ddns.net:54823/machine?ip="+arg ;
+		requete.open("POST", url, true);
+		requete.onreadystatechange=function(){
+			afficherResultat(requete);
+		}
+
+		requete.send();
+		}
+
 
 	 function afficherResultat(requete){
 	 		console.log("afficherResultat");
@@ -32,19 +46,19 @@
 
 		<title>AdminEasy</title>
 	</head>
-	<body>
+	<body onload="Machine.afficherMachine()">
 		<header id="titre_principal">	
 		<h1>AdminEasy</h1>	
 		</header>
 		<!-- .....................................MENU........................................... -->
 		<nav>  <!-- lien de navigation -->
 			<ul>    <!-- accueil -->
-				<li class="menuaccueil"><a href="index.html">Accueil</a></li>	
-				<li class="menureseau"><a href="reseau_vue.html">Réseau</a>			
+				<li><a href="index.html">Accueil</a></li>	
+				<li><a href="reseau_vue.html">Réseau</a>			
 				</li>	
-				<li class="menumachines"><a href="machines_vue.html">Machines</a>
+				<li class="selected"><a href="machines_vue.html">Machines</a>
 				</li>
-				<li class="contact"><a href="contact_vue.html">Contact</a></li>	
+				<li><a href="contact_vue.html">Contact</a></li>	
 			</ul>
 		</nav>
 		<!-- ................................................................................ -->
@@ -54,10 +68,12 @@
 					Voici les machines présentes dans le réseau:
 				</h4>
 				<div id="texte"></div>
+				<i id="machine" class="material-icons" style="font-size:60px;float:right">laptop</i>
 				<form id="monform">
-					<input name="rechercher" type="button" value="Envoyer"  onclick="search()"/>
+					<input name="rechercher" type="button" value="Liste"  onclick="search()"/>
 				</form>
-
+					<input id="ip" type="text" name"ipmachine" />
+					<input name="ipmachine" type="button" value="Envoyer"  onclick="searchIP()"/>
 			</div>
 		</div>
 

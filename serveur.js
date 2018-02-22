@@ -112,27 +112,6 @@ console.log("APRES QUERY");
 										console.log("IF: rows[0]=" +rows[0]);
 										callback("IP inexistante "+ip);
 									}else{
-										var tableau=
-										'<table><thead><tr>'
-										+'<th>Nom Machine</th>'
-										+'<th>IP Machine</th>'
-										+'<th>Nom Utilisateur</th>'
-										+'<th>OS Complet</th>'
-										+'<th>OS Simple</th>'
-										+'<th>OS Version</th>'
-										+'<th>Connection Time</th>'
-										+'<th>CPU Name</th>'
-										+'<th>CPU Cores</th>'
-										+'<th>CPU Threads</th>'
-										+'<th>CPU Hyperthreading</th>'
-										+'<th>CPU Freqmin</th>'
-										+'<th>CPU Freqmax</th>'
-										+'<th>RAM Total</th>'
-										+'<th>Swap Total</th>'
-										+'<th>Net Ifaces</th>'
-										+'<th>Disk Names</th>'
-										+'</tr></thead><tbody>';
-
 									rows.map(row =>
 											{
 												console.log("rows map");
@@ -175,30 +154,25 @@ console.log("APRES QUERY");
 												console.log("RETOUR "+retour);
 
 												var code=
-												'<tr>'
-												+'<td>'+retour[0]+'</td>'
-												+'<td>'+retour[1]+'</td>'
-												+'<td>'+retour[2]+'</td>'
-												+'<td>'+retour[3]+'</td>'
-												+'<td>'+retour[4]+'</td>'
-												+'<td>'+retour[5]+'</td>'
-												+'<td>'+retour[6]+'</td>'
-												+'<td>'+retour[7]+'</td>'
-												+'<td>'+retour[8]+'</td>'
-												+'<td>'+retour[9]+'</td>'
-												+'<td>'+retour[10]+'</td>'
-												+'<td>'+retour[11]+'</td>'
-												+'<td>'+retour[12]+'</td>'
-												+'<td>'+retour[13]+'</td>'
-												+'<td>'+retour[14]+'</td>'
-												+'<td>'+retour[15]+'</td>'
-												+'<td>'+retour[16]+'</td>'
-												+'</tr>';
+												+'<li>Nom Machine: '+retour[0]+'</li>'
+												+'<li>IP Machine: '+retour[1]+'</li>'
+												+'<li>Nom Utilisateur: '+retour[2]+'</li>'
+												+'<li>OS Complet: '+retour[3]+'</li>'
+												+'<li>OS Simple: '+retour[4]+'</li>'
+												+'<li>OS Version: '+retour[5]+'</li>'
+												+'<li>Connection Time: '+retour[6]+'</li>'
+												+'<li>CPU Name: '+retour[7]+'</li>'
+												+'<li>CPU Cores: '+retour[8]+'</li>'
+												+'<li>CPU lireads: '+retour[9]+'</li>'
+												+'<li>CPU Hyperlireading: '+retour[10]+'</li>'
+												+'<li>CPU Freqmin: '+retour[11]+'</li>'
+												+'<li>CPU Freqmax: '+retour[12]+'</li>'
+												+'<li>RAM Total: '+retour[13]+'</li>'
+												+'<li>Swap Total: '+retour[14]+'</li>'
+												+'<li>Net Ifaces: '+retour[15]+'</li>'
+												+'<li>Disk Names: '+retour[16]+'</li>'
 
-
-												callback(tableau+code+'</tbody></table>') ;
-
-
+												callback('<ul>'+code+'</ul>') ;
 
 											}) ;
 									}
@@ -213,6 +187,7 @@ console.log("APRES QUERY");
 
 
 	}
+	/******************************************************************************************/
 
 var ping_get = function(callback)
 				{

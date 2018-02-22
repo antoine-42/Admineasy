@@ -30,6 +30,7 @@ ul {                        /* met le menu au milieu */
 	margin: 0 auto;
 }
 
+
 nav {                          /* menu fond */
 	width: 100%;
 	background-color: grey;
@@ -54,10 +55,14 @@ nav ul li a{                            /* les liens du menu */
 	text-transform: uppercase;   /* met en majuscules */
 	font-size: 25px;
 }
+nav li.selected a{
+	background-color: darkblue;
+}
 
 ul li a:hover {                         /* quand on passe la souris menu */
 	background-color: darkblue;
 }
+
 /**************************************** ACCUEIL **********************************/
 .page{
 	padding: 30px;

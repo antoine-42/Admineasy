@@ -10,20 +10,12 @@
 	<script type="text/javascript">
 
 	function search(){
-	
-		//element=document.getElementById("modele").value;
-		//	console.log("search: "+element);
 		var requete= creerRequete();
-		//var url="http://192.168.1.21:54823/ping";
 		var url="http://nailyk.ddns.net:54823/ping" ;
-
 		requete.open("POST", url, true);
 		requete.onreadystatechange=function(){
 			afficherResultat(requete);
 		}
-
-	//	requete.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
 		requete.send();
 	}
 
@@ -47,18 +39,18 @@
 		<!-- .....................................MENU........................................... -->
 	<nav>  <!-- lien de navigation -->
 			<ul>    <!-- accueil -->
-				<li class="menuaccueil"><a href="index.html">Accueil</a></li>	
-				<li class="menureseau"><a href="reseau_vue.html">Réseau</a>			
+				<li class="selected"><a href="index.html">Accueil</a></li>	
+				<li ><a href="reseau_vue.html">Réseau</a>			
 				</li>	
-				<li class="menumachines"><a href="machines_vue.html">Machines</a>
+				<li ><a href="machines_vue.html">Machines</a>
 				</li>
-				<li class="contact"><a href="contact_vue.html">Contact</a></li>	
+				<li><a href="contact_vue.html">Contact</a></li>	
 			</ul>
 		</nav>
 		<!-- ................................................................................ -->
 		<div class="page">
 			<div class="accueil">
-				<i id="alerte" class="material-icons" style="font-size:48px;color:red">warning</i>
+				<i id="alerte" class="material-icons" style="font-size:48px">warning</i>
 				<div id="texte"></div>
 				<form id="monform">
 					<input name="rechercher" type="button" value="Envoyer"  onclick="search()"/>
