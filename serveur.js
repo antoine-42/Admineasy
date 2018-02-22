@@ -145,6 +145,7 @@ var reaction = function(req, res)
 						if('ip' in arguments)
 						{
 							console.log(arguments['ip']) ;
+							console.log("MACHINE IP");
 							machine_get(arguments['ip'], function(html)
 															{
 																ecrire_HTML(html, res) ;
