@@ -35,7 +35,7 @@ var machine_get = function(ip, callback)
 						});
 
 		var query = "select * from machines where local_ip='"+ip+"'" ;
-console.log("APRES QUERY"):
+console.log("APRES QUERY");
 		client.query(query).then(res =>
 								{
 									var rows = res.rows ;
