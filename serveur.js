@@ -51,6 +51,7 @@ console.log("APRES QUERY");
 											{
 												console.log("rows map");
 												//var retour = `${JSON.stringify(row)}` ;
+												var retour = row;
 												/*
 													Formatez le retour en HTML comme vous le souhaitez.
 													Pour le moment, je ne renvoie que la ligne suivante, mais ça vous permet de voir les champs pour composer le retour HTML.
@@ -60,9 +61,9 @@ console.log("APRES QUERY");
 													Attention, cas non traité : si le retour est vide (adresse IP non connue)
 														Dans ce cas, le serveur renvoit la ligne... donc rien
 												*/
-												//console.log("RETOUR "+retour);
+												console.log("RETOUR "+retour);
 
-												callback(rows.name) ;
+												callback(retour.name) ;
 
 											}) ;
 									}
