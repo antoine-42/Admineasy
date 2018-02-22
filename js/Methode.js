@@ -9,7 +9,7 @@ var Methode = {
 			elem.innerHTML=requete.responseText;
 		}
 	},
-	
+
 	 searchIP: function(){
 		var requete= creerRequete();
 		var arg=document.getElementById("ip").value;
@@ -17,7 +17,7 @@ var Methode = {
 		requete.open("POST", url, true);
 		requete.onreadystatechange=function(){
 			afficherResultat(requete);
-		}
+		};
 
 		requete.send();
 		},
@@ -28,7 +28,7 @@ var Methode = {
 		requete.open("POST", url, true);
 		requete.onreadystatechange=function(){
 			afficherResultat(requete);
-		}
+		};
 
 		requete.send();
 		},
