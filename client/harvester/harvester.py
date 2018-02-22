@@ -14,25 +14,36 @@ if __name__ == "__main__":
     postgres = PostgreSQLconn()
     influx = InfluxConn()
 
-    machine = MachineInfo()
-
     # Devices Data
+    machine = MachineInfo()
     devices_data = {
+        "users":      AllUserInfo(),
         "cpu":        CpuInfo(),
         "ram":        RamInfo(),
         "swap":       SWAPInfo(),
         "net_ifaces": AllNetInterfaceInfo(),
         "partitions": AllPartitionsInfo(),
-        "disk_io":    AllDiskIOInfo(),
+        "disks_io":   AllDiskIOInfo(),
         "temp":       AllTempInfo(),
         "fans":       AllFansInfo(),
         "battery":    BatteryInfo()
     }
 
+    postgres.get_measurements([
+        machine,
+        devices_data["users"],
+        devices_data["cpu"],
+        devices_data["ram"],
+        devices_data["swap"],
+        devices_data["net_ifaces"],
+        devices_data["disks_io"]
+    ])
+    postgres.send_data()
+
     update_n = 0
     while True:
+        update_start = datetime.datetime.now()
         if DEBUG:
-            update_start = datetime.datetime.now()
             print("\nUpdate %s starting at %s\n" % (update_n, update_start.isoformat()))
 
         for device in devices_data:
@@ -43,10 +54,11 @@ if __name__ == "__main__":
                 if DEBUG:
                     devices_data[device].print()
 
+        update_end = datetime.datetime.now()
+        update_duration = (update_end - update_start).total_seconds()
         if DEBUG:
-            update_end = datetime.datetime.now()
-            update_duration = (update_end - update_start).total_seconds()
-            print("\nUpdate finished at %s  duration: %s s\n" % (update_end.isoformat(), update_duration))
+            print("\nUpdate %s finished at %s  duration: %s s\n" %
+                  (update_n, update_end.isoformat(), round(update_duration, 3)))
 
         update_n += 1
         time.sleep(5)

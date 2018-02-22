@@ -31,7 +31,32 @@ class MachineInfo(DeviceInfo):
         print("Machine name: %s  OS: %s" % (self.name, self.os_full))
 
 
-class UserInfo(DeviceInfo):
+class AllUserInfo(DeviceInfo):
+    def __init__(self):
+        self.users = [UserInfo(user_name) for user_name, user_info1, user_info2, user_info3, user_info4 in psutil.users()]
+
+    # Updates all the data, then sends it to the influxdb database.
+    def make_points(self):
+        user_dict = {}
+        for user in self.users:
+            user_dict[user.name] = user.start
+        return [
+            {
+                "measurement": "users",
+                "tags": {
+                    "machine": MACHINE_NAME
+                },
+                "time": str(datetime.datetime.now().isoformat()),
+                "fields": user_dict
+            }
+        ]
+
+    def print(self):
+        for user in self.users:
+            user.print()
+
+
+class UserInfo:
     def __init__(self, name_):
         self.name = name_
         min_time = time.time()
@@ -42,7 +67,7 @@ class UserInfo(DeviceInfo):
         self.start = datetime.datetime.utcfromtimestamp(min_time).isoformat()
 
     def print(self):
-        print("Username: %s  connected at: %s" % (self.name, self.start))
+        print("User: %s  connected at: %s" % (self.name, self.start))
 
 
 class CpuInfo(DeviceInfo):
