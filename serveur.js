@@ -50,7 +50,7 @@ console.log("APRES QUERY");
 									rows.map(row =>
 											{
 												console.log("rows map");
-												var retour = `${JSON.stringify(row)}` ;
+												//var retour = `${JSON.stringify(row)}` ;
 												/*
 													Formatez le retour en HTML comme vous le souhaitez.
 													Pour le moment, je ne renvoie que la ligne suivante, mais ça vous permet de voir les champs pour composer le retour HTML.
@@ -62,7 +62,7 @@ console.log("APRES QUERY");
 												*/
 												console.log("RETOUR "+retour);
 
-												callback(retour['name']) ;
+												callback(rows.name) ;
 
 											}) ;
 									}
