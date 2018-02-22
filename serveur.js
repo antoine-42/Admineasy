@@ -44,8 +44,8 @@ console.log("APRES QUERY");
 									console.log("rows: "+rows);
 									if(rows[0]==undefined) {
 										console.log("IF: rows[0]=" +rows[0]);
-										callback("Bonjour");
-									}
+										callback("IP inexistante "+ip);
+									}else{
 
 									rows.map(row =>
 											{
@@ -65,6 +65,7 @@ console.log("APRES QUERY");
 												callback(retour) ;
 
 											}) ;
+									}
 								})
 							.catch(err =>
 								{
