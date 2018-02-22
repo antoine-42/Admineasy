@@ -20,6 +20,92 @@ var ping_machine = function (ip, callback)
 	
 }
 
+/******************************************************************************************/
+
+var machine_list_get = function(ip, callback)
+	{
+		console.log("ENTRER MACHINE GET");
+		var conString = "postres://admineasy_client:1337@10.8.0.1:5432/admineasy" ;
+
+		var client = new pg.Client(conString) ;
+		client.connect(err =>
+						{if(err)
+							{
+								console.log("Attente de connexion") ;
+								throw err ;
+							}
+						});
+
+		var query = "select * from machines" ;
+console.log("APRES QUERY");
+		client.query(query).then(res =>
+								{
+									
+									var rows = res.rows ;
+									console.log("rows: "+rows);
+									/*if(rows[0]==undefined) {
+										console.log("IF: rows[0]=" +rows[0]);
+							
+									}else{*/
+										var tableau=
+										'<table><thead><tr>'
+										+'<th>Nom Machine</th>'
+										+'<th>IP Machine</th>'
+										+'<th>Nom Utilisateur</th>'
+										+'</tr></thead><tbody>';
+
+									rows.map(row =>
+											{
+												console.log("rows map");
+												//var retour = `${JSON.stringify(row)}` ;
+												
+												/*
+													Formatez le retour en HTML comme vous le souhaitez.
+													Pour le moment, je ne renvoie que la ligne suivante, mais ça vous permet de voir les champs pour composer le retour HTML.
+
+													{"name":"antoine_main","os_complete":"Windows-10-10.0.16299-SP0","os_simple":"Windows","os_version":"10","user_name":"Antoin","connection_time":"2018-02-20T00:07:57.000Z","cpu_name":"Intel(R) Core(TM) i7-5820K CPU @ 3.30GHz","cpu_cores":6,"cpu_threads":12,"cpu_hyperthreading":true,"cpu_freqmin":0,"cpu_freqmax":3300,"ram_total":17070,"swap_total":22438,"local_ip":"192.168.1.42","net_ifaces":"EthernetEthernet 2Loopback Pseudo-Interface 1Local Area Connection* 10","disk_names":"C:\\D:\\"}
+
+													Attention, cas non traité : si le retour est vide (adresse IP non connue)
+														Dans ce cas, le serveur renvoit la ligne... donc rien
+												*/
+												
+
+												var retour = [];
+
+												retour[0]=row.name;
+												retour[1]=row.local_ip;
+												retour[2]=row.user_name;
+												console.log("RETOUR "+retour);
+
+												var code=
+												'<tr>'
+												+'<td>'+retour[0]+'</td>'
+												+'<td>'+retour[1]+'</td>'
+												+'<td>'+retour[2]+'</td>'
+												+'</tr>';
+
+
+												callback(tableau+code+'</tbody></table>') ;
+
+
+
+											}) ;
+									//}
+								})
+							.catch(err =>
+								{
+									console.log(err) ;
+									callback("<b>Une erreur est survenue lors de la requete.")
+								}) ;
+							
+							console.log("FIIIIIIINNNNNNNN");
+
+
+	}
+
+	/******************************************************************************************/
+
+
 var machine_get = function(ip, callback)
 	{
 		console.log("ENTRER MACHINE GET");
@@ -195,6 +281,14 @@ var reaction = function(req, res)
 						{
 							ecrire_HTML("<b>Erreur</b>", res) ;
 						}
+					}
+					else if(page == '/listmachine')
+						{
+							machine_list_get(function(html)
+									{
+										ecrire_HTML(html, res) ;
+									}) ;
+
 					}
 					else if(page != '/favicon.ico')
 						{
