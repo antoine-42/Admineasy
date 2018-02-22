@@ -51,7 +51,7 @@ console.log("APRES QUERY");
 										+'<th>Nom Machine</th>'
 										+'<th>IP Machine</th>'
 										+'<th>Nom Utilisateur</th>'
-										+'</tr></thead></table>';
+										+'</tr></thead><tbody>';
 
 									rows.map(row =>
 											{
@@ -76,11 +76,15 @@ console.log("APRES QUERY");
 												retour[2]=row.user_name;
 												console.log("RETOUR "+retour);
 
-												/*var code=
-												'<tbody>'*/
+												var code=
+												'<tr>'
+												+'<td>'+retour[0]+'</td>'
+												+'<td>'+retour[1]+'</td>'
+												+'<td>'+retour[2]+'</td>'
+												+'</tr>';
 
 
-												callback(tableau+retour[0]) ;
+												callback(tableau+code+'</tbody></table>') ;
 
 
 
