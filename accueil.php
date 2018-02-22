@@ -57,13 +57,13 @@ $host='10.8.0.1';
 $db = 'admineasy';
 $username = 'admineasy_client';
 $password = '1337';
-$dsn = "pgsql:host=$host;port=5432;dbname=$db;user=$username;password=$password";
+$dsn = "host=$host port=5432 dbname=$db user=$username password=$password";
 
 //echo $dsn ;
  
 $try{
 	// create a PostgreSQL database connection
-	$conn = new PDO($dsn);
+	$conn = pg_connect($dsn);
  
 	// display a message if connected to the PostgreSQL successfully
 	if($conn){
