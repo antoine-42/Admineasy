@@ -8,7 +8,7 @@ var querystring = require("querystring") ;					//Module pour analyser une requet
 var pg = require("/home/invite/js_node/node_modules/pg") ;						//Module pour se connecter à Postgres
 var ping = require("/home/invite/js_node/node_modules/ping") ;
 
-
+<script type="text/javascript" src="./js/reseau.js"></script>
 /*****************************************************/
 var ping_machine = function (ip, callback)
 {
@@ -63,7 +63,8 @@ console.log("APRES QUERY");
 
 												var code=
 												'<tr>'
-												+'<td><a href="http://nailyk.ddns.net:54823/machine?ip='+retour[1]+'">'+retour[0]+'</a></td>'
+												//+'<td><a href="http://nailyk.ddns.net:54823/machine?ip='+retour[1]+'">'+retour[0]+'</a></td>'
+												+'<td><a href="Methode.searchIP('+retour[1]+')">'+retour[0]+'</a></td>'
 												+'<td>'+retour[1]+'</td>'
 												+'<td>'+retour[2]+'</td>'
 												+'</tr>';

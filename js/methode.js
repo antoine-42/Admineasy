@@ -9,10 +9,10 @@ var Methode = {
 			elem.innerHTML=requete.responseText;
 		}
 	},
-    searchIP: function(){
+    searchIP: function(ip){
 		var requete= creerRequete();
 		var arg=document.getElementById("ip").value;
-		var url="http://nailyk.ddns.net:54823/machine?ip="+arg ;
+		var url="http://nailyk.ddns.net:54823/machine?ip="+ip ;
 		requete.open("POST", url, true);
 		requete.onreadystatechange=function(){
 			afficherResultat(requete);
