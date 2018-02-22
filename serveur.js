@@ -60,7 +60,7 @@ console.log("APRES QUERY");
 													Attention, cas non traité : si le retour est vide (adresse IP non connue)
 														Dans ce cas, le serveur renvoit la ligne... donc rien
 												*/
-												console.log("RETOUR "+retour);
+												//console.log("RETOUR "+retour);
 
 												callback(rows.name) ;
 
