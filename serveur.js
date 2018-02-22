@@ -154,23 +154,23 @@ console.log("APRES QUERY");
 												console.log("RETOUR "+retour);
 
 												var code=
-												+'<li>Nom Machine: '+retour[0]+'</li>'
-												+'<li>IP Machine: '+retour[1]+'</li>'
-												+'<li>Nom Utilisateur: '+retour[2]+'</li>'
-												+'<li>OS Complet: '+retour[3]+'</li>'
-												+'<li>OS Simple: '+retour[4]+'</li>'
-												+'<li>OS Version: '+retour[5]+'</li>'
-												+'<li>Connection Time: '+retour[6]+'</li>'
-												+'<li>CPU Name: '+retour[7]+'</li>'
-												+'<li>CPU Cores: '+retour[8]+'</li>'
-												+'<li>CPU lireads: '+retour[9]+'</li>'
-												+'<li>CPU Hyperlireading: '+retour[10]+'</li>'
-												+'<li>CPU Freqmin: '+retour[11]+'</li>'
-												+'<li>CPU Freqmax: '+retour[12]+'</li>'
-												+'<li>RAM Total: '+retour[13]+'</li>'
-												+'<li>Swap Total: '+retour[14]+'</li>'
-												+'<li>Net Ifaces: '+retour[15]+'</li>'
-												+'<li>Disk Names: '+retour[16]+'</li>'
+												+'<li>Nom Machine : '+retour[0]+'</li>'
+												+'<li>IP Machine : '+retour[1]+'</li>'
+												+'<li>Nom Utilisateur : '+retour[2]+'</li>'
+												+'<li>OS Complet : '+retour[3]+'</li>'
+												+'<li>OS Simple : '+retour[4]+'</li>'
+												+'<li>OS Version : '+retour[5]+'</li>'
+												+'<li>Connection Time : '+retour[6]+'</li>'
+												+'<li>CPU Name : '+retour[7]+'</li>'
+												+'<li>CPU Cores : '+retour[8]+'</li>'
+												+'<li>CPU lireads : '+retour[9]+'</li>'
+												+'<li>CPU Hyperlireading : '+retour[10]+'</li>'
+												+'<li>CPU Freqmin : '+retour[11]+'</li>'
+												+'<li>CPU Freqmax : '+retour[12]+'</li>'
+												+'<li>RAM Total : '+retour[13]+'</li>'
+												+'<li>Swap Total : '+retour[14]+'</li>'
+												+'<li>Net Ifaces : '+retour[15]+'</li>'
+												+'<li>Disk Names : '+retour[16]+'</li>';
 
 												callback('<ul>'+code+'</ul>') ;
 
