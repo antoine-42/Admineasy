@@ -38,9 +38,11 @@ var machine_get = function(ip, callback)
 console.log("APRES QUERY");
 		client.query(query).then(res =>
 								{
+									console.log("rows");
 									var rows = res.rows ;
 									rows.map(row =>
 											{
+												console.log("rows map");
 												var retour = `${JSON.stringify(row)}` ;
 												/*
 													Formatez le retour en HTML comme vous le souhaitez.
@@ -51,6 +53,7 @@ console.log("APRES QUERY");
 													Attention, cas non traité : si le retour est vide (adresse IP non connue)
 														Dans ce cas, le serveur renvoit la ligne... donc rien
 												*/
+												console.log("RETOUR "+retour);
 
 												callback(retour) ;
 
