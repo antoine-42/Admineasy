@@ -66,9 +66,11 @@ console.log("APRES QUERY");
 												var retour = [];
 
 												retour[0]=row.name;
-												retour[1]=row.os_complete;
-												retour[2]=row.os_simple;
+												retour[1]=row.local_ip;
+												retour[2]=user_name;
 												console.log("RETOUR "+retour);
+
+
 
 												callback(retour[0]) ;
 
