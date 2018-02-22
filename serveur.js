@@ -1,3 +1,5 @@
+require('./js/methode.js');
+
 /**Variables**/
 var PORT = 54823 ; //Port d'écoute
 
@@ -8,7 +10,7 @@ var querystring = require("querystring") ;					//Module pour analyser une requet
 var pg = require("/home/invite/js_node/node_modules/pg") ;						//Module pour se connecter à Postgres
 var ping = require("/home/invite/js_node/node_modules/ping") ;
 
-<script type="text/javascript" src="./js/reseau.js"></script>
+
 /*****************************************************/
 var ping_machine = function (ip, callback)
 {
