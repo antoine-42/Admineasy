@@ -1,16 +1,15 @@
 var Methode = {
 
-	 afficherResultat: function(requete){
-	 		console.log("afficherResultat");
-		if(requete.readyState==4 && requete.status==200){
+    afficherResultat: function(requete){
+        console.log("afficherResultat");
+        if(requete.readyState==4 && requete.status==200){
 			console.log("afficherIIIFFFF");
 			elem=document.getElementById("texte");
 			console.log("RESP: "+requete.responseText);
 			elem.innerHTML=requete.responseText;
 		}
 	},
-
-	 searchIP: function(){
+    searchIP: function(){
 		var requete= creerRequete();
 		var arg=document.getElementById("ip").value;
 		var url="http://nailyk.ddns.net:54823/machine?ip="+arg ;
