@@ -46,6 +46,12 @@ console.log("APRES QUERY");
 										console.log("IF: rows[0]=" +rows[0]);
 										callback("IP inexistante "+ip);
 									}else{
+										var tableau=
+										'<table><thead><tr>'
+										+'<th>Nom Machine</th>'
+										+'<th>IP Machine</th>'
+										+'<th>Nom Utilisateur</th>'
+										+'</tr></thead></table>';
 
 									rows.map(row =>
 											{
@@ -70,9 +76,11 @@ console.log("APRES QUERY");
 												retour[2]=row.user_name;
 												console.log("RETOUR "+retour);
 
+												/*var code=
+												'<tbody>'*/
 
 
-												callback(retour[0]) ;
+												callback(tableau+retour[0]) ;
 
 
 
