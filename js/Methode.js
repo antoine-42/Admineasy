@@ -1,4 +1,4 @@
-var Methode={
+var Methode = {
 	 searchIP: function(){
 		var requete= creerRequete();
 		var arg=document.getElementById("ip").value;
@@ -9,9 +9,9 @@ var Methode={
 		}
 
 		requete.send();
-		}
+		},
 
-		 search: function(){
+		search: function(){
 		var requete= creerRequete();
 		var url="http://nailyk.ddns.net:54823/listmachine" ;
 		requete.open("POST", url, true);
@@ -20,7 +20,7 @@ var Methode={
 		}
 
 		requete.send();
-		}
+		},
 
 
 	  afficherResultat: function(requete){
