@@ -67,7 +67,7 @@ console.log("APRES QUERY");
 
 												retour[0]=row.name;
 												retour[1]=row.local_ip;
-												retour[2]=user_name;
+												retour[2]=row.user_name;
 												console.log("RETOUR "+retour);
 
 
