@@ -63,7 +63,7 @@ console.log("APRES QUERY");
 
 												var code=
 												'<tr>'
-												+'<td><a href="http://nailyk.ddns.net:54823/machine?ip='+retour[1]+'">'+retour[0]+'</a></td>'
+												+'<td><a href="machines_vue.html">'+retour[0]+'</a></td>'
 												+'<td>'+retour[1]+'</td>'
 												+'<td>'+retour[2]+'</td>'
 												+'</tr>';
