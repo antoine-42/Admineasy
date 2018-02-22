@@ -17,16 +17,17 @@ if __name__ == "__main__":
     # Devices Data
     machine = MachineInfo()
     devices_data = {
-        "users":      AllUserInfo(),
-        "cpu":        CpuInfo(),
-        "ram":        RamInfo(),
-        "swap":       SWAPInfo(),
-        "net_ifaces": AllNetInterfaceInfo(),
-        "partitions": AllPartitionsInfo(),
-        "disks_io":   AllDiskIOInfo(),
-        "temp":       AllTempInfo(),
-        "fans":       AllFansInfo(),
-        "battery":    BatteryInfo()
+        "users":        AllUserInfo(),
+        "cpu":          CpuInfo(),
+        "ram":          RamInfo(),
+        "swap":         SWAPInfo(),
+        "net_ifaces":   AllNetInterfaceInfo(),
+        "partitions":   AllPartitionsInfo(),
+        "disks_io":     AllDiskIOInfo(),
+        "temp":         AllTempInfo(),
+        "fans":         AllFansInfo(),
+        "battery":      BatteryInfo(),
+        "self_monitor": SelfMonitor()
     }
 
     postgres.get_measurements([

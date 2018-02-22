@@ -3,10 +3,11 @@ import time
 import datetime
 import collections  # for default dict
 import platform  # System info.
-import socket  # Get local IP
+import os  # System info.
+import socket  # Used to get IP.
 
 # External libraries
-import psutil  # Hardware info. TODO use it to check self usage
+import psutil  # Hardware info.
 import cpuinfo  # Detailed CPU info.
 # import pySMART  # Hard drive SMART info, requires admin. DOESNT FUCKING WORK. TODO make it work
 
@@ -35,7 +36,7 @@ class AllUserInfo(DeviceInfo):
     def __init__(self):
         self.users = [UserInfo(user_name) for user_name, user_info1, user_info2, user_info3, user_info4 in psutil.users()]
 
-    # Updates all the data, then sends it to the influxdb database.
+    # Make points to send to influxdb.
     def make_points(self):
         user_dict = {}
         for user in self.users:
@@ -101,7 +102,7 @@ class CpuInfo(DeviceInfo):
         # measured between every call, if None first call meaningless then average between every call
         self.used_percent = psutil.cpu_percent(1)
 
-    # Updates all the data, then sends it to the influxdb database.
+    # Make points to send to influxdb.
     def make_points(self):
         self.refresh()
         return [
@@ -119,7 +120,8 @@ class CpuInfo(DeviceInfo):
         ]
 
     def print(self):
-        print("CPU: %s  Cores: %d  Hyperthreading: %s" % (self.name, self.physical_cores, self.hyper_threading))
+        print("CPU: %s  Cores: %d  Hyperthreading: %s  Usage: %s  Frequency: %s mhz" %
+              (self.name, self.physical_cores, self.hyper_threading, self.used_percent, self.freq_curr_mhz))
 
 
 class RamInfo(DeviceInfo):
@@ -139,7 +141,7 @@ class RamInfo(DeviceInfo):
         self.used_B = ram_info[3]
         self.used_percent = ram_info[2]
 
-    # Updates all the data, then sends it to the influxdb database.
+    # Make points to send to influxdb.
     def make_points(self):
         self.refresh()
         return [
@@ -159,7 +161,8 @@ class RamInfo(DeviceInfo):
         ]
 
     def print(self):
-        print("RAM: %f GB  Used: %f GB" % (self.total_B / 1000000000, self.used_B / 1000000000))
+        print("RAM: %f GB  Used: %f GB (%s %%)" %
+              (round(self.total_B / 1000000000, 1), round(self.used_B / 1000000000, 1), self.used_percent))
 
 
 class SWAPInfo(DeviceInfo):
@@ -185,7 +188,7 @@ class SWAPInfo(DeviceInfo):
         self.input_B = swap_info[4]
         self.output_B = swap_info[5]
 
-    # Updates all the data, then sends it to the influxdb database.
+    # Make points to send to influxdb.
     def make_points(self):
         self.refresh()
         return [
@@ -207,7 +210,8 @@ class SWAPInfo(DeviceInfo):
         ]
 
     def print(self):
-        print("SWAP: %f GB  Used: %f GB" % (self.total_B / 1000000000, self.used_B / 1000000000))
+        print("SWAP: %f GB  Used: %f GB (%s %%)" %
+              (round(self.total_B / 1000000000, 1), round(self.used_B / 1000000000, 1), self.used_percent))
 
 
 class AllNetInterfaceInfo(DeviceInfo):
@@ -229,7 +233,7 @@ class AllNetInterfaceInfo(DeviceInfo):
         for interface in self.interfaces:
             interface.refresh()
 
-    # Updates all the data, then sends it to the influxdb database.
+    # Make points to send to influxdb.
     def make_points(self):
         json = []
         for interface in self.interfaces:
@@ -281,7 +285,7 @@ class NetInterfaceInfo:
         self.in_error = counters_info[4]
         self.in_drop = counters_info[6]
 
-    #  Sends all the data to the influxdb database. Will not update the data on its own.
+    #  Make points to send to parent class.
     def make_points(self):
         self.refresh()
         return {
@@ -306,7 +310,7 @@ class NetInterfaceInfo:
 
     def print(self):
         print("Interface: %s    received: %f MB  sent: %f MB  errors: %d" % (
-            self.name, self.received_B / 1000000, self.sent_B / 1000000,
+            self.name, round(self.received_B / 1000000, 1), round(self.sent_B / 1000000, 1),
             self.in_error+self.out_drop+self.out_drop+self.in_drop))
 
 
@@ -329,7 +333,7 @@ class AllPartitionsInfo(DeviceInfo):
         for partition in self.partitions:
             partition.refresh()
 
-    # Updates all the data, then sends it to the influxdb database.
+    # Make points to send to influxdb.
     def make_points(self):
         json = []
         for partition in self.partitions:
@@ -380,7 +384,7 @@ class PartitionInfo:
         self.assessment = self.smart.assessment
         self.smart_attributes = self.smart.all_attributes()
 
-    # Updates all the data, then sends it to the influxdb database.
+    # Make points to send to parent class.
     def make_points(self):
         self.refresh()
         return {
@@ -400,7 +404,8 @@ class PartitionInfo:
 
     def print(self):
         print("Disk: %s    mount: %s  file system: %s  total: %s GB  used: %s GB" % (
-            self.device, self.mount, self.file_system, self.total_B / 1000000000, self.used_B / 1000000000))
+            self.device, self.mount, self.file_system,
+            round(self.total_B / 1000000000, 1), round(self.used_B / 1000000000, 1)))
 
 
 class AllDiskIOInfo(DeviceInfo):
@@ -419,7 +424,7 @@ class AllDiskIOInfo(DeviceInfo):
         for disk in self.disks:
             disk.refresh()
 
-    # Updates all the data, then sends it to the influxdb database.
+    # Make points to send to influxdb.
     def make_points(self):
         json = []
         for disk in self.disks:
@@ -456,7 +461,7 @@ class DiskIOInfo:
                 self.write_time = disk_io_info[5]
                 break
 
-    # Updates all the data, then sends it to the influxdb database.
+    # Make points to send to parent class.
     def make_points(self):
         self.refresh()
         return {
@@ -478,7 +483,7 @@ class DiskIOInfo:
 
     def print(self):
         print("Disk: %s    total read: %s GB  total written: %s GB" % (
-            self.physical_drive, self.read_bytes / 1000000000, self.write_bytes / 1000000000))
+            self.physical_drive, round(self.read_bytes / 1000000000, 1), round(self.write_bytes / 1000000000, 1)))
 
 
 class AllTempInfo(DeviceInfo):
@@ -501,7 +506,7 @@ class AllTempInfo(DeviceInfo):
         for device in self.temp_devices:
             device.refresh()
 
-    # Updates all the data, then sends it to the influxdb database.
+    # Make points to send to influxdb.
     def make_points(self):
         json = []
         for device in self.temp_devices:
@@ -601,7 +606,7 @@ class TemperatureDevice:
                             sensor.refresh(updated_sensor)
                 break
 
-    # Updates all the data, then sends it to the influxdb database.
+    # Make points to send to parent class.
     def make_points(self):
         self.refresh()
         # Basic temp info, for every device
@@ -676,7 +681,7 @@ class AllFansInfo(DeviceInfo):
         for fan in self.fans:
             fan.refresh()
 
-    # Updates all the data, then sends it to the influxdb database.
+    # Make points to send to influxdb.
     def make_points(self):
         json = []
         for fan in self.fans:
@@ -702,22 +707,20 @@ class FanInfo:
                 self.rpm = curr_fan[0]
                 break
 
-    # Updates all the data, then sends it to the influxdb database.
+    # Make points to send to parent class.
     def make_points(self):
         self.refresh()
-        return [
-            {
-                "measurement": "fan",
-                "tags": {
-                    "machine": MACHINE_NAME,
-                    "device": self.name
-                },
-                "time": str(datetime.datetime.now().isoformat()),
-                "fields": {
-                    "rpm": self.rpm
-                }
+        return {
+            "measurement": "fan",
+            "tags": {
+                "machine": MACHINE_NAME,
+                "device": self.name
+            },
+            "time": str(datetime.datetime.now().isoformat()),
+            "fields": {
+                "rpm": self.rpm
             }
-        ]
+        }
 
     def print(self):
         print("Fan: %s    current speed: %s RPM" % (
@@ -744,7 +747,7 @@ class BatteryInfo(DeviceInfo):
         self.percent_left = battery_info[0]
         self.seconds_left = battery_info[1]
 
-    # Updates all the data, then sends it to the influxdb database.
+    # Make points to send to influxdb.
     def make_points(self):
         self.refresh()
         return [
@@ -765,3 +768,41 @@ class BatteryInfo(DeviceInfo):
     def print(self):
         print("Battery:    plugged in: %s  percent left: %s  seconds left: %s" % (
             self.is_plugged, self.percent_left, self.seconds_left))
+
+
+class SelfMonitor(DeviceInfo):
+    cpu_percent = -1
+    ram_percent = -1
+
+    def __init__(self):
+        self.pid = os.getpid()
+        self.process = psutil.Process(self.pid)
+        self.process.cpu_percent()  # throw away data from the first call, it's meaningless
+
+        self.refresh()
+
+    # Updates all the data.
+    def refresh(self):
+        with self.process.oneshot():
+            self.cpu_percent = self.process.cpu_percent()
+            self.ram_percent = self.process.memory_percent()
+
+    # Make points to send to influxdb.
+    def make_points(self):
+        self.refresh()
+        return [
+            {
+                "measurement": "self_monitor",
+                "tags": {
+                    "machine": MACHINE_NAME
+                },
+                "time": str(datetime.datetime.now().isoformat()),
+                "fields": {
+                    "cpu_percent": self.cpu_percent,
+                    "ram_percent": self.ram_percent
+                }
+            }
+        ]
+
+    def print(self):
+        print("Self usage:  CPU: %s %%  RAM: %s %%" % (round(self.cpu_percent, 2), round(self.ram_percent, 2)))
