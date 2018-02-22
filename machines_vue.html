@@ -22,7 +22,7 @@
 
 		function search(){
 		var requete= creerRequete();
-		var url="http://nailyk.ddns.net:54823/machine" ;
+		var url="http://nailyk.ddns.net:54823/listmachine" ;
 		requete.open("POST", url, true);
 		requete.onreadystatechange=function(){
 			afficherResultat(requete);
