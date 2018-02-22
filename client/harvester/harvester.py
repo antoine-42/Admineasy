@@ -61,7 +61,7 @@ if __name__ == "__main__":
             self_monitor.refresh()
             self_monitor.print()
             print("\nUpdate %s finished at %s  duration: %s s\n" %
-                  (update_n, update_end.isoformat(), round(update_duration, 3)))
+                  (update_n, update_end.isoformat(), round(update_duration, 1)))
 
         update_n += 1
         time.sleep(5)

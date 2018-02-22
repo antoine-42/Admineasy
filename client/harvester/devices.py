@@ -120,7 +120,7 @@ class CpuInfo(DeviceInfo):
         ]
 
     def print(self):
-        print("CPU: %s  Cores: %d  Hyperthreading: %s  Usage: %s  Frequency: %s mhz" %
+        print("CPU: %s  Cores: %d  Hyperthreading: %s  Usage: %s %%  Frequency: %s mhz" %
               (self.name, self.physical_cores, self.hyper_threading, self.used_percent, self.freq_curr_mhz))
 
 
@@ -161,7 +161,7 @@ class RamInfo(DeviceInfo):
         ]
 
     def print(self):
-        print("RAM: %f GB  Used: %f GB (%s %%)" %
+        print("RAM: %s GB  Used: %s GB (%s %%)" %
               (round(self.total_B / 1000000000, 1), round(self.used_B / 1000000000, 1), self.used_percent))
 
 
@@ -210,7 +210,7 @@ class SWAPInfo(DeviceInfo):
         ]
 
     def print(self):
-        print("SWAP: %f GB  Used: %f GB (%s %%)" %
+        print("SWAP: %s GB  Used: %s GB (%s %%)" %
               (round(self.total_B / 1000000000, 1), round(self.used_B / 1000000000, 1), self.used_percent))
 
 
@@ -309,7 +309,7 @@ class NetInterfaceInfo:
         }
 
     def print(self):
-        print("Interface: %s    received: %f MB  sent: %f MB  errors: %d" % (
+        print("Interface: %s    received: %s MB  sent: %s MB  errors: %d" % (
             self.name, round(self.received_B / 1000000, 1), round(self.sent_B / 1000000, 1),
             self.in_error+self.out_drop+self.out_drop+self.in_drop))
 
@@ -369,7 +369,7 @@ class PartitionInfo:
     # Updates all the data.
     def refresh(self):
         self.refresh_used()
-        # self.refresh_smart()  todo: this shit
+        # self.refresh_smart()
 
     # Updates the used space data.
     def refresh_used(self):
