@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="66cdc106-9ca2-46af-af37-08a7552c784d" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/databases.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devices.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/harvester.py" afterPath="$PROJECT_DIR$/harvester.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../databases/postgres/creationScript.sql" afterPath="$PROJECT_DIR$/../../databases/postgres/creationScript.sql" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -13,7 +18,7 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/harvester$test.coverage" NAME="test Coverage Results" MODIFIED="1517075386166" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/harvester$harvester.coverage" NAME="harvester Coverage Results" MODIFIED="1519147736387" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/harvester$harvester.coverage" NAME="harvester Coverage Results" MODIFIED="1519328034104" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/harvester$utils.coverage" NAME="utils Coverage Results" MODIFIED="1506213096976" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="C:/Program Files (x86)/Python36-32/Lib/site-packages/pySMART" />
   </component>
   <component name="DatabaseView">
@@ -37,25 +42,47 @@
       <file leaf-file-name="harvester.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/harvester.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="592">
-              <caret line="813" column="28" lean-forward="true" selection-start-line="813" selection-start-column="28" selection-end-line="813" selection-end-column="28" />
+            <state relative-caret-position="259">
+              <caret line="16" column="27" lean-forward="true" selection-start-line="16" selection-start-column="27" selection-end-line="16" selection-end-column="27" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="databases.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/databases.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="510">
+              <caret line="36" column="9" lean-forward="false" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
+              <folding>
+                <element signature="e#0#49#0" expanded="true" />
+                <marker date="1519326325680" expanded="true" signature="1548:1607" ph="SELECT * FRO... machines" />
+                <marker date="1519326325680" expanded="true" signature="1938:2056" ph="INSERT INTO machines... " />
+                <marker date="1519326325680" expanded="true" signature="2727:3076" ph="UPDATE machi... " />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="devices.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/devices.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="11713">
+              <caret line="701" column="29" lean-forward="false" selection-start-line="701" selection-start-column="29" selection-end-line="701" selection-end-column="29" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
-                <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-                <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-                <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-                <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-                <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://C:/Program Files (x86)/Python36-32/Lib/site-packages/psycopg2/__init__.py">
+        <entry file="file://$PROJECT_DIR$/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1734">
-              <caret line="120" column="0" lean-forward="false" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="0" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -72,8 +99,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>batt</find>
-      <find>a</find>
       <find>sys</find>
       <find>DiskInfo</find>
       <find>disk_</find>
@@ -91,7 +116,6 @@
       <find>machine_name</find>
       <find>self.host</find>
       <find>__init__</find>
-      <find>machine.name</find>
       <find>partition</find>
       <find>users_info</find>
       <find>dicti</find>
@@ -102,6 +126,9 @@
       <find>in</find>
       <find>user</find>
       <find>\</find>
+      <find>machine.name</find>
+      <find>def update_influxdb(self):</find>
+      <find>utcnow</find>
     </findStrings>
     <replaceStrings>
       <replace>disk</replace>
@@ -111,6 +138,8 @@
       <replace>self.host</replace>
       <replace>machine.name</replace>
       <replace>influxdb_connection.</replace>
+      <replace>def make_points(self):</replace>
+      <replace>now</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -123,6 +152,10 @@
         <option value="C:/Program Files (x86)/Python36-32/Lib/site-packages/pySMART/device.py" />
         <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/ram.py" />
+        <option value="$PROJECT_DIR$/postgres.py" />
+        <option value="$PROJECT_DIR$/__init__.py" />
+        <option value="$PROJECT_DIR$/devices.py" />
+        <option value="$PROJECT_DIR$/databases.py" />
         <option value="$PROJECT_DIR$/harvester.py" />
       </list>
     </option>
@@ -156,7 +189,9 @@
       </profile-state>
     </entry>
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
@@ -172,6 +207,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -180,16 +216,37 @@
               <item name="harvester" type="b2602c69:ProjectViewProjectNode" />
               <item name="harvester" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="harvester" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
+            <path>
+              <item name="harvester" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.6.2 (C:\Program Files (x86)\Python36-32\python.exe) &gt;" type="70bed36:NamedLibraryElementNode" />
+            </path>
+            <path>
+              <item name="harvester" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.6.2 (C:\Program Files (x86)\Python36-32\python.exe) &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="site-packages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="harvester" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.6.2 (C:\Program Files (x86)\Python36-32\python.exe) &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="site-packages" type="462c0819:PsiDirectoryNode" />
+              <item name="psutil" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="SQL Dialects" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="PostgreSQL" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/test.py" />
@@ -304,19 +361,20 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10810811" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11049285" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286638" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977587" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286638" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2421875" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21171875" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2203125" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28203124" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21953125" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2140625" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977587" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37083334" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32942432" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -326,6 +384,28 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286638" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286638" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2421875" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28229168" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21953125" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11049285" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297414" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977587" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37083334" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32942432" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -342,7 +422,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="26" />
+      <option name="time" value="29" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -352,81 +432,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Program Files (x86)/Python36-32/Lib/site-packages/influxdb/client.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4097">
-          <caret line="255" column="0" lean-forward="false" selection-start-line="255" selection-start-column="0" selection-end-line="255" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/harvester.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Program Files (x86)/Python36-32/Lib/site-packages/influxdb/client.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4097">
-          <caret line="255" column="0" lean-forward="false" selection-start-line="255" selection-start-column="0" selection-end-line="255" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/harvester.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Program Files (x86)/Python36-32/Lib/site-packages/influxdb/client.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4097">
-          <caret line="255" column="0" lean-forward="false" selection-start-line="255" selection-start-column="0" selection-end-line="255" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/harvester.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -436,12 +442,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -451,12 +452,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -466,12 +462,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -481,12 +472,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -496,12 +482,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -511,12 +492,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -526,12 +502,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -541,12 +512,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -556,12 +522,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -571,12 +532,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -586,12 +542,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -601,12 +552,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -616,12 +562,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -631,12 +572,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -646,12 +582,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -661,12 +592,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -676,12 +602,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -691,12 +612,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -706,12 +622,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -721,12 +632,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -736,12 +642,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -751,12 +652,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -766,12 +662,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -781,12 +672,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -796,64 +682,13 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/harvester.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/harvester.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/harvester.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://C:/Program Files (x86)/Python36-32/Lib/site-packages/psutil/_pswindows.py" />
     <entry file="file://C:/Program Files (x86)/Python36-32/Lib/codecs.py" />
-    <entry file="file://C:/Program Files (x86)/Python36-32/Lib/site-packages/pySMART/__init__.py" />
     <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_bundle/pydev_import_hook.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="442">
@@ -862,8 +697,6 @@
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/Desktop/pySMART-0.2/setup.py" />
-    <entry file="file://C:/Program Files (x86)/Python36-32/Lib/site-packages/pySMART/utils.py" />
-    <entry file="file://C:/Program Files (x86)/Python36-32/Lib/site-packages/pySMART/device.py" />
     <entry file="file:///usr/local/lib/python3.5/dist-packages/influxdb/client.py" />
     <entry file="file://$PROJECT_DIR$/grafana.json">
       <provider selected="true" editor-type-id="text-editor">
@@ -874,14 +707,6 @@
     </entry>
     <entry file="file:///usr/local/lib/python3.5/dist-packages/psutil/_pslinux.py" />
     <entry file="file:///usr/local/lib/python3.5/dist-packages/psutil/__init__.py" />
-    <entry file="file://C:/Program Files (x86)/Python36-32/Lib/site-packages/influxdb/client.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="917">
-          <caret line="255" column="0" lean-forward="false" selection-start-line="255" selection-start-column="0" selection-end-line="255" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test.py" />
     <entry file="file://$PROJECT_DIR$/ram.py" />
     <entry file="file://C:/Program Files (x86)/Python36-32/Lib/site-packages/psycopg2/__init__.py">
@@ -892,17 +717,135 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/harvester.py">
+    <entry file="file://C:/Program Files (x86)/Python36-32/Lib/site-packages/pySMART/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="592">
-          <caret line="813" column="28" lean-forward="true" selection-start-line="813" selection-start-column="28" selection-end-line="813" selection-end-column="28" />
+        <state relative-caret-position="824">
+          <caret line="88" column="37" lean-forward="true" selection-start-line="88" selection-start-column="37" selection-end-line="88" selection-end-column="37" />
+          <folding>
+            <element signature="e#4744#4776#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Program Files (x86)/Python36-32/Lib/site-packages/pySMART/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1309">
+          <caret line="77" column="0" lean-forward="true" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+          <folding>
+            <element signature="e#823#836#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Program Files (x86)/Python36-32/Lib/site-packages/pySMART/test_entry.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-723">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Program Files (x86)/Python36-32/Lib/site-packages/pySMART/device_list.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-706">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Program Files (x86)/Python36-32/Lib/site-packages/pySMART/device.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-34">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Program Files (x86)/Python36-32/Lib/site-packages/pySMART/attribute.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-94">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Program Files (x86)/Python36-32/Lib/site-packages/influxdb/client.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4335">
+          <caret line="255" column="0" lean-forward="false" selection-start-line="255" selection-start-column="0" selection-end-line="255" selection-end-column="0" />
+          <folding>
+            <element signature="e#59#97#0" expanded="false" />
+            <marker date="1506273194499" expanded="true" signature="17814:17830" ph="CREATE DATAB... missing_value" />
+            <marker date="1506273194499" expanded="true" signature="18059:18073" ph="DROP DATABAS... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Program Files (x86)/Python36-32/Lib/site-packages/influxdb/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#25#63#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Program Files (x86)/Python36-32/Lib/site-packages/psutil/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-36372">
+          <caret line="228" column="26" lean-forward="true" selection-start-line="228" selection-start-column="26" selection-end-line="228" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Program Files (x86)/Python36-32/Lib/site-packages/psutil/_pslinux.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2414">
+          <caret line="181" column="0" lean-forward="true" selection-start-line="181" selection-start-column="0" selection-end-line="181" selection-end-column="0" />
+          <folding>
+            <element signature="e#203#234#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/devices.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="11713">
+          <caret line="701" column="29" lean-forward="false" selection-start-line="701" selection-start-column="29" selection-end-line="701" selection-end-column="29" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-            <marker date="1519147736370" expanded="true" signature="22391:22450" ph="SELECT * FRO... machines" />
-            <marker date="1519147736370" expanded="true" signature="22781:22899" ph="INSERT INTO machines... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23898" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23915" ph="UPDATE machi... " />
-            <marker date="1519147736370" expanded="true" signature="23570:23919" ph="UPDATE machi... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/databases.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="36" column="9" lean-forward="false" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#49#0" expanded="true" />
+            <marker date="1519326325680" expanded="true" signature="1548:1607" ph="SELECT * FRO... machines" />
+            <marker date="1519326325680" expanded="true" signature="1938:2056" ph="INSERT INTO machines... " />
+            <marker date="1519326325680" expanded="true" signature="2727:3076" ph="UPDATE machi... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/harvester.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="259">
+          <caret line="16" column="27" lean-forward="true" selection-start-line="16" selection-start-column="27" selection-end-line="16" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>

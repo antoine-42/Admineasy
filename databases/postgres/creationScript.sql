@@ -28,5 +28,7 @@ GRANT INSERT ON TABLE machines TO admineasy_client;
 GRANT UPDATE  ON TABLE machines TO admineasy_client;
 
 INSERT INTO machines VALUES ('antoine_main', 'Windows-10-10.0.16299-SP0', 'Windows', '10', 'Antoin', '2018-01-28T02:31:57', 'Intel(R) Core(TM) i7-5820K CPU @ 3.30GHz', 6, 12, True, 0, 3300, 17070, 23198, '192.168.1.42', 'EthernetEthernet 2Loopback Pseudo-Interface 1', 'C:D:');
+INSERT INTO machines VALUES ('antoine_laptop', 'Linux mint', 'Linux', '42', 'Antoine', '2018-02-22T02:31:57', 'Intel(R) Core(TM) i5-4520 CPU @ 3.30GHz', 2, 4, True, 0, 3300, 8000, 8000, '192.168.1.69', 'enp3s0', '/dev/sda1');
+INSERT INTO machines VALUES ('banana', 'Linux Ubuntu', 'Linux', '16.4', 'Antoine', '2018-02-22T06:31:57', 'Intel(R) Core(TM) i5-3520 CPU @ 3.30GHz', 4, 4, True, 0, 3300, 8000, 8000, '192.168.1.33', 'enp3s0', '/dev/sda1');
 
 UPDATE machines SET user_name='Antoine', connection_time='2018-02-20T15:42:57', cpu_name='Intel(R) Core(TM) i7-5820K CPU @ 3.30GHz', cpu_cores=6, cpu_threads=12, cpu_hyperthreading='True', cpu_freqmin=0, cpu_freqmax=3300, ram_total=17070, swap_total=23198, local_ip='192.168.1.42', net_ifaces='EthernetEthernet 2Loopback Pseudo-Interface 1', disk_names='C:D:' WHERE name='antoine_main' AND os_complete='Windows-10-10.0.16299-SP0';
