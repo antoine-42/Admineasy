@@ -6,7 +6,29 @@
 	<link rel="stylesheet" href="./css/style.css">
 	<script type="text/javascript" src="./js/requete.js"></script>
 	
-	<script type="text/javascript" src="./js/bd.js"></script>
+	<script type="text/javascript">
+		function search(){
+		var requete= creerRequete();
+		var url="http://nailyk.ddns.net:54823/machine?ip=192.168.1.42" ;
+		requete.open("POST", url, true);
+		requete.onreadystatechange=function(){
+			afficherResultat(requete);
+		}
+
+		requete.send();
+	}
+
+	 function afficherResultat(requete){
+	 		console.log("afficherResultat");
+		//if(requete.readyState==4 && requete.status==200){
+			console.log("afficherIIIFFFF");
+			elem=document.getElementById("texte");
+				console.log("RESP: "+requete.responseText);
+			elem.innerHTML=requete.responseText;
+		//}
+	}
+
+	</script>
 
 		<title>AdminEasy</title>
 	</head>
