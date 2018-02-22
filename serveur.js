@@ -154,8 +154,8 @@ console.log("APRES QUERY");
 												console.log("RETOUR "+retour);
 
 												var code=
-												+'<li>Nom Machine : '+retour[0]+'</li>'
-												+'<li>IP Machine : '+retour[1]+'</li>'
+												+'<li>Nom Machine : '+retour[0]+'</li>';
+												/*+'<li>IP Machine : '+retour[1]+'</li>'
 												+'<li>Nom Utilisateur : '+retour[2]+'</li>'
 												+'<li>OS Complet : '+retour[3]+'</li>'
 												+'<li>OS Simple : '+retour[4]+'</li>'
@@ -170,7 +170,7 @@ console.log("APRES QUERY");
 												+'<li>RAM Total : '+retour[13]+'</li>'
 												+'<li>Swap Total : '+retour[14]+'</li>'
 												+'<li>Net Ifaces : '+retour[15]+'</li>'
-												+'<li>Disk Names : '+retour[16]+'</li>';
+												+'<li>Disk Names : '+retour[16]+'</li>';*/
 
 												callback('<ul>'+code+'</ul>') ;
 
