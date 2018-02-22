@@ -31,5 +31,5 @@ var Methode = {
 			console.log("RESP: "+requete.responseText);
 			elem.innerHTML=requete.responseText;
 		}
-	}
+	},
 }
