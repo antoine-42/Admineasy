@@ -63,8 +63,8 @@ console.log("APRES QUERY");
 												retour[2]=row.user_name;
 												console.log("RETOUR "+retour);
 
-												var requete= creerRequete();
-												var url="http://nailyk.ddns.net:54823/machine?ip="+ip ;
+												/*var requete= creerRequete();
+												var url="http://nailyk.ddns.net:54823/machine?ip="+ip ;*/
 
 												var code=
 												'<tr>'
