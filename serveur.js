@@ -68,6 +68,10 @@ console.log("APRES QUERY");
 									console.log(err) ;
 									callback("<b>Une erreur est survenue lors de la requete.")
 								}) ;
+							
+							console.log("FIIIIIIINNNNNNNN";
+
+
 	}
 
 var ping_get = function(callback)
