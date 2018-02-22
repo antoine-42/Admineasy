@@ -1,5 +1,5 @@
 var Methode={
-	function searchIP(){
+	 searchIP: function(){
 		var requete= creerRequete();
 		var arg=document.getElementById("ip").value;
 		var url="http://nailyk.ddns.net:54823/machine?ip="+arg ;
@@ -11,7 +11,7 @@ var Methode={
 		requete.send();
 		}
 
-		function search(){
+		 search: function(){
 		var requete= creerRequete();
 		var url="http://nailyk.ddns.net:54823/listmachine" ;
 		requete.open("POST", url, true);
@@ -23,7 +23,7 @@ var Methode={
 		}
 
 
-	 function afficherResultat(requete){
+	  afficherResultat: function(requete){
 	 		console.log("afficherResultat");
 		if(requete.readyState==4 && requete.status==200){
 			console.log("afficherIIIFFFF");
