@@ -62,7 +62,7 @@ console.log("APRES QUERY");
 												*/
 												console.log("RETOUR "+retour);
 
-												callback(retour[0]) ;
+												callback(retour.name) ;
 
 											}) ;
 									}
