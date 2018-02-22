@@ -1,5 +1,3 @@
-
-
 var Accueil = {
 	nbAlertes: 0,
 
