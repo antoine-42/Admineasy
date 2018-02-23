@@ -52,8 +52,8 @@ console.log("APRES QUERY");
 										+'<th>Nom Utilisateur</th>'
 										+'</tr></thead><tbody>';
 
-									//rows.map(row =>
-									rows.forEach(row=>
+									rows.map(row =>
+									//rows.forEach(row=>
 											{
 												console.log("rows map");
 												
