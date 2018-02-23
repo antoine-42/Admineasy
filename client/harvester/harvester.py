@@ -6,11 +6,9 @@ from devices import *
 from databases import *
 
 
-DEBUG = True
-
-
 # Main class
 class Harvester:
+    debug = False
     online = True
 
     postgres_conn = None
@@ -21,11 +19,17 @@ class Harvester:
     devices_data = None
 
     def __init__(self):
+        self.check_args()
         self.connect()
         self.initialize_measurements()
         if self.online:
             self.postgres_send_data()
         self.main_loop()
+
+    # check command line args
+    def check_args(self):
+        if sys.argv[0] == "-d":
+            self.debug = True
 
     # Connect to the databases
     def connect(self):
@@ -34,7 +38,7 @@ class Harvester:
             self.influx_conn = InfluxConn()
         except Exception as err:
             print("Can't connect to the database.")
-            if DEBUG:
+            if self.debug:
                 print(err)
                 print("Continue in offline mode ? Y/n")
                 if input() == "n":
@@ -42,8 +46,7 @@ class Harvester:
                 self.online = False
                 return
             else:
-                print("Exiting..")
-                input()
+                print("Exiting...")
                 sys.exit()
 
     # Initialize the measurements
@@ -81,14 +84,14 @@ class Harvester:
         update_n = 0
         while True:
             update_start = datetime.datetime.now()
-            if DEBUG:
+            if self.debug:
                 print("\nUpdate %s starting at %s\n" % (update_n, update_start.isoformat()))
 
             self.update_devices()
 
             update_end = datetime.datetime.now()
             update_duration = (update_end - update_start).total_seconds()
-            if DEBUG:
+            if self.debug:
                 self.self_monitor.refresh()
                 self.self_monitor.print()
                 print("\nUpdate %s finished at %s  duration: %s s\n" %
@@ -106,7 +109,7 @@ class Harvester:
                     points = self.devices_data[device].make_points()
                     if not self.influx_conn.write_points(points):
                         print("ERROR while updating " + device)
-                if DEBUG:
+                if self.debug:
                     self.devices_data[device].print()
 
 
