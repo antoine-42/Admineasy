@@ -25,6 +25,39 @@ var ping_machine = function (ip, callback)
 /******************************************************************************************/
 
 var machine_list_get = function(callback)
+				{
+					var conString = "postres://admineasy_client:1337@10.8.0.1:5432/admineasy" ;
+					var client = new pg.Client(conString) ;
+					client.connect(err =>
+									{if(err)
+										{
+											console.log("Attente de connexion") ;
+											throw err ;
+										}
+									});
+
+					var query = "select * from machines" ;
+
+					client.query(query).then(res =>
+									{
+										var rows = res.rows ;
+										var retour = '<table><thead><tr>'
+										+'<th>Nom Machine</th>'
+										+'<th>IP Machine</th>'
+										+'<th>Nom Utilisateur</th>'
+										+'</tr></thead><tbody>';
+										rows.map((row) =>
+												{
+													//console.log(`Lecture : ${JSON.stringify(row)}`) ;
+													retour+='<tr><td>'+row.name+'</td><td>'+row.local_ip+'</td><td>'+row.user_name+'</td></tr>' ;
+												});
+										retour+='</tbody></table>' ;
+										//console.log("Row : "+retour) ;
+										callback(retour)	;
+									});
+				}
+
+/*var machine_list_get = function(callback)
 	{
 		console.log("ENTRER MACHINE GET");
 		var conString = "postres://admineasy_client:1337@10.8.0.1:5432/admineasy" ;
@@ -52,7 +85,7 @@ console.log("APRES QUERY");
 										+'<th>Nom Utilisateur</th>'
 										+'</tr></thead><tbody>';
 
-									rows.map(row =>
+									rows.map((row) =>
 									//rows.forEach(row=>
 											{
 												console.log("rows map");
@@ -66,7 +99,7 @@ console.log("APRES QUERY");
 
 												/*var requete= creerRequete();
 												var url="http://nailyk.ddns.net:54823/machine?ip="+ip ;*/
-												var code=
+												/*var code=
 												'<tr>'
 												//+'<td><a href="javascript:Methode.searchIP('+retour[1]+')">'+retour[0]+'</a></td>'
 												+'<td><a href="http://nailyk.ddns.net:54823/machine?ip='+retour[1]+'">'+retour[0]+'</a></td>'
@@ -74,6 +107,7 @@ console.log("APRES QUERY");
 												+'<td>'+retour[2]+'</td>'
 												+'</tr>';
 
+												console.log("Avant callback");
 												callback(tableau+code+'</tbody></table>') ;
 
 											}) ;
@@ -233,6 +267,7 @@ var ecrire_HTML = function(html, res)
 							console.log("Retour fonction : "+html) ; //Log serveur
 			
 							/*Création de l'HTML*/
+							console.log("header");
 							res.writeHead(200, {"Content-Type": "text/html"}) ; 	//Code de retour indiquant que la page fonctionne (404 --> non trouvée...), type de retour(html, image...)
 							res.write(html) ;
 							res.end() ;
@@ -291,6 +326,7 @@ var reaction = function(req, res)
 					}
 					else if(page == '/listmachine')
 						{
+							console.log("PAGE LIST MACHINE");
 							machine_list_get(function(html)
 									{
 										ecrire_HTML(html, res) ;
