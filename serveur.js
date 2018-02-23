@@ -61,7 +61,7 @@ var machine_list_get = function(callback)
 												+'</tr>';*/
 
 													//console.log(`Lecture : ${JSON.stringify(row)}`) ;
-													retour+='<tr><td><a href="http://nailyk.ddns.net/admineasy/interface/admineasy/machines_vue.html">'+row.name+'</a></td><td>'+row.local_ip+'</td><td>'+row.user_name+'</td></tr>' ;
+													retour+='<tr><td><a href="http://nailyk.ddns.net:54823/machine?ip='+row.local_ip+'">'+row.name+'</a></td><td>'+row.local_ip+'</td><td>'+row.user_name+'</td></tr>' ;
 												});
 										retour+='</tbody></table>' ;
 										//console.log("Row : "+retour) ;
