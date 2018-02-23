@@ -14,11 +14,8 @@ import cpuinfo  # Detailed CPU info.
 MACHINE_NAME = platform.node()
 
 
-class DeviceInfo:
-    available = True
-
-
-class MachineInfo(DeviceInfo):
+# Get basic information on the machine.
+class MachineInfo:
     def __init__(self):
         self.name = platform.node()
 
@@ -32,9 +29,68 @@ class MachineInfo(DeviceInfo):
         print("Machine name: %s  OS: %s" % (self.name, self.os_full))
 
 
+# Monitors harvester.
+class SelfMonitor:
+    cpu_percent = -1
+    ram_percent = -1
+
+    def __init__(self):
+        self.pid = os.getpid()
+        self.process = psutil.Process(self.pid)
+        self.process.cpu_percent()  # throw away data from the first call, it's meaningless.
+
+        self.refresh()
+
+    # Updates all the data.
+    def refresh(self):
+        with self.process.oneshot():
+            self.cpu_percent = self.process.cpu_percent()
+            self.ram_percent = self.process.memory_percent()
+
+    # Make points to send to influxdb.
+    def make_points(self):
+        return [
+            {
+                "measurement": "self_monitor",
+                "tags": {
+                    "machine": MACHINE_NAME
+                },
+                "time": str(datetime.datetime.now().isoformat()),
+                "fields": {
+                    "cpu_percent": self.cpu_percent,
+                    "ram_percent": self.ram_percent
+                }
+            }
+        ]
+
+    def print(self):
+        print("Self usage:  CPU: %s %%  RAM: %s %%" %
+              (round(self.cpu_percent, 2), round(self.ram_percent, 2)))
+
+
+# Parent class for all monitors
+class DeviceInfo:
+    available = True
+
+
+# Monitors all connected users
 class AllUserInfo(DeviceInfo):
     def __init__(self):
-        self.users = [UserInfo(user_name) for user_name, user_info1, user_info2, user_info3, user_info4 in psutil.users()]
+        self.users = [UserInfo(user_name)
+                      for user_name, user_info1, user_info2, user_info3, user_info4
+                      in psutil.users()]
+
+    # Updates all the data.
+    def refresh(self):
+        users_init = psutil.users()
+        for user_init in users_init:
+            found = False
+            for user_info in self.users:
+                if user_init[0] == user_info.name:
+                    found = True
+                    break
+            if not found:
+                self.users.append(UserInfo(user_init[0]))
 
     # Make points to send to influxdb.
     def make_points(self):
@@ -52,11 +108,13 @@ class AllUserInfo(DeviceInfo):
             }
         ]
 
+    # Prints the information on all users
     def print(self):
         for user in self.users:
             user.print()
 
 
+# Monitors 1 session
 class UserInfo:
     def __init__(self, name_):
         self.name = name_
@@ -67,10 +125,12 @@ class UserInfo:
                 min_time = user.started
         self.start = datetime.datetime.utcfromtimestamp(min_time).isoformat()
 
+    # Prints the information on 1 user
     def print(self):
         print("User: %s  connected at: %s" % (self.name, self.start))
 
 
+# Get information on the CPU
 class CpuInfo(DeviceInfo):
     freq_curr_mhz = -1
     used_percent = -1
@@ -104,7 +164,6 @@ class CpuInfo(DeviceInfo):
 
     # Make points to send to influxdb.
     def make_points(self):
-        self.refresh()
         return [
             {
                 "measurement": "cpu",
@@ -119,11 +178,13 @@ class CpuInfo(DeviceInfo):
             }
         ]
 
+    # Prints the information on the CPU
     def print(self):
         print("CPU: %s  Cores: %d  Hyperthreading: %s  Usage: %s %%  Frequency: %s mhz" %
-              (self.name, self.physical_cores, self.hyper_threading, self.used_percent, self.freq_curr_mhz))
+              (self.name, self.physical_cores, self.hyper_threading, self.used_percent, round(self.freq_curr_mhz, 0)))
 
 
+# Get information on RAM usage.
 class RamInfo(DeviceInfo):
     total_B = -1
     available_B = -1
@@ -143,7 +204,6 @@ class RamInfo(DeviceInfo):
 
     # Make points to send to influxdb.
     def make_points(self):
-        self.refresh()
         return [
             {
                 "measurement": "ram",
@@ -160,11 +220,13 @@ class RamInfo(DeviceInfo):
             }
         ]
 
+    # Prints the information on RAM usage
     def print(self):
         print("RAM: %s GB  Used: %s GB (%s %%)" %
               (round(self.total_B / 1000000000, 1), round(self.used_B / 1000000000, 1), self.used_percent))
 
 
+# Get information on SWAP usage.
 class SWAPInfo(DeviceInfo):
     total_B = -1
     available_B = -1
@@ -190,7 +252,6 @@ class SWAPInfo(DeviceInfo):
 
     # Make points to send to influxdb.
     def make_points(self):
-        self.refresh()
         return [
             {
                 "measurement": "swap",
@@ -209,11 +270,13 @@ class SWAPInfo(DeviceInfo):
             }
         ]
 
+    # Prints the information on SWAP usage
     def print(self):
         print("SWAP: %s GB  Used: %s GB (%s %%)" %
               (round(self.total_B / 1000000000, 1), round(self.used_B / 1000000000, 1), self.used_percent))
 
 
+# Monitors all network interfaces.
 class AllNetInterfaceInfo(DeviceInfo):
     def __init__(self):
         interfaces_init_info = psutil.net_if_stats()
@@ -222,6 +285,7 @@ class AllNetInterfaceInfo(DeviceInfo):
                            in interfaces_init_info.items()]
         self.localIP = socket.gethostbyname(socket.gethostname())
 
+    # Get the names of all interfaces
     def get_names(self):
         names = ""
         for interface in self.interfaces:
@@ -240,11 +304,13 @@ class AllNetInterfaceInfo(DeviceInfo):
             json.append(interface.make_points())
         return json
 
+    # Prints the information on all network interfaces
     def print(self):
         for interface in self.interfaces:
             interface.print()
 
 
+# Monitors 1 network interfaces.
 class NetInterfaceInfo:
     sent_B = -1
     sent_packets = -1
@@ -287,7 +353,6 @@ class NetInterfaceInfo:
 
     #  Make points to send to parent class.
     def make_points(self):
-        self.refresh()
         return {
             "measurement": "network",
             "tags": {
@@ -308,12 +373,14 @@ class NetInterfaceInfo:
             }
         }
 
+    # Prints the information on 1 network interface
     def print(self):
-        print("Interface: %s    received: %s MB  sent: %s MB  errors: %d" % (
-            self.name, round(self.received_B / 1000000, 1), round(self.sent_B / 1000000, 1),
-            self.in_error+self.out_drop+self.out_drop+self.in_drop))
+        print("Interface: %s    received: %s MB  sent: %s MB  errors: %d" %
+              (self.name, round(self.received_B / 1000000, 1), round(self.sent_B / 1000000, 1),
+               self.in_error+self.out_drop+self.out_drop+self.in_drop))
 
 
+# Monitors the usage of all partitions.
 class AllPartitionsInfo(DeviceInfo):
     def __init__(self):
         partitions_init_info = psutil.disk_partitions()
@@ -322,6 +389,7 @@ class AllPartitionsInfo(DeviceInfo):
             if curr_partition[2] != "":  # Ignore partition if there is no file system on it (ex: card readers)
                 self.partitions.append(PartitionInfo(curr_partition[0]))
 
+    # Get the names of all partitions
     def get_names(self):
         names = ""
         for partition in self.partitions:
@@ -345,6 +413,7 @@ class AllPartitionsInfo(DeviceInfo):
             partition.print()
 
 
+# Monitors the usage of 1 partitions.
 class PartitionInfo:
     total_B = -1
     available_B = -1
@@ -356,7 +425,7 @@ class PartitionInfo:
 
     def __init__(self, device_):
         self.device = device_
-        # self.smart = pySMART.Device(self.device)
+        # self.smart = pySMART.Device(self.device) todo <--- smart
 
         for partition in psutil.disk_partitions():
             if partition[0] == self.device:
@@ -369,7 +438,7 @@ class PartitionInfo:
     # Updates all the data.
     def refresh(self):
         self.refresh_used()
-        # self.refresh_smart()
+        # self.refresh_smart() todo <--- smart
 
     # Updates the used space data.
     def refresh_used(self):
@@ -386,7 +455,6 @@ class PartitionInfo:
 
     # Make points to send to parent class.
     def make_points(self):
-        self.refresh()
         return {
             "measurement": "partition",
             "tags": {
@@ -403,15 +471,18 @@ class PartitionInfo:
         }
 
     def print(self):
-        print("Disk: %s    mount: %s  file system: %s  total: %s GB  used: %s GB" % (
-            self.device, self.mount, self.file_system,
-            round(self.total_B / 1000000000, 1), round(self.used_B / 1000000000, 1)))
+        print("Disk: %s    mount: %s  file system: %s  total: %s GB  used: %s GB" %
+              (self.device, self.mount, self.file_system,
+               round(self.total_B / 1000000000, 1), round(self.used_B / 1000000000, 1)))
 
 
+# Monitors the i/o of all disks.
 class AllDiskIOInfo(DeviceInfo):
     def __init__(self):
         disks_io_init_info = psutil.disk_io_counters(True)
-        self.disks = [DiskIOInfo(disk_name) for disk_name, disks_io_info in disks_io_init_info.items()]
+        self.disks = [DiskIOInfo(disk_name)
+                      for disk_name, disks_io_info
+                      in disks_io_init_info.items()]
 
     def get_names(self):
         names = ""
@@ -436,6 +507,7 @@ class AllDiskIOInfo(DeviceInfo):
             disk.print()
 
 
+# Monitors the i/o of 1 disks.
 class DiskIOInfo:
     read_bytes = -1
     read_count = -1
@@ -463,7 +535,6 @@ class DiskIOInfo:
 
     # Make points to send to parent class.
     def make_points(self):
-        self.refresh()
         return {
             "measurement": "disk_io",
             "tags": {
@@ -482,17 +553,20 @@ class DiskIOInfo:
         }
 
     def print(self):
-        print("Disk: %s    total read: %s GB  total written: %s GB" % (
-            self.physical_drive, round(self.read_bytes / 1000000000, 1), round(self.write_bytes / 1000000000, 1)))
+        print("Disk: %s    total read: %s GB  total written: %s GB" %
+              (self.physical_drive, round(self.read_bytes / 1000000000, 1), round(self.write_bytes / 1000000000, 1)))
 
 
+# Monitors the temperature of all devices.
 class AllTempInfo(DeviceInfo):
     def __init__(self):
         self.available = False
         if hasattr(psutil, "sensors_temperatures"):  # Check if available
             sensors_init_info = psutil.sensors_temperatures()
             if sensors_init_info is not None:
-                self.temp_devices = [TemperatureDevice(device_name) for device_name, sensors in sensors_init_info.items()]
+                self.temp_devices = [TemperatureDevice(device_name)
+                                     for device_name, sensors
+                                     in sensors_init_info.items()]
                 self.available = True
 
     def get_names(self):
@@ -518,6 +592,7 @@ class AllTempInfo(DeviceInfo):
             device.print()
 
 
+# Monitors the temperature of all the sensors of 1 devices.
 class TemperatureDevice:
     name_to_device = collections.defaultdict(str)
     # noinspection SpellCheckingInspection
@@ -544,9 +619,9 @@ class TemperatureDevice:
         devices_info = psutil.sensors_temperatures()
         for device_name, sensors_info in devices_info.items():
             if device_name == self.name:
-                self.sensors = [TemperatureSensor(
-                    sensor_info[0], sensor_info[1], sensor_info[2], sensor_info[3]
-                ) for sensor_info in sensors_info]
+                self.sensors = [TemperatureSensor(sensor_info[0], sensor_info[1], sensor_info[2], sensor_info[3])
+                                for sensor_info
+                                in sensors_info]
                 break
 
     # Returns the number of sensors in high temperature range (not including critical).
@@ -599,7 +674,6 @@ class TemperatureDevice:
         updated_devices_info = psutil.sensors_temperatures()
         for updated_device_name, updated_sensors in updated_devices_info.items():
             if updated_device_name == self.name:
-
                 for updated_sensor in updated_sensors:
                     for sensor in self.sensors:
                         if sensor.name == updated_sensor[0]:
@@ -608,7 +682,6 @@ class TemperatureDevice:
 
     # Make points to send to parent class.
     def make_points(self):
-        self.refresh()
         # Basic temp info, for every device
         return {
             "measurement": "temp",
@@ -627,10 +700,11 @@ class TemperatureDevice:
         }
 
     def print(self):
-        print("Device: %s    average temperature: %s C  %s sensor at critical temperature" % (
-            self.clean_name, self.average(), self.critical()))
+        print("Device: %s    average temperature: %s C  %s sensor at critical temperature" %
+              (self.clean_name, self.average(), self.critical()))
 
 
+# Monitors the temperature of 1 sensor.
 class TemperatureSensor:
     def __init__(self, name_, current_=-1, high_=-1, critical_=-1):
         self.name = name_
@@ -657,17 +731,20 @@ class TemperatureSensor:
         return False
 
     def print(self):
-        print("Sensor: %s    current temperature: %s C  high temperature: %s C  critical temperature: %s C" % (
-            self.name, self.current, self.high, self.critical))
+        print("Sensor: %s    current temperature: %s C  high temperature: %s C  critical temperature: %s C" %
+              (self.name, self.current, self.high, self.critical))
 
 
+# Monitors the speed of all fans.
 class AllFansInfo(DeviceInfo):
     def __init__(self):
         self.available = False
         if hasattr(psutil, "sensors_fans"):  # Check if available
             fans_init_info = psutil.sensors_fans()
             if fans_init_info is not None:
-                self.fans = [FanInfo(device_name) for device_name, sensors in fans_init_info.items()]
+                self.fans = [FanInfo(device_name)
+                             for device_name, sensors
+                             in fans_init_info.items()]
                 self.available = True
 
     def get_names(self):
@@ -693,6 +770,7 @@ class AllFansInfo(DeviceInfo):
             fan.print()
 
 
+# Monitors the speed of 1 fans.
 class FanInfo:
     rpm = -1
 
@@ -709,7 +787,6 @@ class FanInfo:
 
     # Make points to send to parent class.
     def make_points(self):
-        self.refresh()
         return {
             "measurement": "fan",
             "tags": {
@@ -723,10 +800,10 @@ class FanInfo:
         }
 
     def print(self):
-        print("Fan: %s    current speed: %s RPM" % (
-            self.name, self.rpm))
+        print("Fan: %s    current speed: %s RPM" % (self.name, self.rpm))
 
 
+# Monitors the battery information.
 class BatteryInfo(DeviceInfo):
     available = True
 
@@ -749,7 +826,6 @@ class BatteryInfo(DeviceInfo):
 
     # Make points to send to influxdb.
     def make_points(self):
-        self.refresh()
         return [
             {
                 "measurement": "battery",
@@ -766,43 +842,5 @@ class BatteryInfo(DeviceInfo):
         ]
 
     def print(self):
-        print("Battery:    plugged in: %s  percent left: %s  seconds left: %s" % (
-            self.is_plugged, self.percent_left, self.seconds_left))
-
-
-class SelfMonitor:
-    cpu_percent = -1
-    ram_percent = -1
-
-    def __init__(self):
-        self.pid = os.getpid()
-        self.process = psutil.Process(self.pid)
-        self.process.cpu_percent()  # throw away data from the first call, it's meaningless
-
-        self.refresh()
-
-    # Updates all the data.
-    def refresh(self):
-        with self.process.oneshot():
-            self.cpu_percent = self.process.cpu_percent()
-            self.ram_percent = self.process.memory_percent()
-
-    # Make points to send to influxdb.
-    def make_points(self):
-        self.refresh()
-        return [
-            {
-                "measurement": "self_monitor",
-                "tags": {
-                    "machine": MACHINE_NAME
-                },
-                "time": str(datetime.datetime.now().isoformat()),
-                "fields": {
-                    "cpu_percent": self.cpu_percent,
-                    "ram_percent": self.ram_percent
-                }
-            }
-        ]
-
-    def print(self):
-        print("Self usage:  CPU: %s %%  RAM: %s %%" % (round(self.cpu_percent, 2), round(self.ram_percent, 2)))
+        print("Battery:    plugged in: %s  percent left: %s  seconds left: %s" %
+              (self.is_plugged, self.percent_left, self.seconds_left))
