@@ -26,6 +26,7 @@ var ping_machine = function (ip, callback)
 
 var machine_list_get = function(callback)
 				{
+					console.log("ENTRER MACHINE LIST GET");
 					var conString = "postres://admineasy_client:1337@10.8.0.1:5432/admineasy" ;
 					var client = new pg.Client(conString) ;
 					client.connect(err =>
@@ -48,80 +49,32 @@ var machine_list_get = function(callback)
 										+'</tr></thead><tbody>';
 										rows.map((row) =>
 												{
+
+												/*var requete= creerRequete();
+												var url="http://nailyk.ddns.net:54823/machine?ip="+ip ;*
+												var code=
+												'<tr>'
+												//+'<td><a href="javascript:Methode.searchIP('+retour[1]+')">'+retour[0]+'</a></td>'
+												+'<td><a href="http://nailyk.ddns.net:54823/machine?ip='+retour[1]+'">'+retour[0]+'</a></td>'
+												+'<td>'+retour[1]+'</td>'
+												+'<td>'+retour[2]+'</td>'
+												+'</tr>';*/
+
 													//console.log(`Lecture : ${JSON.stringify(row)}`) ;
 													retour+='<tr><td>'+row.name+'</td><td>'+row.local_ip+'</td><td>'+row.user_name+'</td></tr>' ;
 												});
 										retour+='</tbody></table>' ;
 										//console.log("Row : "+retour) ;
 										callback(retour)	;
-									});
-				}
-
-/*var machine_list_get = function(callback)
-	{
-		console.log("ENTRER MACHINE GET");
-		var conString = "postres://admineasy_client:1337@10.8.0.1:5432/admineasy" ;
-
-		var client = new pg.Client(conString) ;
-		client.connect(err =>
-						{if(err)
-							{
-								console.log("Attente de connexion") ;
-								throw err ;
-							}
-						});
-
-		var query = "select * from machines" ;
-console.log("APRES QUERY");
-		client.query(query).then(res =>
-								{
-									
-									var rows = res.rows ;
-									console.log("rows: "+rows);
-									var tableau=
-										'<table><thead><tr>'
-										+'<th>Nom Machine</th>'
-										+'<th>IP Machine</th>'
-										+'<th>Nom Utilisateur</th>'
-										+'</tr></thead><tbody>';
-
-									rows.map((row) =>
-									//rows.forEach(row=>
-											{
-												console.log("rows map");
-												
-												var retour = [];
-
-												retour[0]=row.name;
-												retour[1]=row.local_ip;
-												retour[2]=row.user_name;
-												console.log("RETOUR "+retour);
-
-												/*var requete= creerRequete();
-												var url="http://nailyk.ddns.net:54823/machine?ip="+ip ;*/
-												/*var code=
-												'<tr>'
-												//+'<td><a href="javascript:Methode.searchIP('+retour[1]+')">'+retour[0]+'</a></td>'
-												+'<td><a href="http://nailyk.ddns.net:54823/machine?ip='+retour[1]+'">'+retour[0]+'</a></td>'
-												+'<td>'+retour[1]+'</td>'
-												+'<td>'+retour[2]+'</td>'
-												+'</tr>';
-
-												console.log("Avant callback");
-												callback(tableau+code+'</tbody></table>') ;
-
-											}) ;
-								})
-							.catch(err =>
+									})
+					.catch(err =>
 								{
 									console.log(err) ;
 									callback("<b>Une erreur est survenue lors de la requete.")
 								}) ;
-							
-							console.log("FIIIIIIINNNNNNNN");
+					console.log("FIIIIIIINNNNNNNN");
 
-
-	}
+				}
 
 	/******************************************************************************************/
 
