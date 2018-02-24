@@ -41,6 +41,10 @@
 			elem.innerHTML=requete.responseText;
 		}
 	}
+	function both(){
+		Machine.afficherMachine();
+		searchIP();
+	}
 
 	</script>
 
@@ -78,7 +82,7 @@
 					<p>
 						<label>Entrez une adresse ip : </label>
 						<input id="ip" type="text" name="ipmachine" placeholder="Ex : 192.168.1.42" />
-						<input name="ipmachine" type="button" value="Envoyer"  onclick="/*window.open('caract_vue.html')*/searchIP(); Machine.afficherMachine();"/>
+						<input name="ipmachine" type="button" value="Envoyer" onclick="/*window.open('caract_vue.html')*/both();"/>
 					</p>
 				</form>
 			</div>
