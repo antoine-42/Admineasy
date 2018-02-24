@@ -6,6 +6,7 @@ var Machine= {
 	},
 
 	afficherMachine: function(){
+		console.log("AFFICHER MACHINE");
 		machine=document.getElementById("machine");
 		machine.style.display="block";
 		if(this.estCo==true){
