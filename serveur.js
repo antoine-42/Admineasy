@@ -61,7 +61,8 @@ var machine_list_get = function(callback)
 												+'</tr>';*/
 
 													//console.log(`Lecture : ${JSON.stringify(row)}`) ;
-													retour+='<tr><td><a href="http://nailyk.ddns.net:54823/machine?ip='+row.local_ip+'">'+row.name+'</a></td><td>'+row.local_ip+'</td><td>'+row.user_name+'</td></tr>' ;
+													retour+='<tr><td><a href="http://nailyk.ddns.net:54823/machine?ip='+row.local_ip+'">'
+													+row.name+'</a></td><td>'+row.local_ip+'</td><td>'+row.user_name+'</td></tr>' ;
 												});
 										retour+='</tbody></table>' ;
 										//console.log("Row : "+retour) ;
@@ -78,11 +79,10 @@ var machine_list_get = function(callback)
 
 	/******************************************************************************************/
 
-
-var machine_get = function(ip, callback)
+var machine_get = function(ip, callback)  // recupere les machines correspondant à l'ip fournie
 	{
 		console.log("ENTRER MACHINE GET");
-		var conString = "postres://admineasy_client:1337@10.8.0.1:5432/admineasy" ;
+		var conString = "postres://admineasy_client:1337@10.8.0.1:5432/admineasy" ;  // connection a la BD
 
 		var client = new pg.Client(conString) ;
 		client.connect(err =>
@@ -94,14 +94,14 @@ var machine_get = function(ip, callback)
 						});
 
 	console.log("IP: "+ip);
-		var query = "select * from machines where local_ip='"+ip+"'" ;
+		var query = "select * from machines where local_ip='"+ip+"'" ;   // recupere les machines qui ont l'ip demande
 console.log("APRES QUERY");
 		client.query(query).then(res =>
 								{
 									
 									var rows = res.rows ;
 									console.log("rows: "+rows);
-									if(rows[0]==undefined) {
+									if(rows[0]==undefined) {  // si il n'ya pas de machines trouve
 										console.log("IF: rows[0]=" +rows[0]);
 										callback("IP inexistante "+ip);
 									}else{
@@ -119,13 +119,12 @@ console.log("APRES QUERY");
 													"cpu_hyperthreading":true,"cpu_freqmin":0,"cpu_freqmax":3300,"ram_total":17070,"swap_total":22438,"local_ip":"192.168.1.42",
 													"net_ifaces":"EthernetEthernet 2Loopback Pseudo-Interface 1Local Area Connection* 10","disk_names":"C:\\D:\\"}
 
-													Attention, cas non traité : si le retour est vide (adresse IP non connue)
 														Dans ce cas, le serveur renvoit la ligne... donc rien
 												*/
 												
 
 												var retour = [];
-
+												// remplie un tableau avec les caracteristiques
 												retour[0]=row.name;
 												retour[1]=row.local_ip;
 												retour[2]=row.user_name;
@@ -147,7 +146,7 @@ console.log("APRES QUERY");
 												console.log("RETOUR "+retour);
 
 												var code=
-												'<li>Nom Machine : '+retour[0]+'</li>'
+												'<li>Nom Machine : '+retour[0]+'</li>'  // affichage des caracteristique en liste
 												+'<li>IP Machine : '+retour[1]+'</li>'
 												+'<li>Nom Utilisateur : '+retour[2]+'</li>'
 												+'<li>OS Complet : '+retour[3]+'</li>'
@@ -182,7 +181,7 @@ console.log("APRES QUERY");
 	}
 	/******************************************************************************************/
 
-var ping_get = function(callback)
+var ping_get = function(callback)  // recupere les machines connecte
 				{
 					var conString = "postres://admineasy_client:1337@10.8.0.1:5432/admineasy" ;
 					var client = new pg.Client(conString) ;
@@ -194,7 +193,7 @@ var ping_get = function(callback)
 										}
 									});
 
-					var query = "select * from connected" ;
+					var query = "select * from connected" ;  // toutes les machines qui sont dans l'état "connecte" dans la bd
 
 					client.query(query).then(res =>
 									{
@@ -203,6 +202,7 @@ var ping_get = function(callback)
 										rows.map((row) =>
 												{
 													//console.log(`Lecture : ${JSON.stringify(row)}`) ;
+													// affichage
 													retour+='<li> date : '+row.date+' -- ip : '+row.ip+'</li>' ;
 												});
 										retour+='</ul>' ;
