@@ -28,7 +28,6 @@ class Harvester:
         self.initialize_measurements()
         if self.online:
             self.postgres_send_data()
-        print("Initialisation done.")
         self.main_loop()
 
     # check command line args
@@ -55,14 +54,11 @@ class Harvester:
                       (self.postgres_options["login"], self.postgres_options["host"]))
             self.postgres_conn = PostgreSQLconn(self.postgres_options)
             if self.debug:
-                print("Connected.")
                 print("Connecting to InfluxDB: %s@%s" %
                       (self.influx_options["login"], self.influx_options["host"]))
             self.influx_conn = InfluxConn(self.influx_options)
-            if self.debug:
-                print("Connected.")
         except Exception as err:
-            print("Can't connect to the database.")
+            print("Can't connect to the database:")
             if self.debug:
                 print(err)
                 print("Continue in offline mode ? Y/n")
@@ -76,6 +72,8 @@ class Harvester:
 
     # Initialize the measurements
     def initialize_measurements(self):
+        if self.debug:
+            print("Initializing measurements")
         self.machine = MachineInfo()
         self.self_monitor = SelfMonitor()
         self.devices_data = {
@@ -93,6 +91,8 @@ class Harvester:
 
     # Send the data to the postgres database
     def postgres_send_data(self):
+        if self.debug:
+            print("Sending data to postgreSQL database")
         self.postgres_conn.get_measurements([
             self.machine,
             self.devices_data["users"],
@@ -106,6 +106,8 @@ class Harvester:
 
     # Main program loop
     def main_loop(self):
+        if self.debug:
+            print("Initialisation finished.")
         update_n = 0
         while True:
             update_start = datetime.datetime.now()

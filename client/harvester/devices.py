@@ -158,7 +158,8 @@ class CpuInfo(DeviceInfo):
         freq_info = psutil.cpu_freq()
         self.freq_curr_mhz = freq_info[0]
 
-        # measured between every call, if None first call meaningless then average between every call
+        # if >0 will pause and measure cpu usage
+        # if None measured between every call, first call meaningless then average between every call
         self.used_percent = psutil.cpu_percent(1)
 
     # Make points to send to influxdb.
