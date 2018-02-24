@@ -46,7 +46,7 @@
 
 		<title>AdminEasy</title>
 	</head>
-	<body onload="Machine.afficherMachine()">
+	<body>  <!-- onload="Machine.afficherMachine()" -->
 		<header id="titre_principal">	
 		<h1>AdminEasy</h1>	
 		</header>
@@ -70,10 +70,15 @@
 				<div id="texte"></div>
 				<i id="machine" class="material-icons" style="font-size:60px;float:right">laptop</i>
 				<form id="monform">
-					<input name="rechercher" type="button" value="Liste"  onclick="search()"/>
-					<label>Entrez une adresse ip : </label>
-					<input id="ip" type="text" name="ipmachine" placeholder="Ex : 192.168.1.42" />
-					<input name="ipmachine" type="button" value="Envoyer"  onclick="/*window.open('caract_vue.html')*/;searchIP();"/>
+					<p>
+						<label>Cliquez ici pour voir la liste des machines présentes dans le rédeau </label>
+						<input name="rechercher" type="button" value="Liste"  onclick="searchListMachine()"/>
+					</p>
+					<p>
+						<label>Entrez une adresse ip : </label>
+						<input id="ip" type="text" name="ipmachine" placeholder="Ex : 192.168.1.42" />
+						<input name="ipmachine" type="button" value="Envoyer"  onclick="/*window.open('caract_vue.html')*/;searchIP();Machine.afficherMachine();"/>
+					</p>
 				</form>
 			</div>
 		</div>
