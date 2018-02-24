@@ -1,6 +1,7 @@
 import time
 import datetime
 import multiprocessing  # multithreading
+import json
 
 from devices import *
 from databases import *
@@ -8,9 +9,11 @@ from databases import *
 
 # Main class
 class Harvester:
-    debug = False
+    debug = True
     online = True
 
+    postgres_options = None
+    influx_options = None
     postgres_conn = None
     influx_conn = None
 
@@ -19,11 +22,13 @@ class Harvester:
     devices_data = None
 
     def __init__(self):
+        self.import_settings()
         self.check_args()
         self.connect()
         self.initialize_measurements()
         if self.online:
             self.postgres_send_data()
+        print("Initialisation done.")
         self.main_loop()
 
     # check command line args
@@ -31,11 +36,31 @@ class Harvester:
         if sys.argv[0] == "-d":
             self.debug = True
 
+    def import_settings(self):
+        with open('settings.json', 'r') as f:
+            settings = json.load(f)
+        try:
+            self.debug = settings["options"]["debug"]
+            self.postgres_options = settings["postgres"]
+            self.influx_options = settings["influx"]
+        except KeyError as e:
+            print("Error while opening the configuration file:")
+            print(e)
+
     # Connect to the databases
     def connect(self):
         try:
-            self.postgres_conn = PostgreSQLconn()
-            self.influx_conn = InfluxConn()
+            if self.debug:
+                print("Connecting to PostgreSQL: %s@%s" %
+                      (self.postgres_options["login"], self.postgres_options["host"]))
+            self.postgres_conn = PostgreSQLconn(self.postgres_options)
+            if self.debug:
+                print("Connected.")
+                print("Connecting to InfluxDB: %s@%s" %
+                      (self.influx_options["login"], self.influx_options["host"]))
+            self.influx_conn = InfluxConn(self.influx_options)
+            if self.debug:
+                print("Connected.")
         except Exception as err:
             print("Can't connect to the database.")
             if self.debug:

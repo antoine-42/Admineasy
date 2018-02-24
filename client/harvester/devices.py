@@ -9,7 +9,6 @@ import socket  # Used to get IP.
 # External libraries
 import psutil  # Hardware info.
 import cpuinfo  # Detailed CPU info.
-# import pySMART  # Hard drive SMART info, requires admin. DOESNT FUCKING WORK. TODO make it work
 
 MACHINE_NAME = platform.node()
 
@@ -425,8 +424,6 @@ class PartitionInfo:
 
     def __init__(self, device_):
         self.device = device_
-        # self.smart = pySMART.Device(self.device) todo <--- smart
-
         for partition in psutil.disk_partitions():
             if partition[0] == self.device:
                 self.mount = partition[1]
@@ -437,21 +434,11 @@ class PartitionInfo:
 
     # Updates all the data.
     def refresh(self):
-        self.refresh_used()
-        # self.refresh_smart() todo <--- smart
-
-    # Updates the used space data.
-    def refresh_used(self):
         partitions_info = psutil.disk_usage(self.mount)
         self.total_B = partitions_info[0]
         self.available_B = partitions_info[2]
         self.used_B = partitions_info[1]
         self.used_percent = partitions_info[3]
-
-    # Updates the SMART data.
-    def refresh_smart(self):
-        self.assessment = self.smart.assessment
-        self.smart_attributes = self.smart.all_attributes()
 
     # Make points to send to parent class.
     def make_points(self):

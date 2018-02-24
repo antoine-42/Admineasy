@@ -1,0 +1,17 @@
+{
+  "options": {
+    "debug": true
+  },
+  "postgres": {
+    "host": "10.8.0.1",
+    "database": "admineasy",
+    "login": "admineasy_client",
+    "password": "1337"
+  },
+  "influx": {
+    "host": "10.8.0.1",
+    "database": "admineasy",
+    "login": "admineasy-client",
+    "password": "1337"
+  }
+}

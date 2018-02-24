@@ -1,16 +1,6 @@
 import psycopg2  # Communication with PostgreSQL.
 import influxdb  # Communication with influxdb.
 
-POSTGRES_HOST = "10.8.0.1"
-POSTGRES_DATABASE = "admineasy"
-POSTGRES_LOGIN = "admineasy_client"
-POSTGRES_PASSWORD = "1337"
-
-INFLUX_HOST = "10.8.0.1"
-INFLUX_DATABASE = "admineasy"
-INFLUX_LOGIN = "admineasy-client"
-INFLUX_PASSWORD = "1337"
-
 
 # Handles the connection with PostgreSQL
 class PostgreSQLconn:
@@ -25,8 +15,8 @@ class PostgreSQLconn:
     postgres_connection = None
     postgres_cursor = None
 
-    def __init__(self):
-        self.connect()
+    def __init__(self, options):
+        self.connect(options["host"], options["database"], options["login"], options["password"])
 
     # Get the measurements
     def get_measurements(self, measurements):
@@ -39,9 +29,9 @@ class PostgreSQLconn:
         self.disks = measurements[6]
 
     # Connect to the database
-    def connect(self):
+    def connect(self, host, database, login, password):
         self.postgres_connection = psycopg2.connect(
-            host=POSTGRES_HOST, database=POSTGRES_DATABASE, user=POSTGRES_LOGIN, password=POSTGRES_PASSWORD
+            host=host, database=database, user=login, password=password
         )
         self.postgres_cursor = self.postgres_connection.cursor()
 
@@ -96,9 +86,9 @@ class PostgreSQLconn:
 
 # Handles the connection with influxDB
 class InfluxConn:
-    def __init__(self):
+    def __init__(self, options):
         self.influxdb_connection = influxdb.InfluxDBClient(
-            host=INFLUX_HOST, database=INFLUX_DATABASE, username=INFLUX_LOGIN, password=INFLUX_PASSWORD)
+            host=options["host"], database=options["database"], username=options["login"], password=options["password"])
 
     # Sends the points in json to influx
     def write_points(self, json):
