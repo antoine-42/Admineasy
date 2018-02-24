@@ -29,7 +29,7 @@
 		}
 	}
 
-	function searchListMachine(){
+	function searchListMachine(){ // n'est pas appele par le onclick du menu 
 		console.log("SEARCH LIST MACHINE DANS index");
 		var requete= creerRequete();
 		var url="http://nailyk.ddns.net:54823/listmachine" ;
@@ -57,6 +57,7 @@
 				</li>	
 				<li ><a id="link" href="machines_vue.html" onclick="searchListMachine();return true;">Machines</a>
 				</li>
+				<!--  /!\ le onclick (au dessus) ne fonctionne pas -->
 				<li><a href="contact_vue.html">Contact</a></li>	
 			</ul>
 		</nav>
