@@ -1,4 +1,4 @@
-var Machine= {
+var Machine = {
 	 estCo: true,
 
 	setConnecter: function(co){
