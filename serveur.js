@@ -27,8 +27,7 @@ var ping_machine = function (ip, callback)
 var machine_list_get = function(callback)
 				{
 					console.log("ENTRER MACHINE LIST GET");
-					//var conString = "postres://admineasy_client:1337@10.8.0.1:5432/admineasy" ;
-					var conString = "postres://admineasy_client:1337@10.8.0.1:54823/admineasy" ;
+					var conString = "postres://admineasy_client:1337@10.8.0.1:5432/admineasy" ;
 					var client = new pg.Client(conString) ;
 					client.connect(err =>
 									{if(err)
@@ -83,7 +82,7 @@ var machine_list_get = function(callback)
 var machine_get = function(ip, callback)  // recupere les machines correspondant à l'ip fournie
 	{
 		console.log("ENTRER MACHINE GET");
-		var conString = "postres://admineasy_client:1337@10.8.0.1:54823/admineasy" ;  // connection a la BD
+		var conString = "postres://admineasy_client:1337@10.8.0.1:5432/admineasy" ;  // connection a la BD
 
 		var client = new pg.Client(conString) ;
 		client.connect(err =>
@@ -184,7 +183,7 @@ console.log("APRES QUERY");
 
 var ping_get = function(callback)  // recupere les machines connecte
 				{
-					var conString = "postres://admineasy_client:1337@10.8.0.1:54823/admineasy" ;
+					var conString = "postres://admineasy_client:1337@10.8.0.1:5432/admineasy" ;
 					var client = new pg.Client(conString) ;
 					client.connect(err =>
 									{if(err)
