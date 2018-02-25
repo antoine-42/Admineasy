@@ -27,7 +27,7 @@ var ping_machine = function (ip, callback)
 var machine_list_get = function(callback)
 				{
 					console.log("ENTRER MACHINE LIST GET");
-					var conString = "postres://admineasy_client:1337@10.8.0.1:5432/admineasy" ;
+					var conString = "postres://admineasy_client:1337@10.8.0.1:54823/admineasy" ;
 					var client = new pg.Client(conString) ;
 					client.connect(err =>
 									{if(err)
