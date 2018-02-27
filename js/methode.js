@@ -9,9 +9,10 @@ var Methode = {
 			
 			for (var i = 0 ; i < maReponse.length; i++){
 				if(maReponse.charAt(i)=="<"){
+					console.log("IMAGE ");
 					if(maReponse.charAt(i++)=="a"){
 						if(maReponse.charAt(i++)==" "){
-							console.log(maReponse.charAt("IMAGE "+i));
+							console.log("AFFICHER IMAGE ");
 
 
 
@@ -33,7 +34,7 @@ var Methode = {
 
 
 	},
-	
+
 	searchListMachine: function(){
 		console.log("searchListMachine METHODE");
 		var requete= creerRequete();
