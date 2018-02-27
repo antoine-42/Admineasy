@@ -17,7 +17,7 @@ var Methode = {
 
 
 
-							afficherMachine();
+							Methode.afficherMachine();
 						}
 					}
 				}
