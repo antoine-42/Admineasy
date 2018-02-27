@@ -1,1 +1,1 @@
-nssm.exe remove harvester
+.\nssm.exe remove harvester
