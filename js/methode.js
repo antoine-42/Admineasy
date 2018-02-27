@@ -23,12 +23,18 @@ var Methode = {
 
 	afficherMachine: function(){
 	elem=document.getElementById("texte");
+	machine=document.getElementById("machine");
 		var image= new Image();
 
-		image.onload=function () {
+		/*image.onload=function () {
 			image.src="~/mack/admineasy/img/computer.png";
 		}
-		image.src="~/mack/admineasy/img/computer.png";
+		image.src="~/mack/admineasy/img/computer.png";*/
+
+		image.onload=function () {
+			image.src=machine;
+		}
+		image.src=machine;
 
 		elem.innerHTML=image;
 
