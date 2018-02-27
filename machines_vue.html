@@ -12,6 +12,7 @@
 		console.log("searchIP");
 		var requete= creerRequete();
 		var arg=document.getElementById("ip").value;
+		console.log("IP= "+arg);
 		var url="http://nailyk.ddns.net:54823/machine?ip="+arg ;
 		requete.open("POST", url, true);
 		requete.onreadystatechange=function(){
@@ -36,6 +37,7 @@
 
 
 	 function afficherResultat(requete, ip){
+	 		console.log("IP est  = "+ip);
 	 	console.log("afficherResultat");
 	 		console.log("afficherResultat");
 		if(requete.readyState==4 && requete.status==200){
