@@ -37,7 +37,7 @@ uninstaller_a = Analysis(['uninstaller\\uninstaller.py'],
              win_private_assemblies=False,
              cipher=block_cipher)
 
-MERGE((harvester_a, "harvester", "harvester"), (setup_a, "setup", "setup"), (uninstaller_a, "uninstaller", "uninstaller"))
+MERGE((harvester_a, "harvester", "harvester"), (setup_a, "harvester-setup", "harvester-setup"), (uninstaller_a, "harvester-uninstaller", "harvester-uninstaller"))
 
 harvester_pyz = PYZ(harvester_a.pure, harvester_a.zipped_data,
              cipher=block_cipher)
@@ -62,7 +62,7 @@ setup_pyz = PYZ(setup_a.pure, setup_a.zipped_data,
 setup_exe = EXE(setup_pyz,
           setup_a.scripts,
           exclude_binaries=True,
-          name='harvester setup',
+          name='harvester-setup',
           debug=False,
           strip=False,
           upx=True,
@@ -73,14 +73,14 @@ setup_coll = COLLECT(setup_exe,
                setup_a.datas,
                strip=False,
                upx=True,
-               name='harvester setup')
+               name='harvester-setup')
 
 uninstaller_pyz = PYZ(uninstaller_a.pure, uninstaller_a.zipped_data,
              cipher=block_cipher)
 uninstaller_exe = EXE(uninstaller_pyz,
           uninstaller_a.scripts,
           exclude_binaries=True,
-          name='harvester uninstaller',
+          name='harvester-uninstaller',
           debug=False,
           strip=False,
           upx=True,
@@ -91,4 +91,4 @@ uninstaller_coll = COLLECT(uninstaller_exe,
                uninstaller_a.datas,
                strip=False,
                upx=True,
-               name='harvester uninstaller')
+               name='harvester-uninstaller')
