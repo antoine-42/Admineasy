@@ -104,7 +104,7 @@ console.log("APRES QUERY");
 									if(rows[0]==undefined) {  // si il n'ya pas de machines trouve
 										console.log("IF: rows[0]=" +rows[0]);
 									//	callback("IP inexistante "+ip);
-									callback();
+									callback(null);
 									}else{
 									rows.map(row =>
 											{
