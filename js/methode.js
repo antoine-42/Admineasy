@@ -1,7 +1,7 @@
 var Methode = {
 
     parcourirResultat: function(requete){
-    	machine=document.getElementById("machine");
+    
         console.log("parcourirResultat METHODE");
         if(requete.readyState==4 && requete.status==200){
 			console.log("RESP: "+requete.responseText);
@@ -22,13 +22,15 @@ var Methode = {
 	},
 
 	afficherMachine: function(){
-
+	elem=document.getElementById("texte");
 		var image= new Image();
 
 		image.onload=function () {
 			image.src="./img/computer.png";
 		}
-		image.src=src;
+		image.src="./img/computer.png";
+
+		elem.innerHTML=image;
 
 	},
 
