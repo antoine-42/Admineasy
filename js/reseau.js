@@ -10,7 +10,7 @@ var Machine = {
 		machine=document.getElementById("machine");
 		machine.style.display="block";
 		image=document.getElementById("image");
-		image.style.display="inline-block";
+		image.style.display="inline";
 		if(this.estCo==true){
 			machine.style.color="green";
 			
