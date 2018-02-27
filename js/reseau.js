@@ -18,4 +18,9 @@ var Machine = {
 
 	},
 
+	effacerMachine: function () {
+		machine=document.getElementById("machine");
+		machine.style.display="none";
+	},
+
 };
