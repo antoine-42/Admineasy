@@ -9,8 +9,8 @@ var Methode = {
 			
 			for (var i = 0 ; i < maReponse.length; i++){
 				if(maReponse.charAt(i)=="<"){
-					console.log("IMAGE ");
-					if(maReponse.charAt(i++)=="a"){
+					console.log("IMAGE "+maReponse.charAt(i++));
+					if(maReponse.charAt(i+1)=="a"){
 						if(maReponse.charAt(i++)==" "){
 							console.log("AFFICHER IMAGE ");
 
