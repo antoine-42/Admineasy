@@ -45,6 +45,7 @@
 			elem=document.getElementById("texte");
 			if(requete.responseText=="null"){// si pas trouve d'IP
 				elem.innerHTML="IP:  "+ip+" est inexistante";
+			Machine.effacerMachine();
 
 			}else if(provenance=="List"){
 				elem.innerHTML=requete.responseText;
