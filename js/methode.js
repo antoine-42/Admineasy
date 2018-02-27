@@ -9,8 +9,10 @@ var Methode = {
 			
 			for (var i = 0 ; i < maReponse.length; i++){
 				if(maReponse.charAt(i)=='<'){
-					if(maReponse.charAt(i+1)=='a'){
-						if(maReponse.charAt(i+2)==' '){
+					i++;
+					if(maReponse.charAt(i)=='a'){
+						i++;
+						if(maReponse.charAt(i)==' '){
 							console.log("AFFICHER IMAGE ");
 
 							Methode.afficherMachine();
@@ -25,23 +27,12 @@ var Methode = {
 	elem=document.getElementById("texte");
 	machine=document.getElementById("machine");
 		var image= new Image();
-
-		/*image.onload=function () {
-			image.src="./img/computer.png";
-		}
-		image.src="./img/computer.png";*/
-
 		image.onload=function () {
 			image.src="./img/computer.png";
 		}
 		image.src="./img/computer.png";
 
-		/*image.onload=function () {
-			image.src=machine;
-		}
-		image.src=machine;*/
-
-		document.body.appendChild(image);
+		document.elem.appendChild(image);
 		//elem.innerHTML=image;
 
 	},
