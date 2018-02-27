@@ -15,7 +15,7 @@
 		var url="http://nailyk.ddns.net:54823/machine?ip="+arg ;
 		requete.open("POST", url, true);
 		requete.onreadystatechange=function(){
-			afficherResultat(requete);
+			afficherResultat(requete, arg.value);
 		}
 
 		requete.send();
@@ -35,19 +35,17 @@
 		}
 
 
-	 function afficherResultat(requete){
+	 function afficherResultat(requete, ip){
 	 	console.log("afficherResultat");
 	 		console.log("afficherResultat");
 		if(requete.readyState==4 && requete.status==200){
 			console.log("afficherIIIFFFF");
+			console.log("RESP: "+requete.responseText);
+			console.log("REQUETE "+requete);
 			elem=document.getElementById("texte");
 			if(requete.responseText=="null"){// si pas trouve d'IP
-				elem.innerHTML="IP inexistante";
-
+				elem.innerHTML="IP inexistante "+ip;
 			}else{
-				console.log("RESP: "+requete.responseText);
-				console.log("REQUETE "+requete);
-
 				elem.innerHTML=requete.responseText;
 			}
 			
