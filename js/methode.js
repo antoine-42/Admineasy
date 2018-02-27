@@ -8,10 +8,11 @@ var Methode = {
 			var maReponse=requete.responseText;
 			
 			for (var i = 0 ; i < maReponse.length; i++){
-				if(maReponse.charAt(i)=="<"){
+				if(maReponse.charAt(i)=='<'){
 					console.log("IMAGE "+maReponse.charAt(i));
-					if(maReponse.charAt(i+1)=="a"){
-						if(maReponse.charAt(i++)==" "){
+					if(maReponse.charAt(i+1)=='a'){
+						console.log("AAAAAAAAA  i= "+i+"   "+maReponse.charAt(i+1));
+						if(maReponse.charAt(i+2)==' '){
 							console.log("AFFICHER IMAGE ");
 
 
