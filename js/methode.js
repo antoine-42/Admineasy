@@ -32,7 +32,7 @@ var Methode = {
 		}
 		image.src="./img/computer.png";
 
-		document.elem.appendChild(image);
+		elem.appendChild(image);
 		//elem.innerHTML=image;
 
 	},
