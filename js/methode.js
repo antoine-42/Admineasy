@@ -26,9 +26,9 @@ var Methode = {
 		var image= new Image();
 
 		image.onload=function () {
-			image.src="/home/invite/mack/admineasy/img/computer.png";
+			image.src="~/mack/admineasy/img/computer.png";
 		}
-		image.src="/home/invite/mack/admineasy/img/computer.png";
+		image.src="~/mack/admineasy/img/computer.png";
 
 		elem.innerHTML=image;
 
