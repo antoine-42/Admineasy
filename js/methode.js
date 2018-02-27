@@ -26,9 +26,9 @@ var Methode = {
 		var image= new Image();
 
 		image.onload=function () {
-			image.src="./img/computer.png";
+			image.src="../img/computer.png";
 		}
-		image.src="./img/computer.png";
+		image.src="../img/computer.png";
 
 		elem.innerHTML=image;
 
