@@ -13,7 +13,7 @@ var Methode = {
 		var url="http://nailyk.ddns.net:54823/listmachine" ;
 		requete.open("POST", url, true);
 		requete.onreadystatechange=function(){
-			afficherResultat(requete);
+			this.afficherResultat(requete);
 		}
 
 		requete.send();
