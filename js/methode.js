@@ -41,7 +41,8 @@ var Methode = {
 		}
 		image.src=machine;*/
 
-		elem.innerHTML=image;
+		document.body.appendChild(image);
+		//elem.innerHTML=image;
 
 	},
 
