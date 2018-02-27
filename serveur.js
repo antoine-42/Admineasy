@@ -77,6 +77,42 @@ var machine_list_get = function(callback)
 
 				}
 
+/*************************************************************************************************************/
+
+var list_reseau_get = function(callback)
+				{
+					console.log("ENTRER list_reseau_get ");
+					var conString = "postres://admineasy_client:1337@10.8.0.1:5432/admineasy" ;
+					var client = new pg.Client(conString) ;
+					client.connect(err =>
+									{if(err)
+										{
+											console.log("Attente de connexion") ;
+											throw err ;
+										}
+									});
+
+					var query = "select * from machines" ;
+
+					client.query(query).then(res =>
+									{
+										var rows = res.rows ;
+										var retour = '';
+										rows.map((row) =>
+												{
+													retour+='<a href="http://nailyk.ddns.net:54823/machine?ip='+row.local_ip+'">'
+													+row.local_ip+'</a>' ;
+												});
+										callback(retour)	;
+									})
+					.catch(err =>
+								{
+									console.log(err) ;
+									callback("<b>Une erreur est survenue lors de la requete.")
+								}) ;
+				}
+
+
 	/******************************************************************************************/
 
 var machine_get = function(ip, callback)  // recupere les machines correspondant à l'ip fournie
@@ -286,8 +322,14 @@ var reaction = function(req, res)
 										ecrire_HTML(html, res) ;
 									}) ;
 
-					}
-					else if(page != '/favicon.ico')
+					}else if(page == '/listreseau')
+						{
+							list_reseau_get(function(html)
+									{
+										ecrire_HTML(html, res) ;
+									}) ;
+
+					}else if(page != '/favicon.ico')
 						{
 							console.log(page) ;
 							res.writeHead(404, {"Content-Type": "text/html"}) ;
