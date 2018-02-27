@@ -12,11 +12,10 @@
 		console.log("searchIP");
 		var requete= creerRequete();
 		var arg=document.getElementById("ip").value;
-		console.log("IP= "+document.getElementById("ip").value);
 		var url="http://nailyk.ddns.net:54823/machine?ip="+arg ;
 		requete.open("POST", url, true);
 		requete.onreadystatechange=function(){
-			afficherResultat(requete, arg);
+			afficherResultat(requete, arg, Ip);
 		}
 
 		requete.send();
@@ -29,26 +28,30 @@
 		var url="http://nailyk.ddns.net:54823/listmachine" ;
 		requete.open("POST", url, true);
 		requete.onreadystatechange=function(){
-			afficherResultat(requete);
+			afficherResultat(requete, null, List);
 		}
 
 		requete.send();
 		}
 
 
-	 function afficherResultat(requete, ip){
-	 		console.log("IP est  = "+ip);
+	 function afficherResultat(requete, ip, provenance){
 	 	console.log("afficherResultat");
-	 		console.log("afficherResultat");
+	 	console.log("afficherResultat");
 		if(requete.readyState==4 && requete.status==200){
 			console.log("afficherIIIFFFF");
 			console.log("RESP: "+requete.responseText);
 			console.log("REQUETE "+requete);
 			elem=document.getElementById("texte");
 			if(requete.responseText=="null"){// si pas trouve d'IP
-				elem.innerHTML="IP inexistante "+ip;
+				elem.innerHTML="IP:  "+ip+" est inexistante";
+
+			}else if(provenance==List){
+				elem.innerHTML=requete.responseText;
+
 			}else{
 				elem.innerHTML=requete.responseText;
+				Machine.afficherMachine();
 			}
 			
 		}
@@ -97,7 +100,7 @@
 					<p>
 						<label>Entrez une adresse ip : </label>
 						<input id="ip" type="text" name="ipmachine" placeholder="Ex : 192.168.1.42" />
-						<input name="ipmachine" type="button" value="Envoyer" onclick="/*window.open('caract_vue.html')*/Machine.afficherMachine();searchIP();"/>
+						<input name="ipmachine" type="button" value="Envoyer" onclick="/*window.open('caract_vue.html')*/searchIP();"/>
 					</p>
 				</form>
 			</div>
