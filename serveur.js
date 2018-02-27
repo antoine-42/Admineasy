@@ -103,7 +103,8 @@ console.log("APRES QUERY");
 									console.log("rows: "+rows);
 									if(rows[0]==undefined) {  // si il n'ya pas de machines trouve
 										console.log("IF: rows[0]=" +rows[0]);
-										callback("IP inexistante "+ip);
+									//	callback("IP inexistante "+ip);
+									callback();
 									}else{
 									rows.map(row =>
 											{
