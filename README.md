@@ -1,4 +1,9 @@
 # Admineasy
+## Installation
+### Windows
+Lancer l'installeur. Il vas copier les fichiers, et mettre en place un service qui vas lancer le programme a chaque démarrage. Changez la configuration dans [répertoire d'installation]\harvester\harvester\settings.json si besoin.
+### Linux
+WIP
 ## Harvester.py
 ### Librairies Python
 - [psutil](http://pythonhosted.org/psutil/)
