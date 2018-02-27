@@ -5,7 +5,7 @@ var Methode = {
         if(requete.readyState==4 && requete.status==200){
 			console.log("RESP: "+requete.responseText);
 			var maReponse=requete.responseText;
-
+			}
 			/*for (int i = 0 ; i < maChaine.length() ;i++)
     			System.out.println(maChaine.charAt(i));
 		}*/
