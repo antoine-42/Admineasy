@@ -32,7 +32,8 @@ var Methode = {
 		}
 
 
-	}
+	},
+	
 	searchListMachine: function(){
 		console.log("searchListMachine METHODE");
 		var requete= creerRequete();
