@@ -6,7 +6,8 @@
 	<link rel="stylesheet" href="./css/style.css">
 	<script type="text/javascript" src="./js/requete.js"></script>
 	<script type="text/javascript" src="./js/reseau.js"></script>
-
+	<script type="text/javascript" src="./js/methode.js"></script>
+	
 		<title>AdminEasy</title>
 	</head>
 	<body onload="Reseau.afficher()">
@@ -30,7 +31,12 @@
 				<h4>
 					Voici une vision d'ensemble du réseau:
 				</h4>
+				<div id="texte"></div>
+				
 					<i id="machine" class="material-icons" style="font-size:60px">computer</i>
+
+					<label>Cliquez ici pour voir le rédeau </label>
+						<input name="rechercher" type="button" value="Liste"  onclick="Methode.searchListMachine()"/>
 			</div>
 		</div>
 
