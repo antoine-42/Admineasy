@@ -9,8 +9,6 @@ var Machine = {
 		console.log("AFFICHER MACHINE");
 		machine=document.getElementById("machine");
 		machine.style.display="inline";
-		//image=document.getElementById("image");
-		//image.style.display="inline";
 		if(this.estCo==true){
 			machine.style.color="green";
 			

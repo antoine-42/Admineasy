@@ -143,7 +143,7 @@ console.log("APRES QUERY");
 												retour[15]=row.net_ifaces;
 												retour[16]=row.disk_names;
 
-												console.log("RETOUR "+retour);
+												//console.log("RETOUR "+retour);
 
 												var code=
 												'<li>Nom Machine : '+retour[0]+'</li>'  // affichage des caracteristique en liste
