@@ -14,7 +14,7 @@ var Methode = {
 	searchListMachine: function(){
 		console.log("searchListMachine METHODE");
 		var requete= creerRequete();
-		var url="http://nailyk.ddns.net:54823/listmachine" ;
+		var url="http://nailyk.ddns.net:54823/listreseau" ;
 		requete.open("POST", url, true);
 		requete.onreadystatechange=function(){
 			Methode.parcourirResultat(requete);
