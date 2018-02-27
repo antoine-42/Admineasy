@@ -26,6 +26,14 @@ class Setup:
         subprocess.call(["nssm.exe", "set", "harvester", "Start", "SERVICE_AUTO_START"])
         subprocess.call(["nssm.exe", "set", "harvester", "AppStdout", "C:\logs\harvester-log.log"])
         subprocess.call(["nssm.exe", "start", "harvester"])
+        output = str(subprocess.check_output(["nssm.exe", "status", "harvester"]))
+        output = output.replace("b'", "")
+        output = output.replace("\\r\\n'", "")
+        if output == "SERVICE_RUNNING":
+            print("Installation reussie")
+        else:
+            print("L'installeur n'a pas pu installer harvester en tant que service. code d'erreur: " + str(output))
+            input("")
 
     @staticmethod
     def windows_is_admin():
