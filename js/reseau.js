@@ -24,3 +24,12 @@ var Machine = {
 	},
 
 };
+
+var Reseau = {
+
+	afficher: function(){
+		machine=document.getElementById("machine");
+		machine.style.color="blue";
+
+	}
+};

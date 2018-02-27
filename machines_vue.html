@@ -45,19 +45,19 @@
 			elem=document.getElementById("texte");
 			if(requete.responseText=="null"){// si pas trouve d'IP
 				elem.innerHTML="IP:  "+ip+" est inexistante";
-			Machine.effacerMachine();
+				Machine.effacerMachine();
 
-			}else if(provenance=="List"){
+			}else if(provenance=="List"){  // si est appelé par searchListMachine
 				elem.innerHTML=requete.responseText;
 
-			}else{
+			}else{  // si est appelé par searchIP
 				elem.innerHTML=requete.responseText;
 				Machine.afficherMachine();
 			}
 			
 		}
 	}
-	function both(){
+	function both(){  // caca
 		console.log("BOOOOOOTHHHHHHHHHH");
 		Machine.afficherMachine();
 		searchIP();
