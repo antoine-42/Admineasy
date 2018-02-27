@@ -6,8 +6,9 @@ var Methode = {
 			console.log("RESP: "+requete.responseText);
 			var maReponse=requete.responseText;
 			
-			for (var i = 0 ; i < maReponse.length() ;i++)
+			for (var i = 0 ; i < maReponse.length() ;i++){
     			console.log(maReponse.charAt(i));
+			
 			}
 		}
 	},
