@@ -27,14 +27,19 @@ var Methode = {
 		var image= new Image();
 
 		/*image.onload=function () {
-			image.src="~/mack/admineasy/img/computer.png";
+			image.src="./img/computer.png";
 		}
-		image.src="~/mack/admineasy/img/computer.png";*/
+		image.src="./img/computer.png";*/
 
 		image.onload=function () {
+			image.src="./img/computer.png";
+		}
+		image.src="./img/computer.png";
+
+		/*image.onload=function () {
 			image.src=machine;
 		}
-		image.src=machine;
+		image.src=machine;*/
 
 		elem.innerHTML=image;
 
