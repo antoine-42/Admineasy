@@ -14,7 +14,8 @@ class Setup:
         pass
 
     def windows_remove(self):
-        subprocess.call("nssm.exe remove harvester confirm")
+        subprocess.call(["nssm.exe", "stop", "harvester"])
+        subprocess.call(["nssm.exe", "remove", "harvester", "confirm"])
 
 
 if __name__ == "__main__":

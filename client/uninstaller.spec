@@ -3,10 +3,10 @@
 block_cipher = None
 
 
-harvester_a = Analysis(['harvester\\harvester.py'],
+uninstaller_a = Analysis(['uninstaller\\uninstaller.py'],
              pathex=['C:\\Users\\Antoin\\Documents\\GitHub\\admineasy\\client'],
              binaries=[],
-             datas=[ ('harvester/settings.json', '.')],
+             datas=[ ('nssm.exe', '.')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
@@ -14,20 +14,20 @@ harvester_a = Analysis(['harvester\\harvester.py'],
              win_no_prefer_redirects=False,
              win_private_assemblies=False,
              cipher=block_cipher)
-harvester_pyz = PYZ(harvester_a.pure, harvester_a.zipped_data,
+uninstaller_pyz = PYZ(uninstaller_a.pure, uninstaller_a.zipped_data,
              cipher=block_cipher)
-harvester_exe = EXE(harvester_pyz,
-          harvester_a.scripts,
+uninstaller_exe = EXE(uninstaller_pyz,
+          uninstaller_a.scripts,
           exclude_binaries=True,
-          name='harvester',
+          name='harvester-uninstaller',
           debug=False,
           strip=False,
           upx=True,
           console=True )
-harvester_coll = COLLECT(harvester_exe,
-               harvester_a.binaries,
-               harvester_a.zipfiles,
-               harvester_a.datas,
+uninstaller_coll = COLLECT(uninstaller_exe,
+               uninstaller_a.binaries,
+               uninstaller_a.zipfiles,
+               uninstaller_a.datas,
                strip=False,
                upx=True,
-               name='harvester')
+               name='harvester-uninstaller')

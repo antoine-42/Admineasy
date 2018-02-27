@@ -18,15 +18,14 @@ class Setup:
 
     def windows_setup(self):
         dir_path = os.getcwd()
-        app_path = dir_path.split("harvester-setup")[0]
+        app_path = dir_path.split("harvester-setup")[0] + "\\harvester\\harvester.exe"
         if not Setup.windows_is_admin():
             ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, "", None, 1)
-            sys.exit()
-        subprocess.call("nssm.exe install harvester '" + app_path + "\harvester\harvester.exe'")
-        subprocess.call("nssm.exe set harvester Description \"Admineasy client.\"")
-        subprocess.call("nssm.exe set harvester Start SERVICE_AUTO_START")
-        subprocess.call("nssm.exe set harvester AppStdout \"C:\logs\harvester-log.log\"")
-        subprocess.call("nssm.exe start harvester")
+        subprocess.call(["nssm.exe", "install", "harvester", app_path])
+        subprocess.call(["nssm.exe", "set", "harvester", "Description", "Admineasy client."])
+        subprocess.call(["nssm.exe", "set", "harvester", "Start", "SERVICE_AUTO_START"])
+        subprocess.call(["nssm.exe", "set", "harvester", "AppStdout", "C:\logs\harvester-log.log"])
+        subprocess.call(["nssm.exe", "start", "harvester"])
 
     @staticmethod
     def windows_is_admin():
