@@ -24,8 +24,8 @@ var Methode = {
 	},
 
 	afficherMachine: function(){
-		elem=document.getElementById("texte");
-		machine=document.getElementById("machine");
+		var elem=document.getElementById("texte");
+		var machine=document.getElementById("machine");
 		var image= new Image();
 		image.onload=function () {
 				image.src="./img/computer.png";
