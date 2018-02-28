@@ -32,8 +32,11 @@ var Methode = {
 		}
 		image.src="./img/computer.png";  // charge notre image*/
 
-		image.src=machine.value;
+		/*var balise= document.createElement("i");
 
+		balise.className="material-icons";*/
+
+		image.src="./img/computer.svg";
 		image.style.color="red";
 		var div = document.createElement("div");
 		div.style.display= "block";
