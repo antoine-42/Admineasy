@@ -7,46 +7,27 @@ var Methode = {
 			console.log("RESP: "+requete.responseText);
 			var maReponse=requete.responseText;
 			 elem=document.getElementById("texte");
-
-
-			/*for (var i = 0 ; i < maReponse.length; i++){
-				elem.innerHTML+=maReponse.charAt(i);
-				if(maReponse.charAt(i)=='<'){
-					i++;
-					elem.innerHTML+=maReponse.charAt(i);
-					if(maReponse.charAt(i)=='/'){
-						i++;
-						elem.innerHTML+=maReponse.charAt(i);
-						if(maReponse.charAt(i)=='a'){
-							i++;
-							elem.innerHTML+=maReponse.charAt(i);
-							if(maReponse.charAt(i)=='>'){
-								console.log("AFFICHER IMAGE ");
-
-								Methode.afficherMachine();
-							}
-						}
-					}
-				}
-			}*/
 			var j=0;
-			for (var i = 0 ; i < maReponse.length; i++){
+			for (var i = 0 ; i < maReponse.length; i++){  
+			// parcours la reponse evoyé par le serveur
+			// qui ressemble à plusieurs lien comme ça:
+		// <a href="http://nailyk.ddns.net:54823/machine?ip=127.0.1.1">127.0.1.1</a>
 
-				//elem.innerHTML+=maReponse.charAt(i);
 				if(maReponse.charAt(i)=='<'){
 					i++;
-				//	elem.innerHTML+=maReponse.charAt(i);
 					if(maReponse.charAt(i)=='/'){
 						i++;
-				//		elem.innerHTML+=maReponse.charAt(i);
 						if(maReponse.charAt(i)=='a'){
 							i++;
-				//			elem.innerHTML+=maReponse.charAt(i);
-							if(maReponse.charAt(i)=='>'){
+							if(maReponse.charAt(i)=='>'){ // des quel detecte la fin d'une balise a
 								console.log("AFFICHER IMAGE ");
-								elem.innerHTML+=maReponse.substring(j, i);
-								j=i+1;
-								Methode.afficherMachine();
+								elem.innerHTML+=maReponse.substring(j, i);  
+								// affiche la partie de la reponse du serveur
+								// qui correspond à un lien 
+								j=i+1;  // pour decaler la partie que l'on va afficher
+								Methode.afficherMachine();  
+								// affiche l'image du computer
+								// sous le lien correspondant
 							}
 						}
 					}
@@ -57,23 +38,23 @@ var Methode = {
 
 	afficherMachine: function(){
 		var  elem=document.getElementById("texte");  // recupere la ou on va modif
-		var image= new Image();
+		var image= new Image();  // creer object image
 		/*image.onload=function () {
 				image.src="./img/computer.png";
 		}*/
 
-		if(Machine.etat=="connected"){
-			image.src="./img/computergreen.png"; 
+		if(Machine.etat=="connected"){  // verifie l'etat de la machine
+			image.src="./img/computergreen.png";  // donne le lien de l'image correspondant a letat de la machine
 		}else if(Machine.etat=="problem"){
 			image.src="./img/computerred.png"; 
 		}else{
 			image.src="./img/computer.png";
 		}
 	
-		var div = document.createElement("div");
-		div.style.display= "block";
-		div.appendChild(image);
-		elem.appendChild(div);
+		var div = document.createElement("div");  // creer une div
+		div.style.display= "block";  // la met en block pour que chaque image soit en dessous
+		div.appendChild(image);  // donne a la div l'image
+		elem.appendChild(div);  // met la nouvelle div la ou on veut dans notre html
 
 
 	},
