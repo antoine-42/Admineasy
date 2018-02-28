@@ -8,6 +8,7 @@ var Methode = {
 			var maReponse=requete.responseText;
 			 elem=document.getElementById("texte");
 			for (var i = 0 ; i < maReponse.length; i++){
+				elem.innerHTML=maReponse.charAt(i);
 				if(maReponse.charAt(i)=='<'){
 					i++;
 					if(maReponse.charAt(i)=='a'){
@@ -16,7 +17,7 @@ var Methode = {
 							console.log("AFFICHER IMAGE ");
 
 							Methode.afficherMachine();
-							elem.innerHTML=maReponse;
+
 
 						}
 					}
