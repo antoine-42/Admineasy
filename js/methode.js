@@ -38,7 +38,7 @@ var Methode = {
 
 		image.src="./img/computer.svg";
 	//	image.style.backgroundColor="red";
-		image.fill="red";
+		image.fill='red';
 		var div = document.createElement("div");
 		div.style.display= "block";
 		div.appendChild(image);
