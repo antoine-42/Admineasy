@@ -32,8 +32,8 @@ var Methode = {
 		}
 		image.src="./img/computer.png";
 
-		elem.appendChild(image);
-		//elem.innerHTML=image;
+		//elem.appendChild(image);
+		elem.innerHTML=image;
 
 	},
 
