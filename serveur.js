@@ -106,7 +106,7 @@ var list_reseau_get = function(callback)
 
 										//callback(retour)	;
 
-										callback(rows);
+										callback(rows[0]);
 									})
 					.catch(err =>
 								{
