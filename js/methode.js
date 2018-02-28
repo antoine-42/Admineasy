@@ -8,7 +8,7 @@ var Methode = {
 			var maReponse=requete.responseText;
 			 elem=document.getElementById("texte");
 
-			 elem+=innerHTML= maReponse[0];
+
 			/*for (var i = 0 ; i < maReponse.length; i++){
 				elem.innerHTML+=maReponse.charAt(i);
 				if(maReponse.charAt(i)=='<'){
@@ -29,6 +29,29 @@ var Methode = {
 					}
 				}
 			}*/
+			var j=0;
+			for (var i = 0 ; i < maReponse.length; i++){
+
+				//elem.innerHTML+=maReponse.charAt(i);
+				if(maReponse.charAt(i)=='<'){
+					i++;
+				//	elem.innerHTML+=maReponse.charAt(i);
+					if(maReponse.charAt(i)=='/'){
+						i++;
+				//		elem.innerHTML+=maReponse.charAt(i);
+						if(maReponse.charAt(i)=='a'){
+							i++;
+				//			elem.innerHTML+=maReponse.charAt(i);
+							if(maReponse.charAt(i)=='>'){
+								console.log("AFFICHER IMAGE ");
+								elem.innerHTML+=maReponse.substring(j, i);
+								j=i;
+								Methode.afficherMachine();
+							}
+						}
+					}
+				}
+			}
 		}
 	},
 

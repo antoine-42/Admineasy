@@ -104,9 +104,8 @@ var list_reseau_get = function(callback)
 													+row.local_ip+'</a>' ;
 												});
 
-										//callback(retour)	;
+										callback(retour)	;
 
-										callback(rows[0]);
 									})
 					.catch(err =>
 								{
