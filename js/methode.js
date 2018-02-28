@@ -43,7 +43,15 @@ var Methode = {
 		div.style.display= "block";
 		div.appendChild(image);
 		elem.appendChild(div);*/
-		
+
+
+		var test= new machine;
+		test.setAttribute("fill", "red");
+
+		var div = document.createElement("div");
+		div.style.display= "block";
+		div.appendChild(test);
+		elem.appendChild(div);
 
 
 	},
