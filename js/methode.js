@@ -32,6 +32,7 @@ var Methode = {
 		}
 		image.src="./img/computer.png";  // charge notre image
 
+		image.style.color="red";
 		var div = document.createElement("div");
 		div.style.display= "block";
 		div.appendChild(image);
@@ -53,4 +54,32 @@ var Methode = {
 		requete.send();
 		},
 	 
+};
+
+/*********************************************************************************/
+
+var Accueil = {
+	nbAlertes: 0,
+
+	setAlerte: function(){
+		this.nbAlertes++;
+	},
+
+	afficherAlerte: function(){
+		alerte=document.getElementById("alerte");
+		if(this.nbAlertes==0){
+			alerte.style.color="green";
+			alerte.innerHTML += "<br><p>Il n'y a pas d'alerte</p>";
+			
+		}else if(this.nbAlertes==1){
+			alerte.style.color="orange";
+			alerte.innerHTML += "<br><p>Il y a 1 alerte</p>";
+
+		}else if(this.nbAlertes>1){
+			alerte.style.color="red";
+			alerte.innerHTML += "<br><p>Il y a "+this.nbAlertes+" alertes</p>";
+		}
+
+	},
+
 };
