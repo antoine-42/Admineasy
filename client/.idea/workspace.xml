@@ -92,8 +92,8 @@
       <file leaf-file-name="setup.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/installer/setup.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="30" column="54" lean-forward="false" selection-start-line="30" selection-start-column="54" selection-end-line="30" selection-end-column="54" />
+            <state relative-caret-position="272">
+              <caret line="22" column="68" lean-forward="false" selection-start-line="22" selection-start-column="68" selection-end-line="22" selection-end-column="68" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -763,8 +763,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/installer/setup.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="30" column="54" lean-forward="false" selection-start-line="30" selection-start-column="54" selection-end-line="30" selection-end-column="54" />
+        <state relative-caret-position="272">
+          <caret line="22" column="68" lean-forward="false" selection-start-line="22" selection-start-column="68" selection-end-line="22" selection-end-column="68" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
