@@ -12,15 +12,17 @@ var Methode = {
 				if(maReponse.charAt(i)=='<'){
 					i++;
 					elem.innerHTML+=maReponse.charAt(i);
-					if(maReponse.charAt(i)=='a'){
+					if(maReponse.charAt(i)=='/'){
 						i++;
 						elem.innerHTML+=maReponse.charAt(i);
-						if(maReponse.charAt(i)==' '){
-							console.log("AFFICHER IMAGE ");
+						if(maReponse.charAt(i)=='a'){
+							i++;
+							elem.innerHTML+=maReponse.charAt(i);
+							if(maReponse.charAt(i)=='>'){
+								console.log("AFFICHER IMAGE ");
 
-							Methode.afficherMachine();
-
-
+								Methode.afficherMachine();
+							}
 						}
 					}
 				}
