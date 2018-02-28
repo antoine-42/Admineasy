@@ -32,9 +32,9 @@ var Methode = {
 		}*/
 
 		if(Machine.etat=="connected"){
-			image.src="./img/computer"+green+".png"; 
+			image.src="./img/computergreen.png"; 
 		}else if(Machine.etat=="problem"){
-			image.src="./img/computer"+red+".png"; 
+			image.src="./img/computerred.png"; 
 		}else{
 			image.src="./img/computer.png";
 		}
