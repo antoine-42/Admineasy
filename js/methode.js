@@ -32,7 +32,7 @@ var Methode = {
 		}
 		image.src="./img/computer.png";  // charge notre image*/
 
-		image.src=machine;
+		image.src=machine.class;
 
 		image.style.color="red";
 		var div = document.createElement("div");
