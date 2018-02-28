@@ -8,9 +8,14 @@ import time
 
 class Setup:
     def __init__(self):
-        self.dir_path = os.path.dirname(os.path.abspath(__file__))
+        # get path
+        if getattr(sys, "frozen", False):
+            self.dir_path = os.path.dirname(os.path.realpath(sys.executable))
+        elif __file__:
+            self.dir_path = os.path.dirname(os.path.realpath(__file__))
         self.app_path = self.dir_path.split("harvester-setup")[0]
 
+        # detect OS
         self.os = platform.system()
         if self.os == "Linux":
             self.linux_setup()

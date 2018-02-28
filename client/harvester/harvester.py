@@ -31,13 +31,11 @@ class Harvester:
             self.postgres_send_data()
         self.main_loop()
 
-    # check command line args
-    def check_args(self):
-        if sys.argv[0] == "-d":
-            self.debug = True
-
     def import_settings(self):
-        script_location = os.path.dirname(os.path.abspath(__file__))
+        if getattr(sys, "frozen", False):
+            script_location = os.path.dirname(os.path.realpath(sys.executable))
+        elif __file__:
+            script_location = os.path.dirname(os.path.realpath(__file__))
         settings_location = os.path.join(script_location, "settings.json")
         with open(settings_location, 'r') as f:
             settings = json.load(f)
