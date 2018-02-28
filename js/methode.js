@@ -27,10 +27,12 @@ var Methode = {
 		var  elem=document.getElementById("texte");  // recupere la ou on va modif
 		var machine=document.getElementById("machine");  
 		var image= new Image();
-		image.onload=function () {
+		/*image.onload=function () {
 				image.src="./img/computer.png";
 		}
-		image.src="./img/computer.png";  // charge notre image
+		image.src="./img/computer.png";  // charge notre image*/
+
+		image.src=machine.src;
 
 		image.style.color="red";
 		var div = document.createElement("div");
