@@ -45,7 +45,7 @@ var Methode = {
 							if(maReponse.charAt(i)=='>'){
 								console.log("AFFICHER IMAGE ");
 								elem.innerHTML+=maReponse.substring(j, i);
-								j=i;
+								j=i++;
 								Methode.afficherMachine();
 							}
 						}
