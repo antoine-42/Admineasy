@@ -24,18 +24,19 @@ var Methode = {
 	},
 
 	afficherMachine: function(){
-		 var  elem=document.getElementById("texte");
-		 var machine=document.getElementById("machine");
+		var  elem=document.getElementById("texte");  // recupere la ou on va modif
+		var machine=document.getElementById("machine");  
 		var image= new Image();
 		image.onload=function () {
 				image.src="./img/computer.png";
 		}
-		image.src="./img/computer.png";
+		image.src="./img/computer.png";  // charge notre image
 
-		elem.appendChild(image);
-		/*var div = document.createElement("div");
-		div.appendChild(elem);
-		div.style.display= "block";*/
+		var div = document.createElement("div");
+		div.style.display= "block";
+		div.appendChild(image);
+		elem.appendChild(div);
+		
 
 
 	},
