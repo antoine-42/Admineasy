@@ -11,7 +11,10 @@ class Setup:
             self.windows_remove()
 
     def linux_remove(self):
-        pass
+        subprocess.call(["/usr/bin/sudo", "systemctl", "stop", "admineasy-harvester.service"])
+        subprocess.call(["/usr/bin/sudo", "systemctl", "disable", "admineasy-harvester.service"])
+        subprocess.call(["/usr/bin/sudo", "rm", "/etc/systemd/system/admineasy-harvester.service"])
+        subprocess.call(["/usr/bin/sudo", "systemctl", "daemon-reload"])
 
     def windows_remove(self):
         subprocess.call(["nssm.exe", "stop", "harvester"])

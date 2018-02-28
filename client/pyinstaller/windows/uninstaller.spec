@@ -3,10 +3,10 @@
 block_cipher = None
 
 
-uninstaller_a = Analysis(['uninstaller\\uninstaller.py'],
+uninstaller_a = Analysis(['../../uninstaller/uninstaller.py'],
              pathex=['C:\\Users\\Antoin\\Documents\\GitHub\\admineasy\\client'],
              binaries=[],
-             datas=[ ('nssm.exe', '.')],
+             datas=[ ('../nssm.exe', '.')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],

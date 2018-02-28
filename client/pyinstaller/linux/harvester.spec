@@ -3,10 +3,10 @@
 block_cipher = None
 
 
-harvester_a = Analysis(['harvester\\harvester.py'],
-             pathex=['C:\\Users\\Antoin\\Documents\\GitHub\\admineasy\\client'],
+harvester_a = Analysis(['../../harvester/harvester.py'],
+             pathex=['/home/antoine/git/admineasy/client'],
              binaries=[],
-             datas=[ ('harvester/settings.json', '.')],
+             datas=[ ('../../harvester/settings.json', '.')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],

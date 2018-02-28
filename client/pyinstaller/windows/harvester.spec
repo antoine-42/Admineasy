@@ -3,10 +3,10 @@
 block_cipher = None
 
 
-setup_a = Analysis(['installer\\setup.py'],
+harvester_a = Analysis(['../../harvester/harvester.py'],
              pathex=['C:\\Users\\Antoin\\Documents\\GitHub\\admineasy\\client'],
              binaries=[],
-             datas=[ ('nssm.exe', '.')],
+             datas=[ ('../../harvester/settings.json', '.')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
@@ -14,20 +14,20 @@ setup_a = Analysis(['installer\\setup.py'],
              win_no_prefer_redirects=False,
              win_private_assemblies=False,
              cipher=block_cipher)
-setup_pyz = PYZ(setup_a.pure, setup_a.zipped_data,
+harvester_pyz = PYZ(harvester_a.pure, harvester_a.zipped_data,
              cipher=block_cipher)
-setup_exe = EXE(setup_pyz,
-          setup_a.scripts,
+harvester_exe = EXE(harvester_pyz,
+          harvester_a.scripts,
           exclude_binaries=True,
-          name='harvester-setup',
+          name='harvester',
           debug=False,
           strip=False,
           upx=True,
           console=True )
-setup_coll = COLLECT(setup_exe,
-               setup_a.binaries,
-               setup_a.zipfiles,
-               setup_a.datas,
+harvester_coll = COLLECT(harvester_exe,
+               harvester_a.binaries,
+               harvester_a.zipfiles,
+               harvester_a.datas,
                strip=False,
                upx=True,
-               name='harvester-setup')
+               name='harvester')

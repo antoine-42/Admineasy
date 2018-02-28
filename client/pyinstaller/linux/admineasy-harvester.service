@@ -1,0 +1,16 @@
+[Unit]
+Description=Harvester: Admineasy client
+After=network.target
+
+[Service]
+User=root
+Group=root
+
+Type=simple
+ExecStart=/opt/admineasy/harvester/harvester
+TimeoutStopSec=20
+KillMode=process
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
