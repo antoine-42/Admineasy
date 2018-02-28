@@ -22,6 +22,7 @@ class Harvester:
     devices_data = None
 
     def __init__(self):
+
         self.import_settings()
         self.check_args()
         self.connect()
@@ -36,7 +37,9 @@ class Harvester:
             self.debug = True
 
     def import_settings(self):
-        with open('settings.json', 'r') as f:
+        script_location = os.path.dirname(os.path.abspath(__file__))
+        settings_location = os.path.join(script_location, "settings.json")
+        with open(settings_location, 'r') as f:
             settings = json.load(f)
         try:
             self.debug = settings["options"]["debug"]

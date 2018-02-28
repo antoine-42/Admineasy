@@ -8,6 +8,9 @@ import time
 
 class Setup:
     def __init__(self):
+        self.dir_path = os.path.dirname(os.path.abspath(__file__))
+        self.app_path = self.dir_path.split("harvester-setup")[0]
+
         self.os = platform.system()
         if self.os == "Linux":
             self.linux_setup()
@@ -15,19 +18,29 @@ class Setup:
             self.windows_setup()
 
     def linux_setup(self):
-        subprocess.call(["/usr/bin/sudo", "mv", "admineasy-harvester.service", "/etc/systemd/system/"])
+        # put path to executable in service file
+        exec_path = os.path.join(self.app_path, "/harvester/harvester")
+        service_path = os.path.join(self.dir_path, 'admineasy-harvester.service')
+        with open(service_path, "r+") as f:
+            lines = [line.replace("[EXEC_PATH]", exec_path)
+                     if "ExecStart=[EXEC_PATH]" in line else line
+                     for line in f]
+            f.seek(0)
+            f.truncate()
+            f.writelines(lines)
+        # copy service file, then enable and start it.
+        subprocess.call(["/usr/bin/sudo", "mv", service_path, "/etc/systemd/system/"])
         subprocess.call(["/usr/bin/sudo", "systemctl", "enable", "admineasy-harvester.service"])
         subprocess.call(["/usr/bin/sudo", "systemctl", "start", "admineasy-harvester.service"])
 
     def windows_setup(self):
         # get path to application
-        dir_path = os.getcwd()
-        app_path = dir_path.split("harvester-setup")[0] + "\\harvester\\harvester.exe"
+        exec_path = os.path.join(self.app_path, "\\harvester\\harvester.exe")
         # get admin privileges
         if not Setup.windows_is_admin():
             ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, "", None, 1)
         # setup service
-        subprocess.call(["nssm.exe", "install", "harvester", app_path])
+        subprocess.call(["nssm.exe", "install", "harvester", exec_path])
         subprocess.call(["nssm.exe", "set", "harvester", "Description", "Admineasy client."])
         subprocess.call(["nssm.exe", "set", "harvester", "Start", "SERVICE_AUTO_START"])
         subprocess.call(["nssm.exe", "set", "harvester", "AppStdout", "C:\logs\harvester-log.log"])
