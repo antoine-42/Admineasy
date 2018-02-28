@@ -15,11 +15,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="harvester.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="harvester.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/harvester/harvester.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="227">
-              <caret line="33" column="30" lean-forward="true" selection-start-line="33" selection-start-column="30" selection-end-line="37" selection-end-column="73" />
+            <state relative-caret-position="91">
+              <caret line="25" column="30" lean-forward="false" selection-start-line="25" selection-start-column="30" selection-end-line="25" selection-end-column="30" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -89,7 +89,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="setup.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="setup.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/installer/setup.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="289">
@@ -143,8 +143,8 @@
         <option value="$PROJECT_DIR$/harvester.nsi" />
         <option value="$PROJECT_DIR$/pyinstaller/windows/harvester.nsi" />
         <option value="$PROJECT_DIR$/pyinstaller/linux/admineasy-harvester.service" />
-        <option value="$PROJECT_DIR$/harvester/harvester.py" />
         <option value="$PROJECT_DIR$/installer/setup.py" />
+        <option value="$PROJECT_DIR$/harvester/harvester.py" />
       </list>
     </option>
   </component>
@@ -742,16 +742,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/harvester/harvester.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="227">
-          <caret line="33" column="30" lean-forward="true" selection-start-line="33" selection-start-column="30" selection-end-line="37" selection-end-column="73" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pyinstaller/windows/harvester.nsi">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -774,6 +764,16 @@
           <caret line="17" column="19" lean-forward="false" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="19" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/harvester/harvester.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="91">
+          <caret line="25" column="30" lean-forward="false" selection-start-line="25" selection-start-column="30" selection-end-line="25" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>

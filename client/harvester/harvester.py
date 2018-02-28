@@ -24,7 +24,6 @@ class Harvester:
     def __init__(self):
 
         self.import_settings()
-        self.check_args()
         self.connect()
         self.initialize_measurements()
         if self.online:
