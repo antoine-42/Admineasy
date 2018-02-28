@@ -45,12 +45,12 @@ var Methode = {
 		elem.appendChild(div);*/
 
 
-		var test= new machine;
-		test.setAttribute("fill", "red");
+	//	var test= new document.getElementById("machine");
+		machine.setAttribute("fill", "red");
 
 		var div = document.createElement("div");
 		div.style.display= "block";
-		div.appendChild(test);
+		div.appendChild(machine);
 		elem.appendChild(div);
 
 
