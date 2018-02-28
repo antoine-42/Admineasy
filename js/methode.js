@@ -37,7 +37,7 @@ var Methode = {
 		balise.className="material-icons";*/
 
 		image.src="./img/computer.svg";
-		image.style.color="red";
+		image.style.backgroundColor="red";
 		var div = document.createElement("div");
 		div.style.display= "block";
 		div.appendChild(image);
