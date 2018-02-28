@@ -103,7 +103,10 @@ var list_reseau_get = function(callback)
 													retour+='<a href="http://nailyk.ddns.net:54823/machine?ip='+row.local_ip+'">'
 													+row.local_ip+'</a>' ;
 												});
-										callback(retour)	;
+
+										//callback(retour)	;
+
+										callback(rows);
 									})
 					.catch(err =>
 								{

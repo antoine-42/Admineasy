@@ -7,7 +7,9 @@ var Methode = {
 			console.log("RESP: "+requete.responseText);
 			var maReponse=requete.responseText;
 			 elem=document.getElementById("texte");
-			for (var i = 0 ; i < maReponse.length; i++){
+
+			 elem+=innerHTML= maReponse[0];
+			/*for (var i = 0 ; i < maReponse.length; i++){
 				elem.innerHTML+=maReponse.charAt(i);
 				if(maReponse.charAt(i)=='<'){
 					i++;
@@ -26,7 +28,7 @@ var Methode = {
 						}
 					}
 				}
-			}
+			}*/
 		}
 	},
 
