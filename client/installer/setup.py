@@ -19,8 +19,8 @@ class Setup:
 
     def linux_setup(self):
         # put path to executable in service file
-        exec_path = os.path.join(self.app_path, "/harvester/harvester")
-        service_path = os.path.join(self.app_path, '/harvester-setup/admineasy-harvester.service')
+        exec_path = os.path.join(self.app_path, "harvester/harvester")
+        service_path = os.path.join(self.app_path, 'harvester-setup/admineasy-harvester.service')
         with open(service_path, "r+") as f:
             lines = [line.replace("[EXEC_PATH]", exec_path)
                      if "ExecStart=[EXEC_PATH]" in line else line
