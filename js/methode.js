@@ -29,28 +29,19 @@ var Methode = {
 		var image= new Image();
 		/*image.onload=function () {
 				image.src="./img/computer.png";
+		}*/
+
+		if(Machine.etat=="connected"){
+			image.src="./img/computer"+green+".png"; 
+		}else if(Machine.etat=="problem"){
+			image.src="./img/computer"+red+".png"; 
+		}else{
+			image.src="./img/computer.png";
 		}
-		image.src="./img/computer.png";  // charge notre image*/
-
-		/*var balise= document.createElement("i");
-
-		balise.className="material-icons";*/
-
-		/*image.src="./img/computer.svg";
-	//	image.style.backgroundColor="red";
-		image.style.fill="red";
+	
 		var div = document.createElement("div");
 		div.style.display= "block";
 		div.appendChild(image);
-		elem.appendChild(div);*/
-
-
-	//	var test= new document.getElementById("machine");
-		machine.setAttribute("fill", "red");
-
-		var div = document.createElement("div");
-		div.style.display= "block";
-		div.appendChild(machine);
 		elem.appendChild(div);
 
 
@@ -94,6 +85,37 @@ var Accueil = {
 			alerte.innerHTML += "<br><p>Il y a "+this.nbAlertes+" alertes</p>";
 		}
 
+	},
+
+};
+
+/***************************************************************************************/
+
+var Machine = {
+	 etat: "connected",
+
+	setEtat: function(et){
+		this.etat=et;
+	},
+
+	afficherMachine: function(){
+		console.log("AFFICHER MACHINE");
+		machine=document.getElementById("machine");
+		machine.style.display="inline";
+		if(this.etat=="connected"){
+			machine.style.color="green";
+			
+		}else if(this.etat=="problem"){
+			machine.style.color="orange";
+		}else{
+			machine.style.color="grey";
+		}
+
+	},
+
+	effacerMachine: function () {
+		machine=document.getElementById("machine");
+		machine.style.display="none";
 	},
 
 };
