@@ -1,12 +1,12 @@
 var Methode = {
 
     parcourirResultat: function(requete){
-    
+   
         console.log("parcourirResultat METHODE");
         if(requete.readyState==4 && requete.status==200){
 			console.log("RESP: "+requete.responseText);
 			var maReponse=requete.responseText;
-			
+			 elem=document.getElementById("texte");
 			for (var i = 0 ; i < maReponse.length; i++){
 				if(maReponse.charAt(i)=='<'){
 					i++;
@@ -16,6 +16,8 @@ var Methode = {
 							console.log("AFFICHER IMAGE ");
 
 							Methode.afficherMachine();
+							elem.innerHTML=maReponse;
+
 						}
 					}
 				}
