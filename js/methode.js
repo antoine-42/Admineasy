@@ -24,16 +24,19 @@ var Methode = {
 	},
 
 	afficherMachine: function(){
-	elem=document.getElementById("texte");
-	machine=document.getElementById("machine");
+		elem=document.getElementById("texte");
+		machine=document.getElementById("machine");
 		var image= new Image();
 		image.onload=function () {
-			image.src="./img/computer.png";
+				image.src="./img/computer.png";
 		}
 		image.src="./img/computer.png";
 
-		//elem.appendChild(image);
-		elem.innerHTML=image;
+		elem.appendChild(image);
+		var div = document.createElement("div");
+		div.appendChild(elem);
+		div.style.display= "block";
+
 
 	},
 
