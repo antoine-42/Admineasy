@@ -17,6 +17,7 @@ Lancer [harvester-setup.run](https://github.com/antoine-42/admineasy/releases) s
 
 ### Autres logiciels
 
+- [Makeself](http://makeself.io/) pour faire un installeur sur Linux.
 - [NSIS](http://nsis.sourceforge.net/Main_Page) pour faire un installeur sur Windows.
 - [NSSM](http://nssm.cc/) pour installer le programme comme un service sur windows.
 - Base de données [InfluxDB](https://docs.influxdata.com/influxdb/v1.3/introduction/getting_started/) et [PostgreSQL](https://www.postgresql.org/).
