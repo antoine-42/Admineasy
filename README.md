@@ -1,5 +1,7 @@
 # Admineasy
 
+Admineasy est une application de surveillance de ressources système. Le client, harvester, est installé sur des ordinateurs et envoie les informations d'utilisation a une base de données InfluxDB et PostgreSQL. Un serveur web affiche ces informations proprement.
+
 ## Installation
 
 Lancer [harvester-setup.run](https://github.com/antoine-42/admineasy/releases) sur Linux ou [admineasy.exe](https://github.com/antoine-42/admineasy/releases) sur Windows. L'installeur vas copier les fichiers, et mettre en place un service qui vas lancer le programme a chaque démarrage. Changez la configuration dans [répertoire d'installation]\harvester\harvester\settings.json si besoin.
