@@ -2,13 +2,7 @@
 
 ## Installation
 
-### Linux
-
-WIP
-
-### Windows
-
-Lancer l'installeur. Il vas copier les fichiers, et mettre en place un service qui vas lancer le programme a chaque démarrage. Changez la configuration dans [répertoire d'installation]\harvester\harvester\settings.json si besoin.
+Lancer [harvester-setup.run](https://github.com/antoine-42/admineasy/releases) sur Linux ou [admineasy.exe](https://github.com/antoine-42/admineasy/releases) sur Windows. L'installeur vas copier les fichiers, et mettre en place un service qui vas lancer le programme a chaque démarrage. Changez la configuration dans [répertoire d'installation]\harvester\harvester\settings.json si besoin.
 
 ## Harvester
 
