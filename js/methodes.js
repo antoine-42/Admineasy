@@ -1,6 +1,6 @@
 var Methode = {
 
-    parcourirResultat: function(requete){
+    parcourirResultat: function(requete){  // est appelé par searchListReseau
    
         console.log("parcourirResultat METHODE");
         if(requete.readyState==4 && requete.status==200){
@@ -36,7 +36,7 @@ var Methode = {
 		}
 	},
 
-	afficherMachine: function(){
+	afficherMachine: function(){  // est appelé par parcourirResultat
 		var  elem=document.getElementById("texte");  // recupere la ou on va modif
 		var image= new Image();  // creer object image
 		/*image.onload=function () {
@@ -59,7 +59,7 @@ var Methode = {
 
 	},
 
-	searchListReseau: function(){
+	searchListReseau: function(){  // dans Reseau affiche chaque machine avec une icones et leur id (avec un lien)
 		console.log("searchListMachine METHODE");
 		var requete= creerRequete();
 		var url="http://nailyk.ddns.net:54823/listreseau" ;
@@ -72,7 +72,7 @@ var Methode = {
 		},
 
 
-	searchIP: function(){
+	searchIP: function(){  /// recherche la machine avec l'ip qu'on donne
 		console.log("searchIP");
 		var requete= creerRequete();
 		var arg=document.getElementById("ip").value;
@@ -85,7 +85,7 @@ var Methode = {
 		requete.send();
 		},
 
-	searchListMachine : function(){
+	searchListMachine : function(){  // affiche liste machines avec les caracterestique principal
 		Machine.effacerMachine(); // n'affiche plus l'icone machine quand on affiche la liste
 		console.log("searchListMachine");
 		var requete= creerRequete();
@@ -98,17 +98,26 @@ var Methode = {
 		requete.send();
 		},
 
+	searchPing : function(){
+		var requete= creerRequete();
+		var url="http://nailyk.ddns.net:54823/ping" ;
+		requete.open("POST", url, true);
+		requete.onreadystatechange=function(){
+			Methode.afficherResultat(requete, null, "Ping");
+		}
+		requete.send();
+	}
 
-		afficherResultat : function(requete, ip, provenance){
+		afficherResultat : function(requete, ip, provenance){  // dans machine le resultat de searchListMachine
 	 	console.log("afficherResultat");
 		if(requete.readyState==4 && requete.status==200){
 			console.log("RESP: "+requete.responseText);
 			elem=document.getElementById("texte");
-			if(requete.responseText=="null"){// si pas trouve d'IP
+			if((ip!=null) && (requete.responseText=="null")){// si pas trouve d'IP
 				elem.innerHTML="IP:  "+ip+" est inexistante";
 				Machine.effacerMachine();
 
-			}else if(provenance=="List"){  // si est appelé par searchListMachine
+			}else if((provenance=="List") || (provenance=="Ping")){  // si est appelé par searchListMachine
 				elem.innerHTML=requete.responseText;
 
 			}else{  // si est appelé par searchIP
