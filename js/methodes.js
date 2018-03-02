@@ -59,7 +59,7 @@ var Methode = {
 
 	},
 
-	searchListMachine: function(){
+	searchListReseau: function(){
 		console.log("searchListMachine METHODE");
 		var requete= creerRequete();
 		var url="http://nailyk.ddns.net:54823/listreseau" ;
@@ -70,6 +70,53 @@ var Methode = {
 
 		requete.send();
 		},
+
+
+	searchIP: function(){
+		console.log("searchIP");
+		var requete= creerRequete();
+		var arg=document.getElementById("ip").value;
+		var url="http://nailyk.ddns.net:54823/machine?ip="+arg ;
+		requete.open("POST", url, true);
+		requete.onreadystatechange=function(){
+			afficherResultat(requete, arg, "IP");
+		}
+
+		requete.send();
+		},
+
+	searchListMachine : function(){
+		Machine.effacerMachine(); // n'affiche plus l'icone machine quand on affiche la liste
+		console.log("searchListMachine");
+		var requete= creerRequete();
+		var url="http://nailyk.ddns.net:54823/listmachine" ;
+		requete.open("POST", url, true);
+		requete.onreadystatechange=function(){
+			afficherResultat(requete, null, "List");
+		}
+
+		requete.send();
+		},
+
+
+		afficherResultat : function(requete, ip, provenance){
+	 	console.log("afficherResultat");
+		if(requete.readyState==4 && requete.status==200){
+			console.log("RESP: "+requete.responseText);
+			elem=document.getElementById("texte");
+			if(requete.responseText=="null"){// si pas trouve d'IP
+				elem.innerHTML="IP:  "+ip+" est inexistante";
+				Machine.effacerMachine();
+
+			}else if(provenance=="List"){  // si est appelé par searchListMachine
+				elem.innerHTML=requete.responseText;
+
+			}else{  // si est appelé par searchIP
+				elem.innerHTML=requete.responseText;
+				Machine.afficherMachine();
+			}	
+		}
+	},
 	 
 };
 

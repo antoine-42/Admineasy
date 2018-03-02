@@ -73,7 +73,6 @@ var machine_list_get = function(callback)
 									console.log(err) ;
 									callback("<b>Une erreur est survenue lors de la requete.")
 								}) ;
-					console.log("FIIIIIIINNNNNNNN");
 
 				}
 
@@ -130,10 +129,7 @@ var machine_get = function(ip, callback)  // recupere les machines correspondant
 								throw err ;
 							}
 						});
-
-	console.log("IP: "+ip);
 		var query = "select * from machines where local_ip='"+ip+"'" ;   // recupere les machines qui ont l'ip demande
-console.log("APRES QUERY");
 		client.query(query).then(res =>
 								{
 									
@@ -142,7 +138,7 @@ console.log("APRES QUERY");
 									if(rows[0]==undefined) {  // si il n'ya pas de machines trouve
 										console.log("IF: rows[0]=" +rows[0]);
 									//	callback("IP inexistante "+ip);
-									callback("null");  // oapres on detecte le renvoie de "null"
+									callback("null");  // apres on detecte le renvoie de "null"
 									}else{
 									rows.map(row =>
 											{
@@ -213,12 +209,9 @@ console.log("APRES QUERY");
 									console.log(err) ;
 									callback("<b>Une erreur est survenue lors de la requete.")
 								}) ;
-							
-							console.log("FIIIIIIINNNNNNNN");
-
-
 	}
-	/******************************************************************************************/
+
+/*********************************************************************************************/
 
 var ping_get = function(callback)  // recupere les machines connecte
 				{
@@ -255,7 +248,6 @@ var ping_get = function(callback)  // recupere les machines connecte
  */
 var ecrire_HTML = function(html, res)
 					{
-							
 							console.log("Retour fonction : "+html) ; //Log serveur
 			
 							/*Création de l'HTML*/
