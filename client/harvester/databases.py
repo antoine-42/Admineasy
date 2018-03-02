@@ -16,7 +16,21 @@ class PostgreSQLconn:
     postgres_cursor = None
 
     def __init__(self, options):
-        self.connect(options["host"], options["database"], options["login"], options["password"])
+        self.host = options["host"]
+        self.database = options["database"]
+        self.login = options["login"]
+        self.password = options["password"]
+
+    # Connect to the database
+    def connect(self):
+        self.postgres_connection = psycopg2.connect(
+            host=self.host, database=self.database, user=self.login, password=self.password
+        )
+        self.postgres_cursor = self.postgres_connection.cursor()
+
+    # disconnect from the database
+    def disconnect(self):
+        self.postgres_connection.close()
 
     # Get the measurements
     def get_measurements(self, measurements):
@@ -27,13 +41,6 @@ class PostgreSQLconn:
         self.swap = measurements[4]
         self.net_ifaces = measurements[5]
         self.disks = measurements[6]
-
-    # Connect to the database
-    def connect(self, host, database, login, password):
-        self.postgres_connection = psycopg2.connect(
-            host=host, database=database, user=login, password=password
-        )
-        self.postgres_cursor = self.postgres_connection.cursor()
 
     # Check if this computer exists, then update or create new entry
     def send_data(self):

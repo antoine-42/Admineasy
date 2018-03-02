@@ -103,6 +103,7 @@ class Harvester:
             self.devices_data["disks_io"]
         ])
         self.postgres_conn.send_data()
+        self.postgres_conn.disconnect()
 
     # Main program loop
     def main_loop(self):
