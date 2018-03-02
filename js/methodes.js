@@ -79,7 +79,7 @@ var Methode = {
 		var url="http://nailyk.ddns.net:54823/machine?ip="+arg ;
 		requete.open("POST", url, true);
 		requete.onreadystatechange=function(){
-			afficherResultat(requete, arg, "IP");
+			Methode.afficherResultat(requete, arg, "IP");
 		}
 
 		requete.send();
@@ -92,7 +92,7 @@ var Methode = {
 		var url="http://nailyk.ddns.net:54823/listmachine" ;
 		requete.open("POST", url, true);
 		requete.onreadystatechange=function(){
-			afficherResultat(requete, null, "List");
+			Methode.afficherResultat(requete, null, "List");
 		}
 
 		requete.send();
