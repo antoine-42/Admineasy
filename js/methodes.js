@@ -106,7 +106,7 @@ var Methode = {
 			Methode.afficherResultat(requete, null, "Ping");
 		}
 		requete.send();
-	}
+	},
 
 		afficherResultat : function(requete, ip, provenance){  // dans machine le resultat de searchListMachine
 	 	console.log("afficherResultat");
