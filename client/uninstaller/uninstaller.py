@@ -4,6 +4,7 @@ import subprocess
 
 class Setup:
     def __init__(self):
+        # Detect OS
         self.os = platform.system()
         if self.os == "Linux":
             self.linux_remove()
@@ -11,12 +12,14 @@ class Setup:
             self.windows_remove()
 
     def linux_remove(self):
+        # Remove service
         subprocess.call(["/usr/bin/sudo", "systemctl", "stop", "admineasy-harvester.service"])
         subprocess.call(["/usr/bin/sudo", "systemctl", "disable", "admineasy-harvester.service"])
         subprocess.call(["/usr/bin/sudo", "rm", "/etc/systemd/system/admineasy-harvester.service"])
         subprocess.call(["/usr/bin/sudo", "systemctl", "daemon-reload"])
 
     def windows_remove(self):
+        # Remove service
         subprocess.call(["nssm.exe", "stop", "harvester"])
         subprocess.call(["nssm.exe", "remove", "harvester", "confirm"])
 

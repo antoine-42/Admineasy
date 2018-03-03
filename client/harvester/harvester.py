@@ -1,6 +1,5 @@
 import time
 import datetime
-import multiprocessing  # multithreading
 import json
 
 from devices import *
