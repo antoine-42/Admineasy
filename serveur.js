@@ -1,4 +1,4 @@
-//require('./js/methode.js');
+require('./js/methode.js');
 
 /**Variables**/
 var PORT = 54823 ; //Port d'écoute
