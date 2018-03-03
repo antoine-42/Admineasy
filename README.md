@@ -4,7 +4,17 @@ Admineasy est une application de surveillance de ressources système. Le client,
 
 ## Installation
 
-Lancer [harvester-setup.run](https://github.com/antoine-42/admineasy/releases) sur Linux ou [admineasy.exe](https://github.com/antoine-42/admineasy/releases) sur Windows. L'installeur vas copier les fichiers, et mettre en place un service qui vas lancer le programme a chaque démarrage. Changez la configuration dans [répertoire d'installation]\harvester\harvester\settings.json si besoin.
+L'installeur vas copier les fichiers, et mettre en place un service qui vas lancer le programme a chaque démarrage. Changez la configuration dans [répertoire d'installation]\harvester\harvester\settings.json si besoin.
+
+### Linux
+
+Telecharger [harvester-setup.run](https://github.com/antoine-42/admineasy/releases).
+
+`sudo ./harvester-setup.run --target /opt/admineasy`
+
+### Windows
+
+Telecharger [admineasy.exe](https://github.com/antoine-42/admineasy/releases) et lancer le en tant qu'administrateur.
 
 ## Harvester
 
