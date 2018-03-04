@@ -42,11 +42,6 @@ article {
 </style>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<!--<script>
-$(document).ready(function(){
-    alert("loaded");
-});-->
-</script>
 
 
 </head>
@@ -61,13 +56,15 @@ $(document).ready(function(){
   
 <nav>
   <ul>
-    <li><a href="app1.html" target="iframe_article">cpu</a></li>
-    <li><a href="app2.html" target="iframe_article">fan</a></li>
+    <li><a href="app1.html?type=cpu" target="iframe_article">cpu</a></li>
+    <li><a href="app1.html?type=ram" target="iframe_article">ram</a></li>
+    <li><a href="app1.html?type=swap" target="iframe_article">swap</a></li>
+    <li><a href="app1.html?type=partition" target="iframe_article">partition</a></li>
   </ul>
 </nav>
 
 <article>
-    <iframe src="app1.html" height="1000" width="900" name="iframe_article" style="border:none;"></iframe>
+    <iframe src="app1.html?type=cpu" height="1000" width="900" name="iframe_article" style="border:none;"></iframe>
 </article>
 
 
