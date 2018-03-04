@@ -52,6 +52,7 @@ class Harvester:
                 print("Connecting to PostgreSQL: %s@%s" %
                       (self.postgres_options["login"], self.postgres_options["host"]))
             self.postgres_conn = PostgreSQLconn(self.postgres_options)
+            self.postgres_conn.connect()
             if self.debug:
                 print("Connecting to InfluxDB: %s@%s" %
                       (self.influx_options["login"], self.influx_options["host"]))
