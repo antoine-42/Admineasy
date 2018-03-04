@@ -38,7 +38,6 @@ for(var type in types){
             var param = req.url.substr(1).split("_");
             var limit=(Date.now()-req.body.cpu_period*1000)*1e6;
             var db_rq = "select time," + types[param[0]][param[1]]["influx"] + " from " + param[0] + " where machine='"+req.body.cpu_machine+"' and time>"+limit+" order by time";
-
             influx.query(db_rq)
                 .then(results => {
                     res.json(results);
