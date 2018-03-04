@@ -19,11 +19,12 @@
     var charts_data = [];
     const refresh_delay = 1;
     var param = window.location.search.substr(1).split("=");
+    var titre = {"cpu": "CPU", "ram": "RAM", "swap": "SWAP", "partition": "Utilisation des disques"};
     var types = {
         "cpu": {"usage": {"text": "Utilisation CPU", "format_text":"Pourcentage", "influx": "used"}, "freq": {"text": "Frequence CPU", "format_text":"mhz", "influx": "freq"}},
         "ram": {"usage": {"text": "Utilisation RAM", "format_text":"Pourcentage", "influx": "used_percent"}},
         "swap": {"usage": {"text": "Utilisation SWAP", "format_text":"Pourcentage", "influx": "used_percent"}},
-        "partition": {"usage_full": {"text": "Utilisation disque", "format_text":"Pourcentage", "influx": "partition,total,used_percent"}}
+        "partition": {"usage-full": {"text": "Utilisation disque", "format_text":"Pourcentage", "influx": "used_percent"}}
     };
 
     //prepare graph
@@ -90,6 +91,7 @@
 
 
     $(document).ready(function(){
+        $("#title").append(titre[param[1]]);
 
         $("#ok_button").click(function(){
 // voir https://api.jquery.com/jquery.get/
@@ -107,10 +109,10 @@
 </header>
 
 <body>
-<h1>  </h1>
+<h2 id="title"></h2>
 
 <form action="#" method="get" id="form1">
-Donner l'utilisation du CPU pour les dernières: <input title="cpu_period" type="number" id="cpu_period"> heures <br>
+Donner l'utilisation pour les dernières: <input title="cpu_period" type="number" id="cpu_period"> heures <br>
 sur la machine <input title="cpu_machine" type="text" id="cpu_machine">
 </form> 
 <button id="ok_button">OK</button>

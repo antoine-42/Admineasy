@@ -26,7 +26,7 @@ var types = {
     "cpu": {"usage": {"influx": "used"}, "freq": {"influx": "freq"}},
     "ram": {"usage": {"influx": "used_percent"}},
     "swap": {"usage": {"influx": "used_percent"}},
-    "partition": {"usage_full": {"influx": "partition,total,used_percent"}}
+    "partition": {"usage-full": {"influx": "partition,total,used_percent"}}
 };
 
 for(var type in types){
