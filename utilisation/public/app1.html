@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<header>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+
+var gogo;
+
+$(document).ready(function(){
+
+
+    $("#ok_button").click(function(){
+//        alert ('ok '+$("#cpu_period").val());
+// voir https://api.jquery.com/jquery.get/
+
+        $.post("time_cpu",
+        {
+          cpu_period: $("#cpu_period").val()*3600,
+          cpu_machine: $("#cpu_machine").val()
+        }, 
+        function(data,status){
+gogo=data;
+            chart_data=Array();
+            data.forEach( function(item) { 
+                    chart_data.push(
+                        {x: Date.parse(item.time),
+                         y: item.used });
+                   } 
+            );
+            var chart = new CanvasJS.Chart("chartContainer", {
+            	theme: "light2",
+                
+	            title:{
+		            text: "Occupation CPU"
+	            },
+                axisX:{
+                    valueFormatString: "D/M H'h'mm"
+                },
+	            axisY: {
+		            title: "Pourcentage",
+	            },
+	            data: [{
+		            type: "spline",
+                    xValueType: "dateTime",
+		            dataPoints: chart_data
+	            }]
+            });
+        
+            chart.render();
+                  
+            
+
+ /*            data.forEach( function(x) { affich.push( [x.time.getNanoTime(), x.used] ) } )
+*/
+ //             alert("Data: " + affich.slice(0,5) + "\nStatus: " + status)
+        } );
+    });
+});
+</script>
+</header>
+
+<body>
+<h1>  </h1>
+
+<form action="/action_page.php" method="get" id="form1">
+Donner l'utilisation du CPU pour les dernières: <input type="number" id="cpu_period"> heures <br>
+sur la machine <input type="machine" id="cpu_machine">
+</form> 
+<button id="ok_button">OK</button>
+<div id="chartContainer" style="height: 370px; width: 90%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</body>
+</html>

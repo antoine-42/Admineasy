@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<style>
+div.container {
+    width: 100%;
+    border: 1px solid white;
+}
+
+header, footer {
+    padding: 1em;
+    color: white;
+    background-color: black;
+    clear: left;
+    text-align: center;
+}
+
+nav {
+    float: left;
+    max-width: 160px;
+    margin: 0;
+    padding: 1em;
+    background-color: green;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+   
+nav ul a {
+    text-decoration: none;
+}
+
+article {
+    margin-left: 170px;
+    border-left: 1px solid white;
+    padding: 1em;
+    overflow: hidden;
+}
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!--<script>
+$(document).ready(function(){
+    alert("loaded");
+});-->
+</script>
+
+
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+   <h1>Démo AdminEASY</h1>
+</header>
+  
+<nav>
+  <ul>
+    <li><a href="app1.html" target="iframe_article">cpu</a></li>
+    <li><a href="app2.html" target="iframe_article">fan</a></li>
+  </ul>
+</nav>
+
+<article>
+    <iframe src="app1.html" height="1000" width="900" name="iframe_article" style="border:none;"></iframe>
+</article>
+
+
+
+</div>
+
+
+</body>
+
+</html>
+
