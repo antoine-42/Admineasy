@@ -71,6 +71,18 @@ class SelfMonitor:
 class DeviceInfo:
     available = True
 
+    # Updates all the data.
+    def refresh(self):
+        pass
+
+    # Updates all the data.
+    def make_points(self):
+        pass
+
+    # Updates all the data.
+    def print(self):
+        pass
+
 
 # Monitors all connected users
 class AllUserInfo(DeviceInfo):

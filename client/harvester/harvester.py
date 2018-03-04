@@ -8,7 +8,7 @@ from databases import *
 
 # Main class
 class Harvester:
-    debug = True
+    debug = False
     online = True
 
     postgres_options = None
