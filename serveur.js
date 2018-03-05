@@ -1,5 +1,3 @@
-//require('./js/methode.js');
-
 /**Variables**/
 var PORT = 54823 ; //Port d'écoute
 
@@ -7,8 +5,7 @@ var PORT = 54823 ; //Port d'écoute
 var http = require("http") ;								//Module pour communiquer en HTML
 var url = require("url") ;									//Module pour gérer les URL
 var querystring = require("querystring") ;					//Module pour analyser une requete
-var pg = require("/home/invite/js_node/node_modules/pg") ;						//Module pour se connecter à Postgres
-var ping = require("/home/invite/js_node/node_modules/ping") ;
+var pg = require("./n/node_modules/pg") ;	//Module pour se connecter à Postgres
 
 
 /*****************************************************/
@@ -49,30 +46,17 @@ var machine_list_get = function(callback)
 										+'</tr></thead><tbody>';
 										rows.map((row) =>
 												{
-
-												/*var requete= creerRequete();
-												var url="http://nailyk.ddns.net:54823/machine?ip="+ip ;*
-												var code=
-												'<tr>'
-												//+'<td><a href="javascript:Methode.searchIP('+retour[1]+')">'+retour[0]+'</a></td>'
-												+'<td><a href="http://nailyk.ddns.net:54823/machine?ip='+retour[1]+'">'+retour[0]+'</a></td>'
-												+'<td>'+retour[1]+'</td>'
-												+'<td>'+retour[2]+'</td>'
-												+'</tr>';*/
-
-													//console.log(`Lecture : ${JSON.stringify(row)}`) ;
 													retour+='<tr><td><a href="http://nailyk.ddns.net:54823/machine?ip='+row.local_ip+'">'
 													+row.name+'</a></td><td>'+row.local_ip+'</td><td>'+row.user_name+'</td></tr>' ;
 												});
 										retour+='</tbody></table>' ;
-										//console.log("Row : "+retour) ;
 										callback(retour)	;
 									})
-					.catch(err =>
-								{
-									console.log(err) ;
-									callback("<b>Une erreur est survenue lors de la requete.")
-								}) ;
+									.catch(err =>
+												{
+													console.log(err) ;
+													callback("<b>Une erreur est survenue lors de la requete.")
+												}) ;
 
 				}
 
@@ -137,26 +121,12 @@ var machine_get = function(ip, callback)  // recupere les machines correspondant
 									console.log("rows: "+rows);
 									if(rows[0]==undefined) {  // si il n'ya pas de machines trouve
 										console.log("IF: rows[0]=" +rows[0]);
-									//	callback("IP inexistante "+ip);
+									//callback("IP inexistante "+ip);
 									callback("null");  // apres on detecte le renvoie de "null"
 									}else{
 									rows.map(row =>
 											{
-												console.log("rows map");
-												//var retour = `${JSON.stringify(row)}` ;
-												
-												/*
-													Formatez le retour en HTML comme vous le souhaitez.
-													Pour le moment, je ne renvoie que la ligne suivante, mais ça vous permet de voir les champs pour composer le retour HTML.
-
-													{"name":"antoine_main","os_complete":"Windows-10-10.0.16299-SP0","os_simple":"Windows","os_version":"10","user_name":"Antoin",
-													"connection_time":"2018-02-20T00:07:57.000Z","cpu_name":"Intel(R) Core(TM) i7-5820K CPU @ 3.30GHz","cpu_cores":6,"cpu_threads":12,
-													"cpu_hyperthreading":true,"cpu_freqmin":0,"cpu_freqmax":3300,"ram_total":17070,"swap_total":22438,"local_ip":"192.168.1.42",
-													"net_ifaces":"EthernetEthernet 2Loopback Pseudo-Interface 1Local Area Connection* 10","disk_names":"C:\\D:\\"}
-
-														Dans ce cas, le serveur renvoit la ligne... donc rien
-												*/
-												
+												console.log("rows map") ;												
 
 												var retour = [];
 												// remplie un tableau avec les caracteristiques
@@ -213,7 +183,7 @@ var machine_get = function(ip, callback)  // recupere les machines correspondant
 
 /*********************************************************************************************/
 
-var ping_get = function(callback)  // recupere les machines connecte
+var ping_get = function(callback)  //recupere les machines connecte
 				{
 					var conString = "postres://admineasy_client:1337@10.8.0.1:5432/admineasy" ;
 					var client = new pg.Client(conString) ;
@@ -233,7 +203,6 @@ var ping_get = function(callback)  // recupere les machines connecte
 										var retour = "<ul>" ;
 										rows.map((row) =>
 												{
-													//console.log(`Lecture : ${JSON.stringify(row)}`) ;
 													// affichage
 													retour+='<li> date : '+row.date+' -- ip : '+row.ip+'</li>' ;
 												});

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<header>
+    <style>
+        body{
+            font-family: arial;
+        }
+
+        #chartContainer{
+            width: 100%;
+            height: 100%;
+        }
+
+        #chartContainer > *{
+            width: 100%;
+            height: 400px;
+            display: inline-block;
+        }
+    </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    var charts = [];
+    var charts_data = [];
+    const refresh_delay = 4;
+    var param = window.location.search.substr(1).split("=");
+    var titre = {"cpu": "CPU", "ram": "RAM", "swap": "SWAP", "partition": "Utilisation des disques"};
+    var types = {
+        "cpu": {"usage": {"text": "Utilisation CPU", "format_text":"Pourcentage", "influx": "used"}, "freq": {"text": "Frequence CPU", "format_text":"mhz", "influx": "freq"}},
+        "ram": {"usage": {"text": "Utilisation RAM", "format_text":"Pourcentage", "influx": "used_percent"}},
+        "swap": {"usage": {"text": "Utilisation SWAP", "format_text":"Pourcentage", "influx": "used_percent"}},
+        "partition": {"usage-full": {"text": "Utilisation disque", "format_text":"Pourcentage", "influx": "used_percent"}}
+    };
+
+    //prepare graph
+    function make_graph(source, type) {
+        var id = source + '_' + type;
+
+        $("#chartContainer").append('<div id="' + id + '"></div><br/>');
+
+
+        charts_data[id] = [];
+        charts[id] = new CanvasJS.Chart(id, {
+            theme: "light2",
+            culture: "fr",
+
+            title:{
+                text: types[param[1]][type]["text"]
+            },
+            axisX:{
+                valueFormatString: "D/M H'h'mm"
+            },
+            axisY: {
+                title: types[param[1]][type]["format_text"]
+            },
+            data: [{
+                type: "area",
+                xValueType: "dateTime",
+                dataPoints: charts_data[id]
+            }]
+        });
+    }
+
+    // perform actual query and fill up/update the chart data array
+    function do_query(seconds, machine, is_first, id) {
+        var type = id.split("_")[1];
+
+        $.post(id,
+            {
+                cpu_period: seconds,
+                cpu_machine: machine
+            },
+            function(data,status) {
+                console.log('received '+data.length, ' results');
+                data.forEach( function(item) {
+                    charts_data[id].push(
+                            {x: Date.parse(item.time),
+                                y: item[types[param[1]][type]["influx"]] });
+                        if (! is_first)
+                            charts_data[id].shift();
+                    }
+                );
+                charts[id].render();
+
+            });
+
+    }
+
+    // perform the refresh. Must be called every refresh_delay seconds
+    function doPoll(machine) {
+        for(var chart in charts){
+            do_query(refresh_delay, machine, false, chart);
+        }
+        setTimeout(doPoll, refresh_delay*1000, machine);
+    }
+
+
+    $(document).ready(function(){
+        $("#title").append(titre[param[1]]);
+
+        $("#ok_button").click(function(){
+// voir https://api.jquery.com/jquery.get/
+            for(var mesure in types[param[1]]){
+                make_graph(param[1], mesure);
+
+                var id = param[1] + '_' + mesure;
+                do_query($("#cpu_period").val()*3600, $("#cpu_machine").val(), true, id);
+            }
+
+            setTimeout(doPoll, refresh_delay*1000, $("#cpu_machine").val());
+        });
+    });
+</script>
+</header>
+
+<body>
+<h2 id="title"></h2>
+
+<form action="#" method="get" id="form1">
+Donner l'utilisation pour les dernières: <input title="cpu_period" type="number" id="cpu_period"> heures <br>
+sur la machine <input title="cpu_machine" type="text" id="cpu_machine">
+</form> 
+<button id="ok_button">OK</button>
+<div id="chartContainer"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</body>
+</html>

@@ -100,7 +100,7 @@ var Methode = {
 
 	searchPing : function(){
 		var requete= creerRequete();
-		var url="http://nailyk.ddns.net:54823/ping" ;
+		var url="http://nailyk.ddns.net:54824/ping" ;
 		requete.open("POST", url, true);
 		requete.onreadystatechange=function(){
 			Methode.afficherResultat(requete, null, "Ping");
