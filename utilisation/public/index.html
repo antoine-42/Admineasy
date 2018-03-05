@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<style>
+    body{
+        font-family: arial;
+        margin: 0;
+    }
+
+    div.container {
+        width: 100%;
+    }
+
+    header, footer {
+        padding: 1em;
+        color: white;
+        background-color: black;
+        clear: left;
+        text-align: center;
+    }
+
+    nav {
+        float: left;
+        max-width: 160px;
+        margin: 0;
+        padding: 1em;
+        background-color: #0971c5;
+    }
+
+    nav ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    nav ul a {
+        text-decoration: none;
+        color: white;
+    }
+
+    nav ul a:hover {
+        text-decoration: underline;
+    }
+
+    article {
+        margin-left: 170px;
+        border-left: 1px solid white;
+        padding: 1em;
+        overflow: hidden;
+    }
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+   <h1>Admineasy - Données d'utilisation</h1>
+</header>
+  
+<nav>
+  <ul>
+    <li><a href="app1.html?type=cpu" target="iframe_article">CPU</a></li>
+    <li><a href="app1.html?type=ram" target="iframe_article">RAM</a></li>
+    <li><a href="app1.html?type=swap" target="iframe_article">SWAP</a></li>
+  </ul>
+</nav>
+
+<article>
+    <iframe src="app1.html?type=cpu" height="1000" width="900" name="iframe_article" style="border:none;"></iframe>
+</article>
+
+
+
+</div>
+
+
+</body>
+
+</html>
+
