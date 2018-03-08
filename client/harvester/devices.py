@@ -9,6 +9,7 @@ import socket  # Used to get IP.
 # External libraries
 import psutil  # Hardware info.
 import cpuinfo  # Detailed CPU info.
+from multiprocessing import freeze_support  #cpuinfo fix
 
 MACHINE_NAME = platform.node()
 
@@ -148,6 +149,7 @@ class CpuInfo(DeviceInfo):
 
     def __init__(self):
         # Name
+        freeze_support()  # NOTE: Needed for Pyinstaller
         cpu_info = cpuinfo.get_cpu_info()
         self.name = cpu_info["brand"]
 
